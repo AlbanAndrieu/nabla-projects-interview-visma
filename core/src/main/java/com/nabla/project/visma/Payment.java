@@ -35,7 +35,6 @@ package com.nabla.project.visma;
 
 import java.math.BigDecimal;
 
-// TODO move this class to core module
 public class Payment
 {
 
