@@ -92,10 +92,12 @@ public class LoanPage extends LoadableComponent<LoanPage>
         // Assert.assertTrue(this.driver.getTitle().equals(this.title));
     }
 
-    public void close()
-    {
-        SeleniumHelper.close();
-    }
+    /*
+     * public void close()
+     * {
+     * SeleniumHelper.close();
+     * }
+     */
 
     @Given("the user is on Loan Page")
     public void The_user_is_on_loan_page()
@@ -113,6 +115,8 @@ public class LoanPage extends LoadableComponent<LoanPage>
 
         // Difference between Load Event End and Navigation Event Start is Page Load Time
         System.out.println("Page Load Time is " + ((loadEventEnd - navigationStart) / 1000) + " seconds.");
+        
+        SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         // Wait for the Calculate Button
         new WebDriverWait(SeleniumHelper.getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form:payment")));

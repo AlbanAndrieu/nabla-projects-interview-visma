@@ -49,15 +49,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
 import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
 
+@net.jcip.annotations.NotThreadSafe
 public class SimpleWebDriverSTest
 {
+
+    private final SeleniumHelper helper = new SeleniumHelper();
 
     @Before
     public void setUp() throws Exception
     {
+        this.helper.setUp();
+    }
 
-        SeleniumHelper.setUp();
-
+    @After
+    public void tearDown() throws Exception
+    {
+        this.helper.tearDown();
     }
 
     @Test
@@ -76,26 +83,26 @@ public class SimpleWebDriverSTest
 
         loanPage.calculatePayments("1000000", "10");
 
-        // Get the End Time
-        final long endTime = System.currentTimeMillis();
-
-        // Measure total time
-        final long totalTime = endTime - startTime;
-        System.out.println("Total Page Load Time: " + totalTime + " milliseconds");
-
         Assert.assertEquals("Housing Loan Cost Calculator (Results)", SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
         loanPage.Ensure_the_fund_transfer_is_complete("Payments total is : 1302315.33552576902309236382167649640");
         final WebElement simpleTable = SeleniumHelper.getDriver().findElement(By.id("payments"));
         SeleniumHelper.testWebTable(simpleTable, 121);
         Assert.assertEquals("10852.62779604807519243636518063747", SeleniumHelper.getDriver().findElement(By.xpath("//td[2]")).getText());
 
+        // Get the End Time
+        final long endTime = System.currentTimeMillis();
+
+        // Measure total time
+        final long totalTime = endTime - startTime;
+        System.out.println("Total Page Load Time: " + totalTime + " milliseconds");
+        
         SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
         SeleniumHelper.getSelenium().open("/visma/");
         SeleniumHelper.getSelenium().waitForPageToLoad("1500");
 
-        loanPage.close();
+        // loanPage.close();
     }
 
     @Test
@@ -139,6 +146,10 @@ public class SimpleWebDriverSTest
         loanPage.Ensure_a_transaction_failure_message(2, "Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000.");
         loanPage.Ensure_a_transaction_failure_message(3, "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120.");
 
+        pageLoad.stop();
+
+        System.out.println("Total Page Load Time: " + pageLoad + " milliseconds");
+        
         SeleniumHelper.testTakesScreenshot("testWithWrongInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
@@ -146,9 +157,4 @@ public class SimpleWebDriverSTest
         SeleniumHelper.getSelenium().waitForPageToLoad("1500");
     }
 
-    @After
-    public void tearDown() throws Exception
-    {
-        SeleniumHelper.tearDown();
-    }
 }

@@ -39,21 +39,27 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.Augmenter;
-import org.openqa.selenium.remote.UnreachableBrowserException;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+
+import cucumber.api.Scenario;
 
 /**
  * DOCUMENT ME! albandri.
@@ -62,15 +68,15 @@ import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
  * @version $Revision$
  * @since $Date$
  */
-public class SeleniumHelper
+public class SeleniumHelper /* extends EventFiringWebDriver */
 {
 
     private static final transient Logger LOGGER               = Logger.getLogger(SeleniumHelper.class);
 
-    private static WebDriver              driver;
+    private static WebDriver              REAL_DRIVER;
 
     // private final StringBuffer verificationErrors = new StringBuffer();
-    private static DefaultSelenium        selenium;
+    private static DefaultSelenium        SELENIUM;
 
     // private static final String DEFAULT_CHROMEDRIVER = "C:\\chromedriver\\chromedriver.exe"; // "/var/lib/chromedriver"
     // private static final String DEFAULT_FIREFOXBIN = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; // "/usr/lib/firefox/firefox"
@@ -84,14 +90,81 @@ public class SeleniumHelper
     public static String                  chromeDriver         = SeleniumHelper.DEFAULT_CHROMEDRIVER;
     public static String                  firefoxBin           = SeleniumHelper.DEFAULT_FIREFOXBIN;
 
+    private static final Thread           CLOSE_THREAD         = new Thread()
+                                                               {
+                                                                   @Override
+                                                                   public void run()
+                                                                   {
+                                                                       if (null != SeleniumHelper.REAL_DRIVER)
+                                                                       {
+                                                                           REAL_DRIVER.close();
+                                                                           SeleniumHelper.LOGGER.info("closing the browser");
+                                                                       }
+                                                                   }
+                                                               };
+
+    static
+    {
+        Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
+    }
+
+    public SeleniumHelper()
+    {
+        // super(REAL_DRIVER);
+    }
+
+    // @Override
+    public void close()
+    {
+        if (Thread.currentThread() != CLOSE_THREAD)
+        {
+            throw new UnsupportedOperationException("You shouldn't close this WebDriver. It's shared and will close when the JVM exits.");
+        }
+        // super.close();
+    }
+
+    /*
+     * public static void close()
+     * {
+     * try
+     * {
+     * if (null != SeleniumHelper.driver)
+     * {
+     * SeleniumHelper.driver.quit();
+     * }
+     * SeleniumHelper.driver = null;
+     * SeleniumHelper.LOGGER.info("closing the browser");
+     * } catch (final UnreachableBrowserException e)
+     * {
+     * SeleniumHelper.LOGGER.info("cannot close browser: unreachable browser");
+     * }
+     * }
+     */
+
+    private static class BrowserCleanup implements Runnable
+    {
+        @Override
+        public void run()
+        {
+            SeleniumHelper.LOGGER.info("Closing the browser");
+            // SeleniumHelper.close();
+        }
+    }
+
+    public void deleteAllCookies()
+    {
+        getDriver().manage().deleteAllCookies();
+    }
+
     /**
      * DOCUMENT ME! albandri.
      * 
      * @param driver
-     * @param selenium
+     * @param SELENIUM
      * @throws InterruptedException
      */
-    public static void setUp() throws InterruptedException
+    @Before
+    public void setUp() throws InterruptedException
     {
 
         SeleniumHelper.baseUrl = System.getProperty("webdriver.base.url");
@@ -127,9 +200,11 @@ public class SeleniumHelper
         // FirefoxBinary binary = new FirefoxBinary(new File(firefoxBin));
         // driver = new FirefoxDriver(binary, profile);
 
-        SeleniumHelper.driver = SeleniumHelper.getCurrentDriver();
+        SeleniumHelper.REAL_DRIVER = SeleniumHelper.getCurrentDriver();
         // driver = new FirefoxDriver(profile);
         // driver = new HtmlUnitDriver(true);
+
+        deleteAllCookies();
 
         // RemoteWebDriver does not implement the TakesScreenshot class
         // if the driver does have the Capabilities to take a screenshot
@@ -137,37 +212,34 @@ public class SeleniumHelper
         // WebDriver augmentedDriver = new Augmenter().augment(driver);
         // File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 
-        SeleniumHelper.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        SeleniumHelper.REAL_DRIVER.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         // driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-        SeleniumHelper.driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+        SeleniumHelper.REAL_DRIVER.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
         // driver.manage().window().setSize(new Dimension(1920, 1080));
 
         // this.driver.manage().deleteAllCookies();
         // this.driver.get(propertyKeysLoader("login.base.url"));
 
-        SeleniumHelper.selenium = new WebDriverBackedSelenium(SeleniumHelper.driver, SeleniumHelper.baseUrl);
-        SeleniumHelper.selenium.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.baseUrl);
+        SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         Thread.sleep(10000); // 10 s
     }
 
-    /**
-     * DOCUMENT ME! albandri.
-     * 
-     * @param driver
-     */
-    public static void tearDown()
+    @After
+    public void tearDown(/* Scenario scenario */)
     {
 
-        SeleniumHelper.close();
+        // SeleniumHelper.close();
         /*
-         * final String verificationErrorString = this.verificationErrors.toString();
-         * if (!"".equals(verificationErrorString))
-         * {
-         * Assert.fail(verificationErrorString);
+         * try {
+         * byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+         * scenario.embed(screenshot, "image/png");
+         * } catch (WebDriverException somePlatformsDontSupportScreenshots) {
+         * System.err
+         * .println(somePlatformsDontSupportScreenshots.getMessage());
          * }
          */
-
     }
 
     public static WebDriver getDriver()
@@ -177,49 +249,23 @@ public class SeleniumHelper
 
     public static DefaultSelenium getSelenium()
     {
-        return SeleniumHelper.selenium;
+        return SeleniumHelper.SELENIUM;
     }
 
     private synchronized static WebDriver getCurrentDriver()
     {
-        if (SeleniumHelper.driver == null)
+        if (SeleniumHelper.REAL_DRIVER == null)
         {
             try
             {
                 // driver = new FirefoxDriver(new FirefoxProfile());
-                SeleniumHelper.driver = new ChromeDriver();
+                SeleniumHelper.REAL_DRIVER = new ChromeDriver();
             } finally
             {
                 Runtime.getRuntime().addShutdownHook(new Thread(new BrowserCleanup()));
             }
         }
-        return SeleniumHelper.driver;
-    }
-
-    private static class BrowserCleanup implements Runnable
-    {
-        @Override
-        public void run()
-        {
-            SeleniumHelper.LOGGER.info("Closing the browser");
-            SeleniumHelper.close();
-        }
-    }
-
-    public static void close()
-    {
-        try
-        {
-            if (null != SeleniumHelper.driver)
-            {
-                SeleniumHelper.driver.quit();
-            }
-            SeleniumHelper.driver = null;
-            SeleniumHelper.LOGGER.info("closing the browser");
-        } catch (final UnreachableBrowserException e)
-        {
-            SeleniumHelper.LOGGER.info("cannot close browser: unreachable browser");
-        }
+        return SeleniumHelper.REAL_DRIVER;
     }
 
     public static void testDragDrop(final String draggable, final String droppable, String expectedResult, final WebDriver driver, final StringBuffer verificationErrors)
@@ -286,15 +332,15 @@ public class SeleniumHelper
 
     }
 
-    public static void remoteDriverScreenShot(final String filePath, WebDriver driver) throws Exception
-    {
-
-        Thread.sleep(1000);
-        driver = new Augmenter().augment(driver);
-        final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File(filePath));
-
-    }
+    /*
+     * public static void remoteDriverScreenShot(final String filePath, WebDriver driver) throws Exception
+     * {
+     * Thread.sleep(1000);
+     * driver = new Augmenter().augment(driver);
+     * final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+     * FileUtils.copyFile(scrFile, new File(filePath));
+     * }
+     */
 
     public static void testTakesScreenshot(final String filePath, final WebDriver driver)
     {
