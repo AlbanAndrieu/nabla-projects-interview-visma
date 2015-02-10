@@ -271,6 +271,13 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
+		<!-- in order to use @net.jcip.annotations.NotThreadSafe in junit test -->
+		<dependency>
+			<groupId>com.github.stephenc.jcip</groupId>
+			<artifactId>jcip-annotations</artifactId>
+			<!--<version>${jcip.annotations.version}</version>-->
+			<scope>test</scope>
+		</dependency>			
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-java</artifactId>
@@ -776,6 +783,45 @@
 				</executions>
 		    </plugin>
 		    -->
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>${maven.dependency.check.plugin.version}</version>
+				<!--
+				<configuration>
+					<failBuildOnCVSS>8</failBuildOnCVSS>
+				</configuration>
+				-->
+				<executions> 
+					<execution>
+						<goals>
+							<goal>check</goal>
+							<!--<report>aggregate</report>-->
+						</goals>
+					</execution>
+				</executions>									
+			</plugin>		    
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>codenarc-maven-plugin</artifactId>
+				<version>${maven.codenarc.plugin.version}</version>
+				<configuration>
+					<sourceDirectory>${project.basedir}/src/main/groovy</sourceDirectory>
+					<!--
+					<maxPriority1Violations>0</maxPriority1Violations>
+					<maxPriority2Violations>0</maxPriority2Violations>
+					<maxPriority3Violations>0</maxPriority3Violations>
+					-->
+				</configuration>
+				<executions>
+					<execution>
+					<phase>prepare-package</phase>
+					<goals>
+						<goal>codenarc</goal>
+					</goals>
+					</execution>
+				</executions>
+			</plugin>       		    
 		</plugins>
 	</build>
 

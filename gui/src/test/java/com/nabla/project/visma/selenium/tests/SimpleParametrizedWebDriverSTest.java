@@ -35,8 +35,8 @@ package com.nabla.project.visma.selenium.tests;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang.time.StopWatch;
 import org.jboss.arquillian.junit.InSequence;
 import org.junit.After;
 import org.junit.Assert;
@@ -46,19 +46,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
-
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
 
 @RunWith(value = Parameterized.class)
+@net.jcip.annotations.NotThreadSafe
 public class SimpleParametrizedWebDriverSTest
 {
 
@@ -96,6 +90,12 @@ public class SimpleParametrizedWebDriverSTest
         this.helper.setUp();
     }
 
+    @After
+    public void tearDown() throws Exception
+    {
+        this.helper.tearDown();
+    }
+
     /*
      * @Before
      * public void homePageRefresh() throws IOException
@@ -105,113 +105,38 @@ public class SimpleParametrizedWebDriverSTest
      * }
      */
 
-    @Given("TEST - the user is on Loan Page")
-    public void The_user_is_on_loan_page()
-    {
-
-        this.helper.getDriver().get(SeleniumHelper.baseUrl + "/visma/loan.xhtml");
-    }
-
-    @When("TEST - he enters \"([^\"]*)\" as loan amount")
-    public void He_enters_loan_amount(final String loanAmount)
-    {
-        this.helper.getDriver().findElement(By.name("loan_form:loanAmount")).clear();
-        this.helper.getDriver().findElement(By.name("loan_form:loanAmount")).sendKeys(loanAmount);
-    }
-
-    @And("TEST - he enters \"([^\"]*)\" as payback time")
-    public void He_enters_payback_time(final String paybackTime)
-    {
-        this.helper.getDriver().findElement(By.name("loan_form:paybackTime")).clear();
-        this.helper.getDriver().findElement(By.name("loan_form:paybackTime")).sendKeys(paybackTime);
-    }
-
-    @And("TEST - he Submits request for payments calculation")
-    public void He_submits_request_for_fund_transfer()
-    {
-        this.helper.getDriver().findElement(By.id("transfer")).click();
-    }
-
-    @Then("TEST - ensure the payment schedule is accurate with \"([^\"]*)\" message")
-    public void Ensure_the_fund_transfer_is_complete(final String msg)
-    {
-        final WebElement message = this.helper.getDriver().findElement(By.cssSelector("h4"));
-        Assert.assertEquals(message.getText(), msg);
-    }
-
     @Test
     @InSequence(1)
     public void testWithGoodInputS() throws Exception
     {
-        // Get the Start Time
-        final long startTime = System.currentTimeMillis();
+        // Get the StopWatch Object and start the StopWatch
+        final StopWatch pageLoad = new StopWatch();
+        pageLoad.start();
+        
+        // Create an instance of Loan Page class
+        // and provide the driver
+        final LoanPage loanPage = new LoanPage(/* SeleniumHelper.getDriver() */);
 
-        this.The_user_is_on_loan_page();
+        // Open the Loan Calculator Page
+        loanPage.get();
+        
+        loanPage.calculatePayments(this.loanAmount, this.paybackTime);
 
-        final JavascriptExecutor js = (JavascriptExecutor) this.helper.getDriver();
-
-        // Get the Load Event End
-        final long loadEventEnd = (Long) js.executeScript("return window.performance.timing.loadEventEnd;");
-
-        // Get the Navigation Event Start
-        final long navigationStart = (Long) js.executeScript("return window.performance.timing.navigationStart;");
-
-        // Difference between Load Event End and Navigation Event Start is Page Load Time
-        System.out.println("Page Load Time is " + ((loadEventEnd - navigationStart) / 1000) + " seconds.");
-
-        this.helper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
-
-        // Wait for the Calculate Button
-        new WebDriverWait(this.helper.getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form:payment")));
-
-        // WebElement myDynamicElement = (new WebDriverWait(driver, 20)).until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form")));
-        Assert.assertEquals("Housing Loan Cost Calculator", this.helper.getDriver().findElement(By.cssSelector("h3")).getText());
-        this.He_enters_loan_amount(this.loanAmount);
-        this.He_enters_payback_time(this.paybackTime);
-
-        // wait for the application to get fully loaded
-        /*
-         * final WebElement findOwnerLink = (new WebDriverWait(this.helper.getDriver(), 5)).until(new ExpectedCondition<WebElement>()
-         * {
-         * @Override
-         * public WebElement apply(final WebDriver d)
-         * {
-         * // d.get(baseUrl);
-         * return d.findElement(By.name("loan_form:paybackTime"));
-         * }
-         * });
-         * findOwnerLink.click();
-         */
-
-        final WebDriverWait wait = new WebDriverWait(this.helper.getDriver(), 10);
-        wait.until(ExpectedConditions.elementToBeClickable(By.name("loan_form:payment")));
-        this.helper.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-        this.helper.getDriver().findElement(By.name("loan_form:payment")).click();
-
-        // Get the End Time
-        final long endTime = System.currentTimeMillis();
-
-        // Measure total time
-        final long totalTime = endTime - startTime;
-        System.out.println("Total Page Load Time: " + totalTime + " milliseconds");
-
-        Assert.assertEquals("Housing Loan Cost Calculator (Results)", this.helper.getDriver().findElement(By.cssSelector("h3")).getText());
-        this.Ensure_the_fund_transfer_is_complete("Payments total is : " + this.totalPayments);
-        final WebElement simpleTable = this.helper.getDriver().findElement(By.id("payments"));
+        Assert.assertEquals("Housing Loan Cost Calculator (Results)", SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
+        loanPage.Ensure_the_fund_transfer_is_complete("Payments total is : " + this.totalPayments);
+        final WebElement simpleTable = SeleniumHelper.getDriver().findElement(By.id("payments"));
         SeleniumHelper.testWebTable(simpleTable, this.expectedPayments);
-        Assert.assertEquals(this.firstPayment, this.helper.getDriver().findElement(By.xpath("//td[2]")).getText());
+        Assert.assertEquals(this.firstPayment, SeleniumHelper.getDriver().findElement(By.xpath("//td[2]")).getText());
 
-        // SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", this.helper.getDriver());
+        pageLoad.stop();
+
+        System.out.println("Total Page Load Time: " + pageLoad + " milliseconds");
+        
+        // SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
-        this.helper.getSelenium().open("/visma/");
-        this.helper.getSelenium().waitForPageToLoad("1500");
+        SeleniumHelper.getSelenium().open("/visma/");
+        SeleniumHelper.getSelenium().waitForPageToLoad("1500");
     }
 
-    @After
-    public void tearDown() throws Exception
-    {
-        this.helper.tearDown();
-    }
 }

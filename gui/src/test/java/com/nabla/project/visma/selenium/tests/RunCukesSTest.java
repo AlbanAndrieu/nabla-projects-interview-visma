@@ -36,6 +36,7 @@ package com.nabla.project.visma.selenium.tests;
 import org.junit.runner.RunWith;
 
 import cucumber.api.junit.Cucumber;
+import cucumber.api.CucumberOptions;
 
 /**
  * DOCUMENT ME! albandri.
@@ -45,7 +46,8 @@ import cucumber.api.junit.Cucumber;
  * @since $Date$
  */
 @RunWith(Cucumber.class)
-// @Cucumber.Options(format = { "pretty", "html:target/cucumber-html-report", "json-pretty:target/cucumber-report.json" })
+@CucumberOptions(format =
+{ "pretty", "html:target/cucumber", "json:target/cucumber.json", "junit:taget_junit/cucumber.xml" }, features = "src/test/resources/features", glue = "com.nabla", monochrome = true)
 public class RunCukesSTest
 {
 }
