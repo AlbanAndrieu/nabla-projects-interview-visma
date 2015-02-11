@@ -1,6 +1,7 @@
 # nabla-project-interview-visma
 
 [![Join the chat at https://gitter.im/AlbanAndrieu/nabla-project-interview-visma](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AlbanAndrieu/nabla-project-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Java project for an interview request for visma
 
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma.svg)](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma)
@@ -12,24 +13,6 @@ Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndri
 [![Dependency Status nodejs](https://www.versioneye.com/user/projects/54db8c75c1bbbd9bd7000487/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c75c1bbbd9bd7000487/visual)
 [![Dependency Status bower](https://www.versioneye.com/user/projects/54db8ddcc1bbbd5f82000498/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8ddcc1bbbd5f82000498/visual)
 [![Dependency Status main](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/visual)
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nabla-project-interview-visma/nabla-project-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-# Using the downloads plugin
-
-```
-$ mvn clean install
-```
-
-The compiled, source, and Javadoc JAR files will be uploaded as downloads [here](https://github.com/AlbanAndrieu/nabla-project-interview-visma/downloads).
-
-# Using the site plugin
-
-```
-$ mvn site
-```
-
-The generated site will be committed to the [gh-pages branch](https://github.com/AlbanAndrieu/nabla-project-interview-visma/tree/gh-pages) and visible [here](http://alban.andrieu.github.com/nabla-project-interview-visma/).
 
 The challenge
 ================
@@ -71,14 +54,20 @@ Please find below output of this sample:
 
 - Sonar metrics : [sonar](http://home.nabla.mobi:9000/dashboard/index/2831)
 
+TODO : The compiled, source, and Javadoc JAR files will be uploaded as downloads [here](https://github.com/AlbanAndrieu/nabla-project-interview-visma/downloads).
+
+TODO : The generated site will be committed to the [gh-pages branch](https://github.com/AlbanAndrieu/nabla-project-interview-visma/tree/gh-pages) and visible [here](http://alban.andrieu.github.com/nabla-project-interview-visma/).
+
 Remarks : visma installer is produced during the jenkins build , especially [here](http://home.nabla.mobi:8380/jenkins/job/nabla-installer-visma/).
 In order to install, double click on the [VISMAInstaller.jar](http://home.nabla.mobi:8380/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/VISMAInstaller.jar)
 
 On unix, please make sure you can execute the installer :
 
-    chmod 777 VISMAInstaller.jar
-    sudo ./VISMAInstaller.jar
-    
+```
+$ chmod 777 VISMAInstaller.jar
+$ sudo ./VISMAInstaller.jar
+```
+
 Once installed :
 
     cd /usr/local/visma-installer-1.0.1-SNAPSHOT
