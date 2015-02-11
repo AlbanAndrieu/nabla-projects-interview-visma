@@ -21,7 +21,12 @@
             <developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-project-interview-visma.git</developerConnection>
             <url>https://github.com/AlbanAndrieu/nabla-project-interview-visma</url>
     </scm>
-        
+
+	<issueManagement>
+		<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+
     <!-- DEPENDENCIES -->
     <dependencyManagement>
         <dependencies>
@@ -96,13 +101,12 @@
 						</goals>
 						<phase>install</phase>
 					</execution>
-				</executions>        
+				</executions>
             </plugin>
-            -->
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>${maven.site.github.plugin.version}</version>   
+				<version>${maven.site.github.plugin.version}</version>
 				<configuration>
 					<message>Building site for ${project.version}</message>
 					<server>github</server>
@@ -115,7 +119,8 @@
 						<phase>site</phase>
 					</execution>
 				</executions>
-			</plugin>            
+			</plugin>
+            -->			
         </plugins>
     </build>
 
