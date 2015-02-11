@@ -17,6 +17,7 @@ REM TO TEST mvn clean install -Dlog4j.configuration=log4j.properties -Dlog4j.deb
 
 REM TODO mvn -U -B clean install -Dsurefire.useFile=false -Psample,jacoco,integration,run-its,arq-jetty-embedded -Djacoco.outputDir=/workspace/users/albandri10/project/sample/interview/visma/gui/target -Ddatabase=derby -Dserver=jetty7x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Dlog4j.configuration=log4j.properties -Dlog4j.debug=true -Darquillian=arq-jetty-embedded -Darquillian.launch=arq-jetty-embedded  > install.log
 mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090  > install.log
+mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Psample,jacoco,integration,run-its -Djacoco.outputDir=/workspace/users/albandri10/project/sample/interview/visma/gui/target > install.log
 
 REM build with mvn clean install -Psample,run-its -Dserver=jetty9x
 REM OK but not with integration test call java -jar target/dependency/jetty-runner.jar --port 9090 target/*.war

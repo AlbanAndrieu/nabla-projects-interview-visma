@@ -5,6 +5,10 @@
   "author": "NABLA",
   "main": "src/sample-component.js",
   "private": "false",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/AlbanAndrieu/nabla-project-interview-visma.git "
+  },
   "ignore": [
     ".jshintrc",
     "**/*.txt"

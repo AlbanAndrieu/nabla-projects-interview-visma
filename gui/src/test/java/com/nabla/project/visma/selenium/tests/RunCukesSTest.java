@@ -48,7 +48,7 @@ import cucumber.api.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(format =
 { "pretty", "html:target/cucumber", "json:target/cucumber.json", "junit:taget_junit/cucumber.xml" }, features = "src/test/resources/features", monochrome = true)
-//, glue = "com.nabla"
+// , glue = "com.nabla"
 public class RunCukesSTest
 {
 }

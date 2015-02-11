@@ -64,34 +64,34 @@ import cucumber.api.java.en.When;
 public class LoanPage extends LoadableComponent<LoanPage>
 {
 
-    private final String url = "/visma/loan.xhtml";
+    private final String    url = "/visma/loan.xhtml";
     // private final String title = "JSF 2.0 Visma Loan test";
 
     @FindBy(name = "loan_form:loanAmount")
-    private WebElement   loanAmount;
+    private WebElement      loanAmount;
     @FindBy(name = "loan_form:paybackTime")
-    private WebElement   paybackTime;
+    private WebElement      paybackTime;
 
     @FindBy(name = "loan_form:payment")
-    private WebElement   calculate;
+    private WebElement      calculate;
 
     private final WebDriver webDriver;
-    
+
     public LoanPage(SharedDriver webDriver)
     {
-        this.webDriver = webDriver;     
-        //SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
-        //SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
-        
+        this.webDriver = webDriver;
+        // SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
+        // SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+
         PageFactory.initElements(this.webDriver, this);
     }
-    
+
     public LoanPage()
     {
-        this.webDriver = SeleniumHelper.getDriver();  
+        this.webDriver = SeleniumHelper.getDriver();
         PageFactory.initElements(this.webDriver, this);
     }
-    
+
     @Override
     protected void load()
     {
@@ -130,7 +130,7 @@ public class LoanPage extends LoadableComponent<LoanPage>
         // Difference between Load Event End and Navigation Event Start is Page Load Time
         System.out.println("Page Load Time is " + ((loadEventEnd - navigationStart) / 1000) + " seconds.");
 
-        //SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         // Wait for the Calculate Button
         new WebDriverWait(SeleniumHelper.getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form:payment")));
@@ -163,7 +163,7 @@ public class LoanPage extends LoadableComponent<LoanPage>
         this.calculate.click();
     }
 
-    @Then("ensure the payment schedule is accurate with \"([^\"]*)\" message")
+    @Then("ensure the payment schedule total is accurate with \"([^\"]*)\" message")
     public void Ensure_the_fund_transfer_is_complete(final String msg)
     {
         final WebElement message = SeleniumHelper.getDriver().findElement(By.cssSelector("h4"));

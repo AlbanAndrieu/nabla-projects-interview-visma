@@ -124,7 +124,7 @@ public class SharedDriver extends /* RemoteWebDriver */EventFiringWebDriver
                 driver = new InternetExplorerDriver();
                 break;
             default:
-                System.out.println("in Default");          
+                System.out.println("in Default");
                 System.setProperty("webdriver.chrome.driver", "/var/lib/chromedriver");
                 driver = new ChromeDriver();
                 break;

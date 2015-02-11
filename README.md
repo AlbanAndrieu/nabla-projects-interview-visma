@@ -3,8 +3,16 @@
 [![Join the chat at https://gitter.im/AlbanAndrieu/nabla-project-interview-visma](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AlbanAndrieu/nabla-project-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Java project for an interview request for visma
 
-[![Build Status](https://secure.travis-ci.org/jmxtrans/nabla-project-interview-visma.png?branch=master)](http://travis-ci.org/nabla-project-interview-visma/nabla-project-interview-visma)
-[![Dependency Status](https://www.versioneye.com/user/projects/5421de9e3a8c2f2b8b000056/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5421de9e3a8c2f2b8b000056)
+[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma.svg)](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma)
+
+Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
+
+[![Dependency Status gui](https://www.versioneye.com/user/projects/54db8c70c1bbbd9bd7000448/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c70c1bbbd9bd7000448/visual)
+[![Dependency Status core ](https://www.versioneye.com/user/projects/54db8c65c1bbbda01300036f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c65c1bbbda01300036f/visual)
+[![Dependency Status nodejs](https://www.versioneye.com/user/projects/54db8c75c1bbbd9bd7000487/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c75c1bbbd9bd7000487/visual)
+[![Dependency Status bower](https://www.versioneye.com/user/projects/54db8ddcc1bbbd5f82000498/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8ddcc1bbbd5f82000498/visual)
+[![Dependency Status main](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/visual)
+
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nabla-project-interview-visma/nabla-project-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # Using the downloads plugin
