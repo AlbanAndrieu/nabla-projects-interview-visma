@@ -112,14 +112,14 @@ public class SimpleParametrizedWebDriverSTest
         // Get the StopWatch Object and start the StopWatch
         final StopWatch pageLoad = new StopWatch();
         pageLoad.start();
-        
+
         // Create an instance of Loan Page class
         // and provide the driver
-        final LoanPage loanPage = new LoanPage(/* SeleniumHelper.getDriver() */);
+        final LoanPage loanPage = new LoanPage();
 
         // Open the Loan Calculator Page
         loanPage.get();
-        
+
         loanPage.calculatePayments(this.loanAmount, this.paybackTime);
 
         Assert.assertEquals("Housing Loan Cost Calculator (Results)", SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
@@ -131,7 +131,7 @@ public class SimpleParametrizedWebDriverSTest
         pageLoad.stop();
 
         System.out.println("Total Page Load Time: " + pageLoad + " milliseconds");
-        
+
         // SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 

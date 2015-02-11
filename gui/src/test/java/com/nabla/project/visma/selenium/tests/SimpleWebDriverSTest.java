@@ -95,7 +95,7 @@ public class SimpleWebDriverSTest
         // Measure total time
         final long totalTime = endTime - startTime;
         System.out.println("Total Page Load Time: " + totalTime + " milliseconds");
-        
+
         SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
@@ -149,7 +149,7 @@ public class SimpleWebDriverSTest
         pageLoad.stop();
 
         System.out.println("Total Page Load Time: " + pageLoad + " milliseconds");
-        
+
         SeleniumHelper.testTakesScreenshot("testWithWrongInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 

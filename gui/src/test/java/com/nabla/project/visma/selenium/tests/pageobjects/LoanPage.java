@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -46,6 +47,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
+import com.nabla.project.visma.selenium.tests.helper.SharedDriver;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -73,11 +75,23 @@ public class LoanPage extends LoadableComponent<LoanPage>
     @FindBy(name = "loan_form:payment")
     private WebElement   calculate;
 
+    private final WebDriver webDriver;
+    
+    public LoanPage(SharedDriver webDriver)
+    {
+        this.webDriver = webDriver;     
+        //SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
+        //SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        
+        PageFactory.initElements(this.webDriver, this);
+    }
+    
     public LoanPage()
     {
-        PageFactory.initElements(SeleniumHelper.getDriver(), this);
+        this.webDriver = SeleniumHelper.getDriver();  
+        PageFactory.initElements(this.webDriver, this);
     }
-
+    
     @Override
     protected void load()
     {
@@ -103,7 +117,7 @@ public class LoanPage extends LoadableComponent<LoanPage>
     public void The_user_is_on_loan_page()
     {
 
-        SeleniumHelper.getDriver().get(SeleniumHelper.baseUrl + this.url);
+        SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + this.url);
 
         final JavascriptExecutor js = (JavascriptExecutor) SeleniumHelper.getDriver();
 
@@ -115,8 +129,8 @@ public class LoanPage extends LoadableComponent<LoanPage>
 
         // Difference between Load Event End and Navigation Event Start is Page Load Time
         System.out.println("Page Load Time is " + ((loadEventEnd - navigationStart) / 1000) + " seconds.");
-        
-        SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+
+        //SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         // Wait for the Calculate Button
         new WebDriverWait(SeleniumHelper.getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form:payment")));
