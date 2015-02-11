@@ -1,4 +1,6 @@
 # nabla-project-interview-visma
+
+[![Join the chat at https://gitter.im/AlbanAndrieu/nabla-project-interview-visma](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AlbanAndrieu/nabla-project-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Java project for an interview request for visma
 
 [![Build Status](https://secure.travis-ci.org/jmxtrans/nabla-project-interview-visma.png?branch=master)](http://travis-ci.org/nabla-project-interview-visma/nabla-project-interview-visma)
