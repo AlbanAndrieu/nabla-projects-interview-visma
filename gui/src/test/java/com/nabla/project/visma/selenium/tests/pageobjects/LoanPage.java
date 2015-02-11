@@ -154,7 +154,7 @@ public class LoanPage extends LoadableComponent<LoanPage>
         this.paybackTime.sendKeys(aPaybackTime);
     }
 
-    @And("he Submits request for payments calculation")
+    @And("he Submits request for Payment's Schedule")
     public void He_submits_request_for_fund_transfer()
     {
         final WebDriverWait wait = new WebDriverWait(SeleniumHelper.getDriver(), 10);
