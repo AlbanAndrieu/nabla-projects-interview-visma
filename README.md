@@ -1,6 +1,26 @@
 # nabla-project-interview-visma
 Java project for an interview request for visma
 
+[![Build Status](https://secure.travis-ci.org/jmxtrans/nabla-project-interview-visma.png?branch=master)](http://travis-ci.org/nabla-project-interview-visma/nabla-project-interview-visma)
+[![Dependency Status](https://www.versioneye.com/user/projects/5421de9e3a8c2f2b8b000056/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5421de9e3a8c2f2b8b000056)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nabla-project-interview-visma/nabla-project-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+# Using the downloads plugin
+
+```
+$ mvn clean install
+```
+
+The compiled, source, and Javadoc JAR files will be uploaded as downloads [here](https://github.com/AlbanAndrieu/nabla-project-interview-visma/downloads).
+
+# Using the site plugin
+
+```
+$ mvn site
+```
+
+The generated site will be committed to the [gh-pages branch](https://github.com/AlbanAndrieu/nabla-project-interview-visma/tree/gh-pages) and visible [here](http://alban.andrieu.github.com/nabla-project-interview-visma/).
+
 The challenge
 ================
 
