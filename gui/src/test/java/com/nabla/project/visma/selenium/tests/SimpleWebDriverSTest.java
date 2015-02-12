@@ -33,18 +33,14 @@
  */
 package com.nabla.project.visma.selenium.tests;
 
-import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.lang.time.StopWatch;
 import org.jboss.arquillian.junit.InSequence;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
 import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
@@ -53,18 +49,18 @@ import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
 public class SimpleWebDriverSTest
 {
 
-    private final SeleniumHelper helper = new SeleniumHelper();
+    // private static final SeleniumHelper helper = new SeleniumHelper();
 
-    @Before
-    public void setUp() throws Exception
+    @BeforeClass
+    public static void setUp() throws Exception
     {
-        this.helper.setUp();
+        SeleniumHelper.setUp();
     }
 
-    @After
-    public void tearDown() throws Exception
+    @AfterClass
+    public static void tearDown() throws Exception
     {
-        this.helper.tearDown();
+        SeleniumHelper.tearDown();
     }
 
     @Test
@@ -100,7 +96,7 @@ public class SimpleWebDriverSTest
         // Thread.sleep(1000);
 
         SeleniumHelper.getSelenium().open("/visma/");
-        SeleniumHelper.getSelenium().waitForPageToLoad("1500");
+        // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         // loanPage.close();
     }
@@ -123,25 +119,7 @@ public class SimpleWebDriverSTest
         loanPage.He_enters_loan_amount("-10");
         loanPage.He_enters_payback_time("0");
 
-        // wait for the application to get fully loaded
-        /*
-         * final WebElement findOwnerLink = (new WebDriverWait(SeleniumHelper.getDriver(), 5)).until(new ExpectedCondition<WebElement>()
-         * {
-         * @Override
-         * public WebElement apply(final WebDriver d)
-         * {
-         * // d.get(baseUrl);
-         * return d.findElement(By.name("loan_form:paybackTime"));
-         * }
-         * });
-         * findOwnerLink.click();
-         */
-
-        final WebDriverWait wait = new WebDriverWait(SeleniumHelper.getDriver(), 10);
-        wait.until(ExpectedConditions.elementToBeClickable(By.name("loan_form:payment")));
-        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-        SeleniumHelper.getDriver().findElement(By.name("loan_form:payment")).click();
+        loanPage.calculatePayments("-10", "0");
 
         loanPage.Ensure_a_transaction_failure_message(2, "Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000.");
         loanPage.Ensure_a_transaction_failure_message(3, "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120.");
@@ -154,7 +132,9 @@ public class SimpleWebDriverSTest
         // Thread.sleep(1000);
 
         SeleniumHelper.getSelenium().open("/visma/");
-        SeleniumHelper.getSelenium().waitForPageToLoad("1500");
+        SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+
+        // loanPage.close();
     }
 
 }

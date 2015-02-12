@@ -86,8 +86,9 @@ public class LoanPage extends LoadableComponent<LoanPage>
         PageFactory.initElements(this.webDriver, this);
     }
 
-    public LoanPage()
+    public LoanPage() throws InterruptedException
     {
+        SeleniumHelper.setUp();
         this.webDriver = SeleniumHelper.getDriver();
         PageFactory.initElements(this.webDriver, this);
     }
@@ -106,12 +107,10 @@ public class LoanPage extends LoadableComponent<LoanPage>
         // Assert.assertTrue(this.driver.getTitle().equals(this.title));
     }
 
-    /*
-     * public void close()
-     * {
-     * SeleniumHelper.close();
-     * }
-     */
+    public void close()
+    {
+        SeleniumHelper.close();
+    }
 
     @Given("the user is on Loan Page")
     public void The_user_is_on_loan_page()
@@ -161,6 +160,9 @@ public class LoanPage extends LoadableComponent<LoanPage>
         wait.until(ExpectedConditions.elementToBeClickable(By.name("loan_form:payment")));
         SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         this.calculate.click();
+
+        SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        // SeleniumHelper.getDriver().findElement(By.name("loan_form:payment")).click();
     }
 
     @Then("ensure the payment schedule total is accurate with \"([^\"]*)\" message")

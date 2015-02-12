@@ -38,9 +38,9 @@ import java.util.Collection;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.jboss.arquillian.junit.InSequence;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -56,14 +56,14 @@ import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
 public class SimpleParametrizedWebDriverSTest
 {
 
-    private final SeleniumHelper helper = new SeleniumHelper();
+    // private static final SeleniumHelper helper = new SeleniumHelper();
 
-    private final String         loanAmount;
-    private final String         paybackTime;
+    private final String loanAmount;
+    private final String paybackTime;
 
-    private final String         totalPayments;
-    private final String         firstPayment;
-    private final int            expectedPayments;
+    private final String totalPayments;
+    private final String firstPayment;
+    private final int    expectedPayments;
 
     public SimpleParametrizedWebDriverSTest(final String aLoanAmount, final String aPaybackTime, final String aTotalPayments, final String aFirstPayment, final int aExpectedPayments)
     {
@@ -83,17 +83,17 @@ public class SimpleParametrizedWebDriverSTest
         { "200000", "30", "408808.080969842113801990388563829760", "1135.578002694005871672195523788416", 361 } });
     }
 
-    @Before
-    public void setUp() throws Exception
+    @BeforeClass
+    public static void setUp() throws Exception
     {
 
-        this.helper.setUp();
+        SeleniumHelper.setUp();
     }
 
-    @After
-    public void tearDown() throws Exception
+    @AfterClass
+    public static void tearDown() throws Exception
     {
-        this.helper.tearDown();
+        SeleniumHelper.tearDown();
     }
 
     /*

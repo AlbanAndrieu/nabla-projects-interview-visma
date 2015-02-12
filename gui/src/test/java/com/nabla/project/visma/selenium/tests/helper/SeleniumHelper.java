@@ -39,9 +39,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -105,10 +105,17 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     public SeleniumHelper()
     {
         // super(REAL_DRIVER);
+        try
+        {
+            setUp();
+        } catch (InterruptedException e)
+        {
+            SeleniumHelper.LOGGER.info("Failed to initialize selenium ", e);
+        }
     }
 
     // @Override
-    public void close()
+    public static void close()
     {
         if (Thread.currentThread() != CLOSE_THREAD)
         {
@@ -141,11 +148,11 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
         public void run()
         {
             SeleniumHelper.LOGGER.info("Closing the browser");
-            // SeleniumHelper.close();
+            SeleniumHelper.close();
         }
     }
 
-    public void deleteAllCookies()
+    public static void deleteAllCookies()
     {
         getDriver().manage().deleteAllCookies();
     }
@@ -157,8 +164,8 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
      * @param SELENIUM
      * @throws InterruptedException
      */
-    @Before
-    public void setUp() throws InterruptedException
+    @BeforeClass
+    public static void setUp() throws InterruptedException
     {
 
         SeleniumHelper.BASE_URL = System.getProperty("webdriver.base.url");
@@ -217,23 +224,14 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
         SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
         SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
-        Thread.sleep(10000); // 10 s
+        // Thread.sleep(10000); // 10 s
     }
 
-    @After
-    public void tearDown(/* Scenario scenario */)
+    @AfterClass
+    public static void tearDown()
     {
 
         // SeleniumHelper.close();
-        /*
-         * try {
-         * byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-         * scenario.embed(screenshot, "image/png");
-         * } catch (WebDriverException somePlatformsDontSupportScreenshots) {
-         * System.err
-         * .println(somePlatformsDontSupportScreenshots.getMessage());
-         * }
-         */
     }
 
     public static WebDriver getDriver()
