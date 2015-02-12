@@ -248,14 +248,14 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     {
         if (SeleniumHelper.REAL_DRIVER == null)
         {
-            try
-            {
-                // driver = new FirefoxDriver(new FirefoxProfile());
-                SeleniumHelper.REAL_DRIVER = new ChromeDriver();
-            } finally
-            {
-                Runtime.getRuntime().addShutdownHook(new Thread(new BrowserCleanup()));
-            }
+            // try
+            // {
+            // driver = new FirefoxDriver(new FirefoxProfile());
+            SeleniumHelper.REAL_DRIVER = new ChromeDriver();
+            // } finally
+            // {
+            // Runtime.getRuntime().addShutdownHook(new Thread(new BrowserCleanup()));
+            // }
         }
         return SeleniumHelper.REAL_DRIVER;
     }
