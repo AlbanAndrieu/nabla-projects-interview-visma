@@ -154,7 +154,7 @@ public class LoanPage extends LoadableComponent<LoanPage>
     }
 
     @And("he Submits request for Payment's Schedule")
-    public void He_submits_request_for_fund_transfer()
+    public void He_submits_request_for_fund_transfer() throws InterruptedException
     {
         final WebDriverWait wait = new WebDriverWait(SeleniumHelper.getDriver(), 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.name("loan_form:payment")));
@@ -163,6 +163,8 @@ public class LoanPage extends LoadableComponent<LoanPage>
 
         SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
         // SeleniumHelper.getDriver().findElement(By.name("loan_form:payment")).click();
+
+        // Thread.sleep(10000); // 10 s
     }
 
     @Then("ensure the payment schedule total is accurate with \"([^\"]*)\" message")
@@ -172,7 +174,6 @@ public class LoanPage extends LoadableComponent<LoanPage>
         Assert.assertEquals(message.getText(), msg);
     }
 
-    @Then("ensure a transaction failure message \"([^\"]*)\" is displayed")
     public void Ensure_a_transaction_failure_message(final int i, final String msg)
     {
         final WebElement message = SeleniumHelper.getDriver().findElement(By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
@@ -180,7 +181,25 @@ public class LoanPage extends LoadableComponent<LoanPage>
 
     }
 
-    public void calculatePayments(final String loanAmount, final String paybackTime)
+    @Then("ensure loan amount failure message \"([^\"]*)\" is displayed")
+    public void Ensure_loan_amount_failure_message(final String msg)
+    {
+        int i = 2;
+        final WebElement message = SeleniumHelper.getDriver().findElement(By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
+        Assert.assertEquals(message.getText(), msg);
+
+    }
+
+    @Then("ensure payback time transaction failure message \"([^\"]*)\" is displayed")
+    public void Ensure_payback_time_failure_message(final String msg)
+    {
+        int i = 3;
+        final WebElement message = SeleniumHelper.getDriver().findElement(By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
+        Assert.assertEquals(message.getText(), msg);
+
+    }
+
+    public void calculatePayments(final String loanAmount, final String paybackTime) throws InterruptedException
     {
 
         this.He_enters_loan_amount(loanAmount);

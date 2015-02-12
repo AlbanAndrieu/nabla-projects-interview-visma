@@ -15,5 +15,5 @@ Scenario: Invalid Input
        When he enters "-10" as loan amount
        And he enters "0" as payback time
        And he Submits request for Payment's Schedule
-       Then ensure a transaction failure message "Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000." is displayed
-       Then ensure a transaction failure message "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120." is displayed
+       Then ensure loan amount failure message "Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000." is displayed
+       Then ensure payback time failure message "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120." is displayed

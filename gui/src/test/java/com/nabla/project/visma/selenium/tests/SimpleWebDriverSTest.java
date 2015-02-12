@@ -121,8 +121,11 @@ public class SimpleWebDriverSTest
 
         loanPage.calculatePayments("-10", "0");
 
-        loanPage.Ensure_a_transaction_failure_message(2, "Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000.");
-        loanPage.Ensure_a_transaction_failure_message(3, "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120.");
+        // loanPage.Ensure_a_transaction_failure_message(2, "Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000.");
+        loanPage.Ensure_loan_amount_failure_message("Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000.");
+        // loanPage.Ensure_a_transaction_failure_message(3,
+        // "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120.");
+        loanPage.Ensure_payback_time_failure_message("Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120.");
 
         pageLoad.stop();
 
