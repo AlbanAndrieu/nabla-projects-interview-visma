@@ -120,12 +120,12 @@
 					</execution>
 				</executions>
 			</plugin>
-            -->			
+            -->
         </plugins>
     </build>
 
-    <!--
-    <properties>		
+    <properties>
+		<!--
         <maven.jar.plugin.version>2.3.1</maven.jar.plugin.version>
         <maven.assembly.plugin.version>2.1</maven.assembly.plugin.version>
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -136,9 +136,9 @@
         <commons.lang.version>2.5</commons.lang.version>
         <jsr305.version>2.0.2</jsr305.version>
         <guava.version>14.0.1</guava.version>
-
+    -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
-    -->
+
 </project>
