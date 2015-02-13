@@ -190,7 +190,7 @@ public class LoanPage extends LoadableComponent<LoanPage>
 
     }
 
-    @Then("ensure payback time transaction failure message \"([^\"]*)\" is displayed")
+    @Then("ensure payback time failure message \"([^\"]*)\" is displayed")
     public void Ensure_payback_time_failure_message(final String msg)
     {
         int i = 3;
