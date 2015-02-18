@@ -26,10 +26,10 @@
 		</properties>
 	-->
 	<properties>
-		<gatling.version>1.5.6</gatling.version>
+		<!--<gatling.version>1.5.6</gatling.version>-->
 		<scala.version>2.9.3</scala.version>
 	</properties>
-
+	
 	<!--
 	<dependencyManagement>
 		<dependencies>
@@ -433,6 +433,29 @@
 		  <type>zip</type>
 	    </dependency>
 	    -->
+	   <dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${jdbc.h2.version}</version>
+			<!-- <scope>runtime</scope>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<scope>test</scope>
+		</dependency>
+				
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.cargo</groupId>
+			<artifactId>cargo-core-uberjar</artifactId>
+			<scope>test</scope>
+		</dependency>		    
 	</dependencies>
 
 	<build>
@@ -557,7 +580,32 @@
 				</executions>
 				-->
 			</plugin>
-
+			<!-- Start H2 before integration tests, accepting tcp connections on the
+				randomly selected port -->
+			<!--
+			<plugin>
+				<groupId>com.edugility</groupId>
+				<artifactId>h2-maven-plugin</artifactId>
+				<configuration>
+					<port>5055</port>
+					<baseDirectory>${basedir}/target</baseDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>Spawn a new H2 TCP server</id>
+						<goals>
+							<goal>spawn</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>Stop a spawned H2 TCP server</id>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			-->
 			<!-- for automatic running of integration tests with Jetty -->
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
@@ -566,7 +614,9 @@
 				<configuration>
 					<wait>${cargo.wait}</wait>
 					<container>
-						<timeout>180000</timeout> <!-- 5 minutes -->
+						<timeout>180000</timeout> <!-- 3 minutes -->
+						<!--<timeout>240000</timeout>--> <!-- 4 minutes -->
+						<!--<timeout>300000</timeout>--> <!-- 5 minutes -->
 						<!--<containerId>${cargo.container}</containerId> -->
 						<!--<type>${cargo.container.type}</type> -->
 					</container>
@@ -576,22 +626,19 @@
 						<properties>
 							<cargo.hostname>${cargo.host}</cargo.hostname>
 							<cargo.servlet.port>${cargo.port}</cargo.servlet.port>
+							<!--<cargo.rmi.port>${cargo.rmi.port}</cargo.rmi.port>-->
+							<!--<cargo.tomcat.ajp.port>${cargo.tomcat.ajp.port}</cargo.tomcat.ajp.port>-->
 							<cargo.tomcat.manager.url>${deploy.url}</cargo.tomcat.manager.url>
 							<cargo.remote.username>${cargo.remote.user}</cargo.remote.username>
-							<cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
+							<cargo.remote.password>${cargo.remote.password}</cargo.remote.password>							
 							<cargo.logging>high</cargo.logging>
-							<cargo.jvmargs>${newrelic.agent}
-							${jacoco.agent}
-							-Dcom.sun.management.jmxremote
-                            -Dcom.sun.management.jmxremote.ssl=false
-                            -Dcom.sun.management.jmxremote.authenticate=false
-                            -Dcom.sun.management.jmxremote.port=1099
-                            -Djetty.jmxrmihost=localhost
-                            -Djetty.jmxrmiport=1099
-							<!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
-								-Dnabla.data=${basedir}/src/test/resources/data -->
-							<!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
+							<cargo.jvmargs>${newrelic.agent} 
+${jacoco.agent} 
+${cargo.jmx.activation} 
 							</cargo.jvmargs>
+							<!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
+								-Dnabla.data=${basedir}/src/test/resources/data -->							
+							<!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->							
 						</properties>
 					</configuration>
 					<deployables>
@@ -603,28 +650,10 @@
 								<context>/visma</context>
 							</properties>
 							<pingURL>http://${cargo.host}:${cargo.port}/visma</pingURL>
-							<pingTimeout>60000</pingTimeout>
+							<pingTimeout>60000</pingTimeout> <!-- 1 minute -->
 						</deployable>
 					</deployables>
 				</configuration>
-				<!--
-				<executions>
-						<execution>
-							<id>pre-integration-test</id>
-							<phase>pre-integration-test</phase>
-							<goals>
-								<goal>deploy</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>post-integration-test</id>
-							<phase>post-integration-test</phase>
-							<goals>
-								<goal>undeploy</goal>
-							</goals>
-						</execution>
-				</executions>
-				-->
 			</plugin>
 
 			<!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
@@ -801,6 +830,36 @@
 					</execution>
 				</executions>									
 			</plugin>		    
+			<plugin>
+			  <groupId>org.jboss.tattletale</groupId>
+			  <artifactId>tattletale-maven</artifactId>
+			  <version>${maven.tattletale.plugin.version}</version>
+			  <executions>
+				<execution>
+				  <phase>verify</phase> <!-- needs to run after WAR package has been built -->
+				  <goals>
+					<goal>report</goal>
+				  </goals>
+				</execution>
+			  </executions>
+			  <configuration>
+				<source>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</source>
+				<destination>${project.reporting.outputDirectory}/tattletale</destination>
+				<reports>
+				  <report>jar</report>
+				  <!--<report>multiplejars</report>-->
+				</reports>
+				<profiles>
+				  <profile>java6</profile>
+				</profiles>
+				<failOnWarn>true</failOnWarn>
+				<!-- excluding some jars, if jar name contains any of these strings it won't be analyzed -->
+				<excludes>
+				  <exclude>persistence-api-</exclude>
+				  <exclude>xmldsig-</exclude>
+				</excludes>
+			  </configuration>
+			</plugin>			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>codenarc-maven-plugin</artifactId>

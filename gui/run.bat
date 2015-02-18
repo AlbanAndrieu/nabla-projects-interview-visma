@@ -16,8 +16,18 @@ REM WAS OK call mvn org.codehaus.cargo:cargo-maven2-plugin:run -Psample,run-its,
 REM TO TEST mvn clean install -Dlog4j.configuration=log4j.properties -Dlog4j.debug=true -Prun-its,arq-weld-ee-embedded -Dtest=LoanServiceITest > deploy.log 2>&1
 
 REM TODO mvn -U -B clean install -Dsurefire.useFile=false -Psample,jacoco,integration,run-its,arq-jetty-embedded -Djacoco.outputDir=/workspace/users/albandri10/project/sample/interview/visma/gui/target -Ddatabase=derby -Dserver=jetty7x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Dlog4j.configuration=log4j.properties -Dlog4j.debug=true -Darquillian=arq-jetty-embedded -Darquillian.launch=arq-jetty-embedded  > install.log
+REM BUILD with jetty9x
 mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090  > install.log
-mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Psample,jacoco,integration,run-its -Djacoco.outputDir=/workspace/users/albandri10/project/sample/interview/visma/gui/target > install.log
+REM BUILD with jetty9x + integration tests
+mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
+REM BUILD with tomcat7x + integration tests
+mvn clean install -Dserver=tomcat7x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8280 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
+REM BUILD with tomcat8x + integration tests
+mvn clean install -Dserver=tomcat8x -Dcargo.tomcat.ajp.port=8399 -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
+REM PACKAGE tomcat8x
+REM http://cargo.codehaus.org/Generating+a+container+configuration+deployment+structure
+REM TO TEST mvn clean install cargo:configure -Dserver=tomcat8x > install.log
+REM TO TEST mvn clean install cargo:package -Dserver=tomcat8x > install.log
 
 REM build with mvn clean install -Psample,run-its -Dserver=jetty9x
 REM OK but not with integration test call java -jar target/dependency/jetty-runner.jar --port 9090 target/*.war
