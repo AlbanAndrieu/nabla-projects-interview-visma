@@ -23,7 +23,9 @@ mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriv
 REM BUILD with tomcat7x + integration tests
 mvn clean install -Dserver=tomcat7x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8280 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
 REM BUILD with tomcat8x + integration tests
-mvn clean install -Dserver=tomcat8x -Dcargo.tomcat.ajp.port=8399 -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
+REM OK mvn help:effective-pom -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > effective.log
+mvn clean install -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
+#-Dcargo.tomcat.ajp.port=8399 -Dcargo.debug.address=9000
 REM PACKAGE tomcat8x
 REM http://cargo.codehaus.org/Generating+a+container+configuration+deployment+structure
 REM TO TEST mvn clean install cargo:configure -Dserver=tomcat8x > install.log

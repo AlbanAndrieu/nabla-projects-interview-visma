@@ -93,6 +93,7 @@ public class TomcatDeploymentITest
 
         // Create the Cargo Container instance
         LocalConfiguration configuration = (LocalConfiguration) new DefaultConfigurationFactory().createConfiguration(CONTAINER_ID, ContainerType.INSTALLED, ConfigurationType.STANDALONE, "target/" + TOMCAT_VERSION);
+        // See properties at http://cargo.codehaus.org/Configuration+properties
         configuration.setProperty(ServletPropertySet.PORT, valueOf(WEBAPI_PORT));
         configuration.setProperty(TomcatPropertySet.AJP_PORT, valueOf(AJP_PORT));
         configuration.setProperty(GeneralPropertySet.RMI_PORT, valueOf(RMI_PORT));
