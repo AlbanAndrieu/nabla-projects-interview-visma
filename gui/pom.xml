@@ -441,6 +441,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>test</scope>
+		</dependency>	
+		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<scope>test</scope>
@@ -891,7 +896,7 @@
             <id>gatling</id>
 		    <activation>
 		    		<property>
-		    				<name>!profile.activation</name>
+		    				<name>profile.activation</name>
 		    		</property>
 		    </activation>		            
             <dependencies>

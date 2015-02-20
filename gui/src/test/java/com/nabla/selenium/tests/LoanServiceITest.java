@@ -35,7 +35,6 @@ package com.nabla.selenium.tests;
 
 import java.math.BigDecimal;
 
-import org.apache.log4j.Logger;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -45,6 +44,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nabla.project.visma.LoanService;
 import com.nabla.project.visma.NavigationBean;
@@ -57,7 +58,7 @@ import com.nabla.project.visma.api.ILoanService;
 public class LoanServiceITest
 {
 
-    private static final Logger LOGGER = Logger.getLogger(LoanServiceITest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoanServiceITest.class);
 
     @Deployment
     // @org.jboss.arquillian.container.test.api.TargetsContainer("arq-jetty-embedded")

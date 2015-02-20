@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -51,6 +50,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
@@ -65,7 +66,7 @@ import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 public class SeleniumHelper /* extends EventFiringWebDriver */
 {
 
-    private static final transient Logger LOGGER               = Logger.getLogger(SeleniumHelper.class);
+    private static final transient Logger LOGGER               = LoggerFactory.getLogger(SeleniumHelper.class);
 
     private static WebDriver              REAL_DRIVER;
 
@@ -74,11 +75,13 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
 
     // private static final String DEFAULT_CHROMEDRIVER = "C:\\chromedriver\\chromedriver.exe"; // "/var/lib/chromedriver"
     // private static final String DEFAULT_FIREFOXBIN = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; // "/usr/lib/firefox/firefox"
-    public static final String            DEFAULT_CHROMEDRIVER = "/var/lib/chromedriver";               // "C:\\chromedriver\\chromedriver.exe"
-    public static final String            DEFAULT_FIREFOXBIN   = "/usr/lib/firefox/firefox";            // "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+    public static final String            DEFAULT_CHROMEDRIVER = "/var/lib/chromedriver";                      // "C:\\chromedriver\\chromedriver.exe"
+    public static final String            DEFAULT_FIREFOXBIN   = "/usr/lib/firefox/firefox";                   // "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
     public static final String            PAGE_TO_LOAD_TIMEOUT = "30000";
 
-    public static final String            DEFAULT_URL          = "http://localhost:9090";
+    private final static int              MAIN_PORT            = 9090;
+
+    public static final String            DEFAULT_URL          = "http://localhost:" + MAIN_PORT;
 
     public static String                  BASE_URL             = SeleniumHelper.DEFAULT_URL;
     private static String                 CHROMEDRIVER         = SeleniumHelper.DEFAULT_CHROMEDRIVER;
@@ -110,7 +113,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
             setUp();
         } catch (InterruptedException e)
         {
-            SeleniumHelper.LOGGER.info("Failed to initialize selenium ", e);
+            SeleniumHelper.LOGGER.error("Failed to initialize selenium ", e);
         }
     }
 
@@ -147,7 +150,10 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
         @Override
         public void run()
         {
-            SeleniumHelper.LOGGER.info("Closing the browser");
+            if (LOGGER.isDebugEnabled())
+            {
+                SeleniumHelper.LOGGER.debug("Closing the browser");
+            }
             SeleniumHelper.close();
         }
     }
@@ -172,29 +178,48 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
 
         if (null == SeleniumHelper.BASE_URL)
         {
-            System.out.println("Use default webdriver.base.url");
+            if (LOGGER.isDebugEnabled())
+            {
+                SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
+            }
             SeleniumHelper.BASE_URL = SeleniumHelper.DEFAULT_URL;
             System.setProperty("webdriver.base.url", SeleniumHelper.BASE_URL);
         }
-        System.out.println("webdriver.base.url is : " + SeleniumHelper.BASE_URL + "\n");
+
+        if (LOGGER.isDebugEnabled())
+        {
+            SeleniumHelper.LOGGER.debug("webdriver.base.url is : {}", SeleniumHelper.BASE_URL);
+        }
 
         SeleniumHelper.CHROMEDRIVER = System.getProperty("webdriver.chrome.driver");
         if (null == SeleniumHelper.CHROMEDRIVER)
         {
-            System.out.println("Use default webdriver.base.url");
+            if (LOGGER.isDebugEnabled())
+            {
+                SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
+            }
             SeleniumHelper.CHROMEDRIVER = SeleniumHelper.DEFAULT_CHROMEDRIVER;
             System.setProperty("webdriver.chrome.driver", SeleniumHelper.CHROMEDRIVER);
         }
-        System.out.println("webdriver.chrome.driver is : " + SeleniumHelper.CHROMEDRIVER + "\n");
+        if (LOGGER.isDebugEnabled())
+        {
+            SeleniumHelper.LOGGER.debug("webdriver.chrome.driver is : {}", SeleniumHelper.CHROMEDRIVER);
+        }
 
         SeleniumHelper.FIREFOXBIN = System.getProperty("webdriver.firefox.bin");
         if (null == SeleniumHelper.FIREFOXBIN)
         {
-            System.out.println("Use default webdriver.firefox.bin");
+            if (LOGGER.isDebugEnabled())
+            {
+                SeleniumHelper.LOGGER.debug("Use default webdriver.firefox.bin");
+            }
             SeleniumHelper.FIREFOXBIN = SeleniumHelper.DEFAULT_FIREFOXBIN;
             System.setProperty("webdriver.firefox.bin", SeleniumHelper.FIREFOXBIN);
         }
-        System.out.println("webdriver.firefox.bin is : " + SeleniumHelper.FIREFOXBIN + "\n");
+        if (LOGGER.isDebugEnabled())
+        {
+            SeleniumHelper.LOGGER.debug("webdriver.firefox.bin is : {}", SeleniumHelper.FIREFOXBIN);
+        }
         // ProfilesIni allProfiles = new ProfilesIni();
         // FirefoxProfile profile = allProfiles.getProfile("Selenium");
         // FirefoxProfile profile = new FirefoxProfile();

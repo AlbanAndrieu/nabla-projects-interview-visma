@@ -45,6 +45,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
 import com.nabla.project.visma.selenium.tests.helper.SharedDriver;
@@ -64,18 +66,20 @@ import cucumber.api.java.en.When;
 public class LoanPage extends LoadableComponent<LoanPage>
 {
 
-    private final String    url = "/visma/loan.xhtml";
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoanPage.class);
+
+    private final String        url    = "/visma/loan.xhtml";
     // private final String title = "JSF 2.0 Visma Loan test";
 
     @FindBy(name = "loan_form:loanAmount")
-    private WebElement      loanAmount;
+    private WebElement          loanAmount;
     @FindBy(name = "loan_form:paybackTime")
-    private WebElement      paybackTime;
+    private WebElement          paybackTime;
 
     @FindBy(name = "loan_form:payment")
-    private WebElement      calculate;
+    private WebElement          calculate;
 
-    private final WebDriver webDriver;
+    private final WebDriver     webDriver;
 
     public LoanPage(SharedDriver webDriver)
     {
@@ -127,7 +131,7 @@ public class LoanPage extends LoadableComponent<LoanPage>
         final long navigationStart = (Long) js.executeScript("return window.performance.timing.navigationStart;");
 
         // Difference between Load Event End and Navigation Event Start is Page Load Time
-        System.out.println("Page Load Time is " + ((loadEventEnd - navigationStart) / 1000) + " seconds.");
+        LOGGER.info("Page Load Time is {} seconds.", ((loadEventEnd - navigationStart) / 1000));
 
         // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 

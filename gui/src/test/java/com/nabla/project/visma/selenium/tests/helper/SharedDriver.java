@@ -11,8 +11,9 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -40,22 +41,25 @@ import cucumber.api.java.Before;
  */
 public class SharedDriver extends /* RemoteWebDriver */EventFiringWebDriver
 {
-    private static final WebDriver REAL_DRIVER;           // FirefoxDriver
-    private static final Thread    CLOSE_THREAD    = new Thread()
-                                                   {
-                                                       @Override
-                                                       public void run()
-                                                       {
-                                                           REAL_DRIVER.close();
-                                                       }
-                                                   };
 
-    private static Properties      test_properties = null;
-    private static String          browser_name    = null;
+    private static final transient Logger LOGGER          = LoggerFactory.getLogger(SeleniumHelper.class);
+
+    private static final WebDriver        REAL_DRIVER;                                                    // FirefoxDriver
+    private static final Thread           CLOSE_THREAD    = new Thread()
+                                                          {
+                                                              @Override
+                                                              public void run()
+                                                              {
+                                                                  REAL_DRIVER.close();
+                                                              }
+                                                          };
+
+    private static Properties             test_properties = null;
+    private static String                 browser_name    = null;
 
     static
     {
-        System.out.println("setting property ");
+        LOGGER.info("Setting properties");
         setProperty();
         browser_name = fetchBrowser();
         System.out.println(browser_name);
@@ -76,7 +80,7 @@ public class SharedDriver extends /* RemoteWebDriver */EventFiringWebDriver
     public static void setProperty()
     {
         // initialize properties
-        System.out.println("***************Initializing Properties file*******************");
+        LOGGER.info("***************Initializing Properties file*******************");
         try
         {
             test_properties = new Properties();
@@ -84,7 +88,7 @@ public class SharedDriver extends /* RemoteWebDriver */EventFiringWebDriver
             test_properties.load(fs);
         } catch (Exception e)
         {
-            System.out.println("Error in initializing Properties file");
+            LOGGER.error("Error in initializing Properties file");
         }
 
     }
@@ -94,11 +98,11 @@ public class SharedDriver extends /* RemoteWebDriver */EventFiringWebDriver
         browser_name = test_properties.getProperty("browser");
         if (null != browser_name)
         {
-            System.out.println("values fetched is" + browser_name);
+            LOGGER.info("Values fetched is {}", browser_name);
         } else
         {
             browser_name = "chrome";
-            System.out.println("values fetched is empty");
+            LOGGER.info("Values fetched is empty");
         }
         return browser_name;
 
@@ -110,21 +114,33 @@ public class SharedDriver extends /* RemoteWebDriver */EventFiringWebDriver
         switch (browserName)
         {
             case "firefox":
-                System.out.println("in firefox");
+                if (LOGGER.isDebugEnabled())
+                {
+                    LOGGER.debug("in firefox");
+                }
                 System.setProperty("webdriver.firefox.bin", "/usr/lib/firefox/firefox");
                 driver = new FirefoxDriver();
                 break;
             case "chrome":
-                System.out.println("in chrome");
+                if (LOGGER.isDebugEnabled())
+                {
+                    LOGGER.debug("in chrome");
+                }
                 System.setProperty("webdriver.chrome.driver", "/var/lib/chromedriver");
                 driver = new ChromeDriver();
                 break;
             case "ie":
-                System.out.println("in IE");
+                if (LOGGER.isDebugEnabled())
+                {
+                    LOGGER.debug("in IE");
+                }
                 driver = new InternetExplorerDriver();
                 break;
             default:
-                System.out.println("in Default");
+                if (LOGGER.isDebugEnabled())
+                {
+                    LOGGER.debug("in Default");
+                }
                 System.setProperty("webdriver.chrome.driver", "/var/lib/chromedriver");
                 driver = new ChromeDriver();
                 break;
@@ -159,7 +175,7 @@ public class SharedDriver extends /* RemoteWebDriver */EventFiringWebDriver
             scenario.embed(screenshot, "image/png");
         } catch (WebDriverException somePlatformsDontSupportScreenshots)
         {
-            System.err.println(somePlatformsDontSupportScreenshots.getMessage());
+            LOGGER.error(somePlatformsDontSupportScreenshots.getMessage());
         }
     }
 }

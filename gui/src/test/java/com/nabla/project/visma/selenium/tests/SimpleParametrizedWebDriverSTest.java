@@ -47,6 +47,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
 import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
@@ -56,14 +58,14 @@ import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
 public class SimpleParametrizedWebDriverSTest
 {
 
-    // private static final SeleniumHelper helper = new SeleniumHelper();
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(SimpleParametrizedWebDriverSTest.class);
 
-    private final String loanAmount;
-    private final String paybackTime;
+    private final String                  loanAmount;
+    private final String                  paybackTime;
 
-    private final String totalPayments;
-    private final String firstPayment;
-    private final int    expectedPayments;
+    private final String                  totalPayments;
+    private final String                  firstPayment;
+    private final int                     expectedPayments;
 
     public SimpleParametrizedWebDriverSTest(final String aLoanAmount, final String aPaybackTime, final String aTotalPayments, final String aFirstPayment, final int aExpectedPayments)
     {
@@ -130,7 +132,7 @@ public class SimpleParametrizedWebDriverSTest
 
         pageLoad.stop();
 
-        System.out.println("Total Page Load Time: " + pageLoad + " milliseconds");
+        LOGGER.info("Total Page Load Time: {} milliseconds", pageLoad);
 
         // SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);

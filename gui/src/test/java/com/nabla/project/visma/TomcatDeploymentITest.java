@@ -46,7 +46,7 @@ public class TomcatDeploymentITest
 {
 
     private static InstalledLocalContainer WEBAPI_CONTAINER;
-    private static final Logger            LOG                  = LoggerFactory.getLogger(TomcatDeploymentITest.class);
+    private static final Logger            LOGGER               = LoggerFactory.getLogger(TomcatDeploymentITest.class);
 
     private final static int               WEBAPI_PORT          = getFreePort();
     private final static int               AJP_PORT             = getFreePort();
@@ -139,7 +139,7 @@ public class TomcatDeploymentITest
         });
 
         // 1. Start Web API
-        LOG.info("Starting WebAPI");
+        LOGGER.info("Starting WebAPI");
         WEBAPI_CONTAINER.start();
     }
 
@@ -147,7 +147,9 @@ public class TomcatDeploymentITest
     public static void tearDown() throws Exception
     {
         if (Sets.newHashSet(STARTED, STARTING).contains(WEBAPI_CONTAINER.getState()))
+        {
             WEBAPI_CONTAINER.stop();
+        }
     }
 
     /*

@@ -41,6 +41,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
 import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
@@ -49,7 +51,7 @@ import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
 public class SimpleWebDriverSTest
 {
 
-    // private static final SeleniumHelper helper = new SeleniumHelper();
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(SimpleWebDriverSTest.class);
 
     @BeforeClass
     public static void setUp() throws Exception
@@ -90,7 +92,7 @@ public class SimpleWebDriverSTest
 
         // Measure total time
         final long totalTime = endTime - startTime;
-        System.out.println("Total Page Load Time: " + totalTime + " milliseconds");
+        LOGGER.info("Total Page Load Time: {} milliseconds", totalTime);
 
         SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
@@ -129,7 +131,7 @@ public class SimpleWebDriverSTest
 
         pageLoad.stop();
 
-        System.out.println("Total Page Load Time: " + pageLoad + " milliseconds");
+        LOGGER.info("Total Page Load Time : {} milliseconds", pageLoad);
 
         SeleniumHelper.testTakesScreenshot("testWithWrongInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
