@@ -21,7 +21,7 @@ public class DeploymentITest
 
     private static final transient Logger LOGGER          = LoggerFactory.getLogger(DeploymentITest.class);
 
-    private static final int              MAIN_PORT       = 8480;
+    private static final int              MAIN_PORT       = 9090;
     private static final String           DEFAULT_CONTEXT = "visma";
 
     private static final String           DEFAULT_URL     = "http://localhost:" + MAIN_PORT;
