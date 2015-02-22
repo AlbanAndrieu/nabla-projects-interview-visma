@@ -978,7 +978,6 @@
 					<plugin>
 						<groupId>net.alchim31.maven</groupId>
 						<artifactId>scala-maven-plugin</artifactId>
-						<version>${maven.scala.maven.plugin.version}</version>
 						<executions>
 							<execution>
 								<goals>
@@ -991,7 +990,6 @@
 					<plugin>
 						<groupId>com.excilys.ebi.gatling</groupId>
 						<artifactId>gatling-maven-plugin</artifactId>
-						<version>${gatling.version}</version>
 						<executions>
 							<execution>
 								<phase>integration-test</phase>
