@@ -467,7 +467,25 @@
 			<groupId>org.codehaus.cargo</groupId>
 			<artifactId>cargo-core-uberjar</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm</artifactId>
+				</exclusion>	
+			</exclusions>		
 		</dependency>
+		<!-- replaced by ow2 asm-debug-all
+        <dependency>
+                <groupId>asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>${asm.version}</version>
+        </dependency>	
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-debug-all</artifactId>
+			<version>${asm.version}</version>
+		</dependency>        	
+        -->
 	</dependencies>
 
 	<build>
