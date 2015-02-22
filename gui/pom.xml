@@ -29,7 +29,7 @@
 		<!--<gatling.version>1.5.6</gatling.version>-->
 		<scala.version>2.9.3</scala.version>
 	</properties>
-	
+
 	<!--
 	<dependencyManagement>
 		<dependencies>
@@ -277,7 +277,7 @@
 			<artifactId>jcip-annotations</artifactId>
 			<!--<version>${jcip.annotations.version}</version>-->
 			<scope>test</scope>
-		</dependency>			
+		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-java</artifactId>
@@ -444,13 +444,20 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<scope>test</scope>
-		</dependency>	
+		</dependency>
+		<!-- Log4J Adapter for SLF4J
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<scope>test</scope>
 		</dependency>
-				
+
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
@@ -460,7 +467,7 @@
 			<groupId>org.codehaus.cargo</groupId>
 			<artifactId>cargo-core-uberjar</artifactId>
 			<scope>test</scope>
-		</dependency>		    
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -638,13 +645,13 @@
 							<!--<cargo.tomcat.shutdown.port>9205</cargo.tomcat.shutdown.port>-->
 							<cargo.tomcat.manager.url>${deploy.url}</cargo.tomcat.manager.url>
 							<cargo.remote.username>${cargo.remote.user}</cargo.remote.username>
-							<cargo.remote.password>${cargo.remote.password}</cargo.remote.password>							
+							<cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
 							<cargo.logging>high</cargo.logging>
 							<!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
 							<!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>-->
 							<!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
-								-Dnabla.data=${basedir}/src/test/resources/data -->							
-							<!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->		
+								-Dnabla.data=${basedir}/src/test/resources/data -->
+							<!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
 							<!--<![CDATA[-Xdebug -Xrunjdwp:transport=dt_socket,address=${cargo.debug.address},server=y,suspend=${cargo.debug.suspend} -noverify ${javaagent}]]>-->
 						</properties>
 					</configuration>
@@ -684,10 +691,10 @@
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<port>${jetty.port}</port>
 							<maxIdleTime>600000</maxIdleTime>
-							<!-- TODO activate JMX 
+							<!-- TODO activate JMX
 							<scanintervalseconds>10</scanintervalseconds>
-							<jettyXml>src/etc/jetty-jmx.xml</jettyXml>			
-							-->				
+							<jettyXml>src/etc/jetty-jmx.xml</jettyXml>
+							-->
 						</connector>
 					</connectors>
 			<!--
@@ -828,15 +835,15 @@
 					<failBuildOnCVSS>8</failBuildOnCVSS>
 				</configuration>
 				-->
-				<executions> 
+				<executions>
 					<execution>
 						<goals>
 							<goal>check</goal>
 							<!--<report>aggregate</report>-->
 						</goals>
 					</execution>
-				</executions>									
-			</plugin>		    
+				</executions>
+			</plugin>
 			<plugin>
 			  <groupId>org.jboss.tattletale</groupId>
 			  <artifactId>tattletale-maven</artifactId>
@@ -866,7 +873,7 @@
 				  <exclude>xmldsig-</exclude>
 				</excludes>
 			  </configuration>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>codenarc-maven-plugin</artifactId>
@@ -887,18 +894,45 @@
 					</goals>
 					</execution>
 				</executions>
-			</plugin>       		    
+			</plugin>
 		</plugins>
 	</build>
 
-  <profiles>	  
+  <profiles>
+		<profile>
+            <id>jmeter</id>
+		    <activation>
+		    		<property>
+		    				<name>profile.activation</name>
+		    		</property>
+		    </activation>
+            <build>
+                <plugins>
+					<plugin>
+						<groupId>com.lazerycode.jmeter</groupId>
+						<artifactId>jmeter-maven-plugin</artifactId>
+						<version>${maven.jmeter.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>jmeter-tests</id>
+								<!--<phase>verify</phase>-->
+								<phase>integration-test</phase>
+								<goals>
+									<goal>jmeter</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+                </plugins>
+            </build>
+        </profile>
 		<profile>
             <id>gatling</id>
 		    <activation>
 		    		<property>
 		    				<name>profile.activation</name>
 		    		</property>
-		    </activation>		            
+		    </activation>
             <dependencies>
 		        <dependency>
 		        	<groupId>com.excilys.ebi.gatling.highcharts</groupId>
@@ -914,11 +948,11 @@
 		        	<groupId>com.excilys.ebi.gatling</groupId>
 		        	<artifactId>gatling-recorder</artifactId>
 		        	<scope>test</scope>
-		        </dependency>	  
+		        </dependency>
 				<dependency>
 					<groupId>org.scala-lang</groupId>
 					<artifactId>scala-library</artifactId>
-				</dependency>		        
+				</dependency>
             </dependencies>
 
             <build>
@@ -953,92 +987,9 @@
 								</configuration>
 							</execution>
 						</executions>
-					</plugin>					
-                </plugins>
-            </build>					
-	    <!--
-		<profile>
-            <id>jacoco</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.extension</groupId>
-                    <artifactId>arquillian-jacoco</artifactId>
-                    <version>${org.jboss.arquillian.jacoco.version}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>org.jacoco.core</artifactId>
-                    <version>${jacoco.version}</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-
-            <build>
-                <plugins>
-					-->
-					<!--
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>add-resources</id>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>add-resource</goal>
-                                </goals>
-                                <configuration>
-                                    <resources>
-                                        <resource>
-                                            <directory>../impl/target/classes</directory>
-                                            <targetPath>.</targetPath>
-                                        </resource>
-                                        <resource>
-                                            <directory>../api/target/classes</directory>
-                                            <targetPath>.</targetPath>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>add-sources</id>
-                                <phase>generate-sources</phase>
-                                <goals>
-                                    <goal>add-source</goal>
-                                </goals>
-                                <configuration>
-                                    <sources>
-                                        <source>../impl/src/main/java</source>
-                                        <source>../api/src/main/java</source>
-                                    </sources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    -->
-                    <!--
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                               <id>report</id>
-                               <phase>post-integration-test</phase>
-                               <goals>
-                                   <goal>report</goal>
-                               </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+					</plugin>
                 </plugins>
             </build>
-       -->            
         </profile>
     </profiles>
 </project>
