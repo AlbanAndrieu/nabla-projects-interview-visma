@@ -848,11 +848,10 @@
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
 				<version>${maven.dependency.check.plugin.version}</version>
-				<!--
 				<configuration>
-					<failBuildOnCVSS>8</failBuildOnCVSS>
+					<!--<failBuildOnCVSS>8</failBuildOnCVSS>-->
+					<format>XML</format>
 				</configuration>
-				-->
 				<executions>
 					<execution>
 						<goals>

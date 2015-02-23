@@ -43,6 +43,10 @@ public class DeploymentITest
             System.setProperty("webdriver.base.url", DeploymentITest.BASE_URL);
         }
         System.out.println("webdriver.base.url is : " + DeploymentITest.BASE_URL + "\n");
+        
+        VISMA_URL       = DeploymentITest.BASE_URL + "/" + DeploymentITest.DEFAULT_CONTEXT;
+        
+        System.out.println("URL updated to : " + DeploymentITest.VISMA_URL + "\n");
 
     }
 
