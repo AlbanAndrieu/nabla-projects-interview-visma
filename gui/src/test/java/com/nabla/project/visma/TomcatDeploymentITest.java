@@ -51,7 +51,6 @@ public class TomcatDeploymentITest
     private final static int               WEBAPI_PORT          = getFreePort();
     private final static int               AJP_PORT             = getFreePort();
     private final static int               RMI_PORT             = getFreePort();
-    // private final static int applicationPort = 9975;
     // private final static String pricerServiceBase = "http://localhost:" + applicationPort + "/scripting/services";
     private final static String            WEBAPI_BASE          = "http://localhost:" + WEBAPI_PORT + "/api";
     private final static String            WEBAPI_WAR           = "target/visma.war";
@@ -94,8 +93,19 @@ public class TomcatDeploymentITest
         // Create the Cargo Container instance
         LocalConfiguration configuration = (LocalConfiguration) new DefaultConfigurationFactory().createConfiguration(CONTAINER_ID, ContainerType.INSTALLED, ConfigurationType.STANDALONE, "target/" + TOMCAT_VERSION);
         // See properties at http://cargo.codehaus.org/Configuration+properties
+        // System.setProperty("cargo.servlet.port", "");
+        System.out.println("cargo.servlet.port system property is : " + System.getProperty("cargo.servlet.port") + "\n");
+        // System.setProperty("cargo.tomcat.ajp.port", "");
+        System.out.println("cargo.tomcat.ajp.port system property is : " + System.getProperty("cargo.tomcat.ajp.port") + "\n");
+        // System.setProperty("cargo.rmi.port", "");
+        System.out.println("cargo.rmi.port system property is : " + System.getProperty("cargo.rmi.port") + "\n");
+        System.setProperty("cargo.rmi.port", valueOf(RMI_PORT));
+        System.out.println("cargo.rmi.port system property is : " + System.getProperty("cargo.rmi.port") + "\n");
+        System.out.println("Random SERVER port is : " + WEBAPI_PORT);
         configuration.setProperty(ServletPropertySet.PORT, valueOf(WEBAPI_PORT));
+        System.out.println("Random AJP port is : " + AJP_PORT);
         configuration.setProperty(TomcatPropertySet.AJP_PORT, valueOf(AJP_PORT));
+        System.out.println("Random RMI port is : " + RMI_PORT);
         configuration.setProperty(GeneralPropertySet.RMI_PORT, valueOf(RMI_PORT));
 
         WEBAPI_CONTAINER = (InstalledLocalContainer) new DefaultContainerFactory().createContainer(CONTAINER_ID, ContainerType.INSTALLED, configuration);

@@ -666,7 +666,7 @@
 							<cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
 							<cargo.logging>high</cargo.logging>
 							<!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
-							<cargo.jvmargs><![CDATA[${newrelic.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>
+							<cargo.jvmargs><![CDATA[${newrelic.agent}]]></cargo.jvmargs>
 							<!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>-->
 							<!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
 								-Dnabla.data=${basedir}/src/test/resources/data -->
