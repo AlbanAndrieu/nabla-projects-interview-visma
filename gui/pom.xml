@@ -416,12 +416,13 @@
 	        <classifier>runtime</classifier>
 	        <scope>test</scope>
 	    </dependency>
-		<dependency>
-		  <groupId>com.newrelic.agent.java</groupId>
-		  <artifactId>newrelic-agent</artifactId>
-		  <version>${newrelic.version}</version>
-		  <scope>runtime</scope>
-		</dependency>
+	    <dependency>
+	      <groupId>com.newrelic.agent.java</groupId>
+	      <artifactId>newrelic-agent</artifactId>
+	      <version>${newrelic.version}</version>
+	      <scope>test</scope>
+	      <!--<scope>runtime</scope>-->
+	    </dependency>
 
 	    <!-- The newrelic-java.zip dependency. -->
 	    <!--
@@ -471,20 +472,20 @@
 				<exclusion>
 					<groupId>asm</groupId>
 					<artifactId>asm</artifactId>
-				</exclusion>	
-			</exclusions>		
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- replaced by ow2 asm-debug-all
         <dependency>
                 <groupId>asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>${asm.version}</version>
-        </dependency>	
+        </dependency>
 		<dependency>
 			<groupId>org.ow2.asm</groupId>
 			<artifactId>asm-debug-all</artifactId>
 			<version>${asm.version}</version>
-		</dependency>        	
+		</dependency>
         -->
 	</dependencies>
 
@@ -970,6 +971,7 @@
 				<dependency>
 					<groupId>org.scala-lang</groupId>
 					<artifactId>scala-library</artifactId>
+					<scope>test</scope>
 				</dependency>
             </dependencies>
 

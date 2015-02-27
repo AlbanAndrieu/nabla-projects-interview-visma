@@ -3,7 +3,8 @@ module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    //basePath: '',
+    basePath: '../../..',
 
     // frameworks to use
     frameworks: ['jasmine'],
@@ -16,13 +17,13 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/angular/angular.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'src/*.js',
-      'test/*.js'
+      'bower_components/angular-mocks/angular-mocks.js',    
+      'src/main/javascript/*.js',
+      'src/test/javascript/*.js'
     ],
 
     // list of files to exclude
-    exclude: [],
+    exclude: ['src/test/javascript/karma.conf*.js'],
 
     plugins: [
       'karma-chrome-launcher',

@@ -2,11 +2,16 @@
 
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    jshint: {
+	  files: ['Gruntfile.js', 'src/main/javascript/*.js','src/test/javascript/*.js']
+    },
+        
     bower: {
       install: {
         options: {
@@ -24,7 +29,7 @@ module.exports = function(grunt) {
     uglify: {
       build: {
         files: {
-          'build/sample-component.min.js': ['src/sample-component.js']
+          'build/sample-component.min.js': ['src/main/javascript/sample-component.js']
         }
       }
     },
@@ -33,7 +38,7 @@ module.exports = function(grunt) {
       main: {
         files: [{
           expand: true,
-          cwd: 'src/',
+          cwd: 'src/main/javascript/',
           src: 'sample-component.js',
           dest: 'build/'
         }]
@@ -44,17 +49,13 @@ module.exports = function(grunt) {
 
     karma: {
       unit: {
-        configFile: 'karma.conf.js'
+        configFile: 'src/test/javascript/karma.conf.js'
       }
     },
 
   });
 
-  grunt.registerTask('default', function() {
-    grunt.task.run([
-
-    ]);
-  });
+  grunt.registerTask('default', ['jshint']);
   
   grunt.registerTask('build', function() {
     grunt.task.run([
@@ -62,7 +63,7 @@ module.exports = function(grunt) {
       'bower:install',
       'uglify', 
       'copy', 
-      'karma:unit',
+//      'karma:unit',
     ]);
   });
 

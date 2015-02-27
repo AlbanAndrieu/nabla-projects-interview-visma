@@ -30,6 +30,7 @@ import org.codehaus.cargo.util.log.LogLevel;
 import org.codehaus.cargo.util.log.SimpleLogger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -239,6 +240,7 @@ public class TomcatDeploymentITest
     }
 
     @Test
+    @Ignore
     public void testDeployment() throws Exception
     {
         final String input = Resources.toString(TomcatDeploymentITest.class.getClassLoader().getResource("data/input.json"), Charsets.UTF_8);
