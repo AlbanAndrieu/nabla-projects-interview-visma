@@ -235,12 +235,12 @@ public class TomcatDeploymentITest
 
         // Run the code
         // TODO
-        ClientResponse docResponse = webClient.resource(format("%s/doc/1.0/contract/%s/", WEBAPI_BASE, scriptId)).get(ClientResponse.class);
+        //ClientResponse docResponse = webClient.resource(format("%s/doc/1.0/contract/%s/", WEBAPI_BASE, scriptId)).get(ClientResponse.class);
         // assertEquals(format("Error getting documentation for script %s", scriptId), 200, docResponse.getStatus());
     }
 
-    @Test
-    @Ignore
+    //@Test
+    //@Ignore
     public void testDeployment() throws Exception
     {
         final String input = Resources.toString(TomcatDeploymentITest.class.getClassLoader().getResource("data/input.json"), Charsets.UTF_8);
