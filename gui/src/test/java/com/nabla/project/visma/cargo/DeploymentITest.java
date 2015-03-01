@@ -1,4 +1,4 @@
-package com.nabla.project.visma;
+package com.nabla.project.visma.cargo;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
