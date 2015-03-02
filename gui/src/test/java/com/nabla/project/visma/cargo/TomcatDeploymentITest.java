@@ -239,7 +239,7 @@ public class TomcatDeploymentITest
         // assertEquals(format("Error getting documentation for script %s", scriptId), 200, docResponse.getStatus());
     }
 
-    //@Test
+    @Test
     //@Ignore
     public void testDeployment() throws Exception
     {
