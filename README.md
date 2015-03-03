@@ -4,7 +4,7 @@
 
 Java project for an interview request for visma
 
-[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma)
+//[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma)
 [![Jenkins Build Status](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma-nightly)
 
 Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
