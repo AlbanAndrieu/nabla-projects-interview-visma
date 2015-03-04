@@ -22,6 +22,12 @@
             <url>https://github.com/AlbanAndrieu/nabla-project-interview-visma</url>
     </scm>
 
+	<ciManagement>
+		<system>Jenkins</system>
+		<!--<url>${JENKINS_URL}/job/${JOB_NAME}</url>-->
+        <url>${JOB_URL}</url>
+	</ciManagement>
+
 	<issueManagement>
 		<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma/issues</url>
 		<system>GitHub Issues</system>
