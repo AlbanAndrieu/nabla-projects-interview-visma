@@ -2,7 +2,7 @@ cls
 
 call setenv.bat
 REM OK call mvn org.codehaus.cargo:cargo-maven2-plugin:run -Psample,run-its -Dserver=jetty9x -Ddatabase=derby > deploy.log 2>&1
-REM OK call mvn clean install org.codehaus.cargo:cargo-maven2-plugin:run -Psample,run-its -Dserver=jetty9x -Ddatabase=derby > deploy.log 2>&1
+REM OK call mvn clean install org.codehaus.cargo:cargo-maven2-plugin:run -Psample,run-its -Dserver=jetty9x -Ddatabase=derby -Dwebdriver.base.url=http://localhost:9090 > deploy.log 2>&1
 REM TODO call mvn clean install org.codehaus.cargo:cargo-maven2-plugin:run -Psample,run-its -Dserver=tomcat7x -Ddatabase=derby > deploy.log 2>&1
 REM call mvn clean install tomcat7:run -Psample,run-its -Dserver=tomcat7x -Ddatabase=derby > deploy.log 2>&1
 REM OK clean mvn tomcat7:redeploy -Psample,run-its -Dserver=tomcat7x -Ddatabase=derby -Dtomcat.username=admin -Dtomcat.password=microsoft > deploy.log 2>&1
@@ -25,7 +25,7 @@ mvn clean install -Dserver=tomcat7x -Dwebdriver.chrome.driver=/var/lib/chromedri
 REM BUILD with tomcat8x + integration tests
 REM OK mvn help:effective-pom -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > effective.log
 mvn clean install -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
-#-Dcargo.tomcat.ajp.port=8399 
+#-Dcargo.tomcat.ajp.port=8399
 REM FOR MANUAL TEST IN ECLIPSE
 mvn clean install org.codehaus.cargo:cargo-maven2-plugin:run -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration -Djacoco.outputDir=./target > install.log
 #-Dcargo.debug.address=9000
@@ -33,6 +33,7 @@ REM PACKAGE tomcat8x
 REM http://cargo.codehaus.org/Generating+a+container+configuration+deployment+structure
 REM OK mvn clean install cargo:configure -Dserver=tomcat8x > install.log
 REM OK mvn clean install cargo:package -Dserver=tomcat8x > install.log
+REM OK mvn jmeter:gui -Psample,jmeter -Dserver=jetty9x -Ddatabase=derby -Djetty.port=9090 -Dwebdriver.base.url=http://localhost:9090 > jmeter-gui.log
 
 REM build with mvn clean install -Psample,run-its -Dserver=jetty9x
 REM OK but not with integration test call java -jar target/dependency/jetty-runner.jar --port 9090 target/*.war

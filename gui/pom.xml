@@ -28,6 +28,9 @@
 	<properties>
 		<!--<gatling.version>1.5.6</gatling.version>-->
 		<scala.version>2.9.3</scala.version>
+
+		<!-- for jmeter -->
+		<performancetest.webservice.path>/visma</performancetest.webservice.path>
 	</properties>
 
 	<!--
@@ -717,6 +720,8 @@
 							-->
 						</connector>
 					</connectors>
+					<stopPort>${jetty.stop.port}</stopPort>
+                    <stopKey>STOP</stopKey>
 			<!--
 			<systemProperties>
 				<systemProperty>

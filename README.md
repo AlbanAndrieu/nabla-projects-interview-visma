@@ -4,7 +4,7 @@
 
 Java project for an interview request for visma
 
-//[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma)
+[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma)
 [![Jenkins Build Status](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma-nightly)
 
 Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
@@ -14,6 +14,8 @@ Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndri
 [![Dependency Status nodejs](https://www.versioneye.com/user/projects/54db8c75c1bbbd9bd7000487/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c75c1bbbd9bd7000487/visual)
 [![Dependency Status bower](https://www.versioneye.com/user/projects/54db8ddcc1bbbd5f82000498/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8ddcc1bbbd5f82000498/visual)
 [![Dependency Status main](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/visual)
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
 
 The challenge
 ================
