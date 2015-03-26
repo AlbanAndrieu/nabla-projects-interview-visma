@@ -706,34 +706,21 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<configuration>
-					<webAppConfig>
-						<contextPath>/visma</contextPath>
-					</webAppConfig>
-					<useTestClasspath>true</useTestClasspath>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>${jetty.port}</port>
-							<maxIdleTime>600000</maxIdleTime>
-							<!-- TODO activate JMX
-							<scanintervalseconds>10</scanintervalseconds>
-							<jettyXml>src/etc/jetty-jmx.xml</jettyXml>
-							-->
-						</connector>
-					</connectors>
-					<stopPort>${jetty.stop.port}</stopPort>
-                    <stopKey>STOP</stopKey>
-			<!--
-			<systemProperties>
-				<systemProperty>
-					<key>nabla.config</key>
-					<value>../../config/dev</value>
-				</systemProperty>
-				<systemProperty>
-					<key>nabla.data</key>
-					<value>${data.dir}</value>
-				</systemProperty>
-			</systemProperties>
-			-->
+                    <webApp>
+                        <contextPath>/visma</contextPath>
+                    </webApp>
+					<!--
+					<systemProperties>
+						<systemProperty>
+							<key>nabla.config</key>
+							<value>../../config/dev</value>
+						</systemProperty>
+						<systemProperty>
+							<key>nabla.data</key>
+							<value>${data.dir}</value>
+						</systemProperty>
+					</systemProperties>
+					-->
 				</configuration>
 			</plugin>
 
