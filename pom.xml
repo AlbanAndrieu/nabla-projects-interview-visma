@@ -17,9 +17,9 @@
     <url>https://github.com/AlbanAndrieu/nabla-project-interview-visma</url>
 
     <scm>
-    	<connection>scm:git:git://github.com/AlbanAndrieu/nabla-project-interview-visma.git</connection>
-    	<developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-project-interview-visma.git</developerConnection>
-    	<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma</url>
+		<connection>scm:git:git://github.com/AlbanAndrieu/nabla-project-interview-visma.git</connection>
+		<developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-project-interview-visma.git</developerConnection>
+		<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma</url>
     </scm>
 
     <ciManagement>
@@ -27,7 +27,7 @@
     	<!--<url>${JENKINS_URL}/job/${JOB_NAME}</url>-->
         <url>${JOB_URL}</url>
     </ciManagement>
-    
+
     <issueManagement>
     	<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma/issues</url>
     	<system>GitHub Issues</system>
