@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nabla.project.visma.api.ILoan;
 import com.nabla.project.visma.api.IPaymentMethod;
@@ -52,12 +53,12 @@ import com.nabla.project.visma.api.IProduct;
 public class HouseLoan implements ILoan
 {
 
-    private static final transient Logger LOGGER           = Logger.getLogger(HouseLoan.class);
+    private static final transient Logger LOGGER           = LoggerFactory.getLogger(HouseLoan.class);
 
     public static final double            DEFAULT_INTEREST = 5.5;
 
     // Fixed interest of 5.5% per year
-    private double                        interest         = HouseLoan.DEFAULT_INTEREST;       // NOSONAR
+    private double                        interest         = HouseLoan.DEFAULT_INTEREST;              // NOSONAR
 
     private transient IProduct            product;
 
@@ -148,10 +149,8 @@ public class HouseLoan implements ILoan
     public Map<Integer, List<BigDecimal>> calcMonthlyPayment()
     {
 
-        if (HouseLoan.LOGGER.isDebugEnabled())
-        {
-            HouseLoan.LOGGER.debug("Start calculateMonthlyPayment for : " + this.toString());
-        }
+        HouseLoan.LOGGER.debug("Start calculateMonthlyPayment for : {}", this.toString());
+
         // TODO check Design pattern strategy
         this.paymentMethod.setLoan(this);
         return this.paymentMethod.calculate();

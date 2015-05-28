@@ -44,7 +44,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nabla.project.visma.api.ILoanService;
 
@@ -55,14 +56,11 @@ public class QueryBean implements Serializable
 
     private static final long             serialVersionUID = 1L;
 
-    private static final transient Logger LOGGER           = Logger.getLogger(QueryBean.class);
+    private static final transient Logger LOGGER           = LoggerFactory.getLogger(QueryBean.class);
 
     public QueryBean()
     {
-        if (QueryBean.LOGGER.isDebugEnabled())
-        {
-            QueryBean.LOGGER.debug("QueryBean started!");
-        }
+        QueryBean.LOGGER.debug("QueryBean started!");
     }
 
     private BigDecimal      loanAmount   = new BigDecimal(200_000);
@@ -151,11 +149,8 @@ public class QueryBean implements Serializable
         // Get payments from service
         final Map<Integer, List<BigDecimal>> myPaymentSchedule = this.service.calcMonthlyPayment(this.getLoanAmount(), this.getPaybackTime());
 
-        System.out.println("PaymentSchedule is : " + myPaymentSchedule.toString());
-        if (QueryBean.LOGGER.isDebugEnabled())
-        {
-            QueryBean.LOGGER.debug("PaymentSchedule is : " + myPaymentSchedule.toString());
-        }
+        // System.out.println("PaymentSchedule is : " + myPaymentSchedule.toString());
+        QueryBean.LOGGER.debug("PaymentSchedule is : {}", myPaymentSchedule.toString());
 
         this.setPaymentSchedule(new PaymentSchedule(myPaymentSchedule));
         this.setTotalPayment(this.service.getTotalPayment(this.getLoanAmount(), this.getPaybackTime()));

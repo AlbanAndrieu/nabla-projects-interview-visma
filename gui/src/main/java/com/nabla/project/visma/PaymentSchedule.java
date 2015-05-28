@@ -44,14 +44,15 @@ import java.util.Map.Entry;
 import javax.faces.model.ArrayDataModel;
 import javax.faces.model.DataModel;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PaymentSchedule implements Serializable
 {
 
     private static final long             serialVersionUID  = 1L;
 
-    private static final transient Logger LOGGER            = Logger.getLogger(PaymentSchedule.class);
+    private static final transient Logger LOGGER            = LoggerFactory.getLogger(PaymentSchedule.class);
 
     private DataModel<Payment>            paymentsDataModel = null;
 
@@ -109,16 +110,11 @@ public class PaymentSchedule implements Serializable
             final Entry<Integer, List<BigDecimal>> pairs = it.next();
             final Integer month = pairs.getKey();
 
-            if (PaymentSchedule.LOGGER.isDebugEnabled())
-            {
-                PaymentSchedule.LOGGER.debug("Data is : " + month + " = " + pairs.getValue());
-            }
+            PaymentSchedule.LOGGER.debug("Data is : {} = {}", month, pairs.getValue());
+
             final List<BigDecimal> data = pairs.getValue();
 
-            if (PaymentSchedule.LOGGER.isDebugEnabled())
-            {
-                PaymentSchedule.LOGGER.debug("Data size : " + data.size());
-            }
+            PaymentSchedule.LOGGER.debug("Data size : {}", data.size());
 
             for (final BigDecimal bigDecimal : data)
             {

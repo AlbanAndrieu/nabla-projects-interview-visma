@@ -37,7 +37,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nabla.project.visma.api.ILoan;
 import com.nabla.project.visma.api.ILoanService;
@@ -49,7 +50,7 @@ public class LoanService implements ILoanService
 {
 
     // TODO @Inject
-    private static final transient Logger LOGGER = Logger.getLogger(LoanService.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(LoanService.class);
 
     @Override
     // @GET
@@ -57,10 +58,7 @@ public class LoanService implements ILoanService
     public Map<Integer, List<BigDecimal>> calcMonthlyPayment(final BigDecimal loanAmount, final int numberOfYears)
     {
 
-        if (LoanService.LOGGER.isDebugEnabled())
-        {
-            LoanService.LOGGER.debug("Start calculateMonthlyPayment for loan amount: " + loanAmount + " and number of years :" + numberOfYears);
-        }
+        LoanService.LOGGER.debug("Start calculateMonthlyPayment for loan amount: {} and number of years : {}", loanAmount, numberOfYears);
 
         final IProduct product = new House(loanAmount);
         final ILoan loan = new HouseLoan(product, numberOfYears);
@@ -75,10 +73,7 @@ public class LoanService implements ILoanService
     public BigDecimal getTotalPayment(final BigDecimal loanAmount, final int numberOfYears)
     {
 
-        if (LoanService.LOGGER.isDebugEnabled())
-        {
-            LoanService.LOGGER.debug("Start getTotalPayment for loan amount: " + loanAmount + " and number of years :" + numberOfYears);
-        }
+        LoanService.LOGGER.debug("Start getTotalPayment for loan amount: {} and number of years : {}", loanAmount, numberOfYears);
 
         final IProduct product = new House(loanAmount);
         final ILoan loan = new HouseLoan(product, numberOfYears);
