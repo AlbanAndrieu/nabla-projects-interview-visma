@@ -261,6 +261,12 @@
                 <scope>compile</scope>
         </dependency>
 
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+			<optional>true</optional><!-- needed only for annotations -->
+		</dependency>
+
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
@@ -447,7 +453,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <scope>test</scope>
         </dependency>
         <!-- Log4J Adapter for SLF4J
         <dependency>
@@ -464,8 +469,19 @@
 
         <dependency>
             <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
-            <scope>test</scope>
+            <version>${jersey.version}</version>
+			<scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.cargo</groupId>
@@ -490,6 +506,28 @@
             <version>${asm.version}</version>
         </dependency>
         -->
+
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-proxy</artifactId>
+            <version>${jetty.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-http</artifactId>
+			<version>${jetty.version}</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-rewrite</artifactId>
+			<version>${jetty.version}</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
     </dependencies>
 
     <build>
@@ -503,7 +541,7 @@
                 <configuration>
                     <browser>*firefox</browser>
                     <suite>src/test/selenium/SimpleSTestSuite.html</suite>
-                    <startURL>http://${cargo.host}:${cargo.port}</startURL>
+                    <startURL>http://${cargo.host}:${cargo.port}/visma</startURL>
                 </configuration>
                 -->
                 <!--
@@ -679,6 +717,7 @@
             </plugin>
             -->
             <!-- for automatic running of integration tests with Jetty -->
+            <!-- mvn org.codehaus.cargo:cargo-maven2-plugin:run -->
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
@@ -714,7 +753,18 @@
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
                             <!--<![CDATA[-Xdebug -Xrunjdwp:transport=dt_socket,address=${cargo.debug.address},server=y,suspend=${cargo.debug.suspend} -noverify ${javaagent}]]>-->
+                            <cargo.jetty.createContextXml>false</cargo.jetty.createContextXml>
                         </properties>
+						<configfiles>
+							<configfile>
+								<file>${project.basedir}/src/main/etc/jetty-rewrite.xml</file>
+								<todir>etc</todir>
+							</configfile>
+							<configfile>
+								<file>${project.basedir}/src/main/etc/rewrite.ini</file>
+								<todir>start.d</todir>
+							</configfile>
+						</configfiles>
                     </configuration>
                     <deployables>
                         <deployable>
@@ -743,7 +793,7 @@
             <!-- Allow this web application to be started with the command : 'mvn jetty:run-war -Psample -Dserver=jetty9x -Ddatabase=derby -Djetty.port=9090' -->
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <configuration>
+				<configuration>
                     <webApp>
                         <contextPath>/visma</contextPath>
                     </webApp>
@@ -759,7 +809,33 @@
                         </systemProperty>
                     </systemProperties>
                     -->
-                </configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<!--TODO<jettyConfig>src/main/etc/jetty.xml</jettyConfig>-->
+                    <httpConnector>
+                        <!--host>localhost</host-->
+                        <port>${jetty.port}</port>
+                    </httpConnector>
+					<stopPort>${jetty.stop.port}</stopPort>
+					<stopKey>STOP</stopKey>
+				</configuration>
+				<!--TODO
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-http</artifactId>
+						<version>${jetty.version}</version>
+						<type>jar</type>
+						<scope>runtime</scope>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-rewrite</artifactId>
+						<version>${jetty.version}</version>
+						<type>jar</type>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+				-->
             </plugin>
 
             <!-- start app using java -jar target/dependency/jetty-runner.jar target/*.war -port 9090 -->
@@ -876,74 +952,6 @@
                 </executions>
             </plugin>
             -->
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${maven.dependency.check.plugin.version}</version>
-                <configuration>
-                    <!--<failBuildOnCVSS>8</failBuildOnCVSS>-->
-                    <format>XML</format>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                            <!--<report>aggregate</report>-->
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-              <groupId>org.jboss.tattletale</groupId>
-              <artifactId>tattletale-maven</artifactId>
-              <version>${maven.tattletale.plugin.version}</version>
-              <executions>
-                <execution>
-                  <phase>verify</phase> <!-- needs to run after WAR package has been built -->
-                  <goals>
-                    <goal>report</goal>
-                  </goals>
-                </execution>
-              </executions>
-              <configuration>
-                <source>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</source>
-                <destination>${project.reporting.outputDirectory}/tattletale</destination>
-                <reports>
-                  <report>jar</report>
-                  <!--<report>multiplejars</report>-->
-                </reports>
-                <profiles>
-                  <profile>java6</profile>
-                </profiles>
-                <failOnWarn>true</failOnWarn>
-                <!-- excluding some jars, if jar name contains any of these strings it won't be analyzed -->
-                <excludes>
-                  <exclude>persistence-api-</exclude>
-                  <exclude>xmldsig-</exclude>
-                </excludes>
-              </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>codenarc-maven-plugin</artifactId>
-                <version>${maven.codenarc.plugin.version}</version>
-                <configuration>
-                    <sourceDirectory>${project.basedir}/src/main/groovy</sourceDirectory>
-                    <!--
-                    <maxPriority1Violations>0</maxPriority1Violations>
-                    <maxPriority2Violations>0</maxPriority2Violations>
-                    <maxPriority3Violations>0</maxPriority3Violations>
-                    -->
-                </configuration>
-                <executions>
-                    <execution>
-                    <phase>prepare-package</phase>
-                    <goals>
-                        <goal>codenarc</goal>
-                    </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -1068,6 +1076,122 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <!-- Jenkins by default defines a property BUILD_NUMBER which is used to enable the profile. -->
+        <profile>
+            <id>jenkins</id>
+            <activation>
+                <property>
+                    <name>BUILD_NUMBER</name>
+                </property>
+            </activation>
+            <!--
+            <properties>
+                <maven.test.failure.skip>false</maven.test.failure.skip>
+                <maven.test.skip>false</maven.test.skip>
+            </properties>
+            -->
+		   <build>
+				<plugins>
+					<plugin>
+						<groupId>org.owasp</groupId>
+						<artifactId>dependency-check-maven</artifactId>
+						<version>${maven.dependency.check.plugin.version}</version>
+						<configuration>
+							<!--<failBuildOnCVSS>8</failBuildOnCVSS>-->
+							<format>XML</format>
+						</configuration>
+						<executions>
+							<execution>
+
+								<goals>
+									<goal>check</goal>
+									<!--<report>aggregate</report>-->
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.jboss.tattletale</groupId>
+						<artifactId>tattletale-maven</artifactId>
+						<version>${maven.tattletale.plugin.version}</version>
+						<executions>
+							<execution>
+							<phase>verify</phase> <!-- needs to run after WAR package has been built -->
+							<goals>
+								<goal>report</goal>
+							</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<source>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</source>
+							<destination>${project.reporting.outputDirectory}/tattletale</destination>
+							<reports>
+								<report>jar</report>
+							<!--<report>multiplejars</report>-->
+							</reports>
+							<profiles>
+								<profile>java6</profile>
+							</profiles>
+							<failOnWarn>true</failOnWarn>
+							<!-- excluding some jars, if jar name contains any of these strings it won't be analyzed -->
+							<excludes>
+								<exclude>persistence-api-</exclude>
+								<exclude>xmldsig-</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>codenarc-maven-plugin</artifactId>
+						<version>${maven.codenarc.plugin.version}</version>
+						<configuration>
+							<sourceDirectory>${project.basedir}/src/main/groovy</sourceDirectory>
+							<!--
+							<maxPriority1Violations>0</maxPriority1Violations>
+							<maxPriority2Violations>0</maxPriority2Violations>
+							<maxPriority3Violations>0</maxPriority3Violations>
+							-->
+						</configuration>
+						<executions>
+							<execution>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>codenarc</goal>
+							</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!--
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>${maven.frontend.plugin.version}</version>
+
+						<configuration>
+							<nodeVersion>${node.version}</nodeVersion>
+							<npmVersion>${npm.version}</npmVersion>
+							<nodeDownloadRoot>http://kgrweb/download/nodejs/</nodeDownloadRoot>
+							<npmDownloadRoot>http://kgrweb/download/npm/-/</npmDownloadRoot>
+						</configuration>
+
+						<executions>
+							<execution>
+								<id>grunt integration-test</id>
+								<goals>
+									<goal>grunt</goal>
+								</goals>
+								<phase>integration-test</phase>
+								<configuration>
+									<arguments>integration-test</arguments>
+								</configuration>
+							</execution>
+						</executions>
+
+					</plugin>
+					-->
+				</plugins>
+		   </build>
         </profile>
     </profiles>
 </project>

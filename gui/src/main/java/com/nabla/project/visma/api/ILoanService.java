@@ -45,12 +45,12 @@ public interface ILoanService
      * 
      * @return a date with their corresponding amount and interest
      */
-    Map<Integer, List<BigDecimal>> calcMonthlyPayment(BigDecimal loanAmount, int numberOfYears);
+    Map<Integer, List<BigDecimal>> calcMonthlyPayment();
 
     /**
      * Get the total of all scheduled payment
      * 
      * @return sum of payments
      */
-    BigDecimal getTotalPayment(BigDecimal loanAmount, int numberOfYears);
+    BigDecimal getTotalPayment();
 }

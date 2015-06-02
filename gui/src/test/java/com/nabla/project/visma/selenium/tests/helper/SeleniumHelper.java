@@ -145,18 +145,11 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
      * }
      */
 
-    private static class BrowserCleanup implements Runnable
-    {
-        @Override
-        public void run()
-        {
-            if (LOGGER.isDebugEnabled())
-            {
-                SeleniumHelper.LOGGER.debug("Closing the browser");
-            }
-            SeleniumHelper.close();
-        }
-    }
+    /*
+     * private static class BrowserCleanup implements Runnable {
+     * @Override public void run() { if (LOGGER.isDebugEnabled()) {
+     * SeleniumHelper.LOGGER.debug("Closing the browser"); } SeleniumHelper.close(); } }
+     */
 
     public static void deleteAllCookies()
     {
@@ -178,48 +171,37 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
 
         if (null == SeleniumHelper.BASE_URL)
         {
-            if (LOGGER.isDebugEnabled())
-            {
-                SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
-            }
+            SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
             SeleniumHelper.BASE_URL = SeleniumHelper.DEFAULT_URL;
             System.setProperty("webdriver.base.url", SeleniumHelper.BASE_URL);
         }
 
-        if (LOGGER.isDebugEnabled())
-        {
-            SeleniumHelper.LOGGER.debug("webdriver.base.url is : {}", SeleniumHelper.BASE_URL);
-        }
+        SeleniumHelper.LOGGER.debug("webdriver.base.url is : {}", SeleniumHelper.BASE_URL);
 
         SeleniumHelper.CHROMEDRIVER = System.getProperty("webdriver.chrome.driver");
         if (null == SeleniumHelper.CHROMEDRIVER)
         {
-            if (LOGGER.isDebugEnabled())
-            {
-                SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
-            }
+
+            SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
+
             SeleniumHelper.CHROMEDRIVER = SeleniumHelper.DEFAULT_CHROMEDRIVER;
             System.setProperty("webdriver.chrome.driver", SeleniumHelper.CHROMEDRIVER);
         }
-        if (LOGGER.isDebugEnabled())
-        {
-            SeleniumHelper.LOGGER.debug("webdriver.chrome.driver is : {}", SeleniumHelper.CHROMEDRIVER);
-        }
+
+        SeleniumHelper.LOGGER.debug("webdriver.chrome.driver is : {}", SeleniumHelper.CHROMEDRIVER);
 
         SeleniumHelper.FIREFOXBIN = System.getProperty("webdriver.firefox.bin");
         if (null == SeleniumHelper.FIREFOXBIN)
         {
-            if (LOGGER.isDebugEnabled())
-            {
-                SeleniumHelper.LOGGER.debug("Use default webdriver.firefox.bin");
-            }
+
+            SeleniumHelper.LOGGER.debug("Use default webdriver.firefox.bin");
+
             SeleniumHelper.FIREFOXBIN = SeleniumHelper.DEFAULT_FIREFOXBIN;
             System.setProperty("webdriver.firefox.bin", SeleniumHelper.FIREFOXBIN);
         }
-        if (LOGGER.isDebugEnabled())
-        {
-            SeleniumHelper.LOGGER.debug("webdriver.firefox.bin is : {}", SeleniumHelper.FIREFOXBIN);
-        }
+
+        SeleniumHelper.LOGGER.debug("webdriver.firefox.bin is : {}", SeleniumHelper.FIREFOXBIN);
+
         // ProfilesIni allProfiles = new ProfilesIni();
         // FirefoxProfile profile = allProfiles.getProfile("Selenium");
         // FirefoxProfile profile = new FirefoxProfile();

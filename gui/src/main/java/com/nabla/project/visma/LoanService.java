@@ -37,6 +37,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,22 +51,48 @@ import com.nabla.project.visma.api.IProduct;
 
 //The @Stateless annotation eliminates the need for manual transaction
 //TODO @Stateless
+@Path("/loan")
 public class LoanService implements ILoanService
 {
 
     // TODO @Inject
     private static final transient Logger LOGGER = LoggerFactory.getLogger(LoanService.class);
 
+    private BigDecimal                    loanAmount;
+
+    private int                           numberOfYears;
+
+    // IProduct product;
+
+    ILoan                                 loan;
+
+    public LoanService()
+    {
+        throw new AssertionError();
+    }
+
+    public LoanService(@Nonnull @Nonnegative final BigDecimal loanAmount, final int numberOfYears)
+    {
+        super();
+        this.loanAmount = loanAmount;
+        this.numberOfYears = numberOfYears;
+
+        IProduct product = new House(this.loanAmount);
+        this.loan = new HouseLoan(product, this.numberOfYears);
+    }
+
     @Override
-    // @GET
+    @GET
     // @Produces({ MediaType.APPLICATION_ATOM_XML, MediaType.APPLICATION_JSON })
-    public Map<Integer, List<BigDecimal>> calcMonthlyPayment(final BigDecimal loanAmount, final int numberOfYears)
+    public Map<Integer, List<BigDecimal>> calcMonthlyPayment()
     {
 
-        LoanService.LOGGER.debug("Start calculateMonthlyPayment for loan amount: {} and number of years : {}", loanAmount, numberOfYears);
+        if (null == this.loan)
+        {
+            throw new IllegalArgumentException("Service cannot be null");
+        }
 
-        final IProduct product = new House(loanAmount);
-        final ILoan loan = new HouseLoan(product, numberOfYears);
+        LoanService.LOGGER.debug("Start calculateMonthlyPayment for loan amount: {} and number of years : {}", loan.getProduct().getPrice(), loan.getPaybackTime());
 
         return loan.calcMonthlyPayment();
 
@@ -70,14 +101,20 @@ public class LoanService implements ILoanService
     @Override
     // @GET
     // @Produces({ MediaType.APPLICATION_ATOM_XML, MediaType.APPLICATION_JSON })
-    public BigDecimal getTotalPayment(final BigDecimal loanAmount, final int numberOfYears)
+    public BigDecimal getTotalPayment()
     {
 
-        LoanService.LOGGER.debug("Start getTotalPayment for loan amount: {} and number of years : {}", loanAmount, numberOfYears);
+        if (null == this.loan)
+        {
+            throw new IllegalArgumentException("Service cannot be null");
+        }
 
-        final IProduct product = new House(loanAmount);
-        final ILoan loan = new HouseLoan(product, numberOfYears);
+        LoanService.LOGGER.debug("Start getTotalPayment for loan amount: {} and number of years : {}", loan.getProduct().getPrice(), loan.getPaybackTime());
 
         return loan.getTotalPayment();
     }
+
+    /*
+     * @GET public Collection<Book> list() { return books; }
+     */
 }

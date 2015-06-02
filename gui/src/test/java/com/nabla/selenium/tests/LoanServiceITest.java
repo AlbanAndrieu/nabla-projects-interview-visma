@@ -79,7 +79,7 @@ public class LoanServiceITest
     }
 
     // @Inject
-    ILoanService service = new LoanService();
+    ILoanService service;
 
     // @Inject
     // private static transient Logger LOGGER = Logger.getLogger(LoanServiceITest.class);
@@ -91,7 +91,8 @@ public class LoanServiceITest
 
         LoanServiceITest.LOGGER.info("this will go to the console if the level is set correctly");
 
-        final BigDecimal total = this.service.getTotalPayment(new BigDecimal(200_000), 30);
+        service = new LoanService(new BigDecimal(200_000), 30);
+        final BigDecimal total = this.service.getTotalPayment();
 
         Assert.assertNotNull(total);
         Assert.assertEquals("408808.080969842113801990388563829760", total.toString());

@@ -77,7 +77,7 @@ public class QueryBean implements Serializable
     private PaymentSchedule paymentSchedule;
 
     // @Inject
-    ILoanService            service      = new LoanService();
+    ILoanService            service;
 
     public BigDecimal getLoanAmount()
     {
@@ -146,14 +146,17 @@ public class QueryBean implements Serializable
      */
     public String getPayments()
     {
+
+        service = new LoanService(this.getLoanAmount(), this.getPaybackTime());
+
         // Get payments from service
-        final Map<Integer, List<BigDecimal>> myPaymentSchedule = this.service.calcMonthlyPayment(this.getLoanAmount(), this.getPaybackTime());
+        final Map<Integer, List<BigDecimal>> myPaymentSchedule = this.service.calcMonthlyPayment();
 
         // System.out.println("PaymentSchedule is : " + myPaymentSchedule.toString());
         QueryBean.LOGGER.debug("PaymentSchedule is : {}", myPaymentSchedule.toString());
 
         this.setPaymentSchedule(new PaymentSchedule(myPaymentSchedule));
-        this.setTotalPayment(this.service.getTotalPayment(this.getLoanAmount(), this.getPaybackTime()));
+        this.setTotalPayment(this.service.getTotalPayment());
 
         // Set computation ERROR
         final FacesMessage msg = new FacesMessage("Something went wrong!", "Please check your input");

@@ -137,10 +137,49 @@
         <guava.version>14.0.1</guava.version>
         <mockito.version>1.9.5</mockito.version>
         <commons.lang.version>2.5</commons.lang.version>
+        <logback.version>1.0.13</logback.version>
         -->
         <!--
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     -->
+
+    <profiles>
+         <profile>
+             <id>logback</id>
+             <dependencies>
+                 <dependency>
+                     <groupId>ch.qos.logback</groupId>
+                     <artifactId>logback-classic</artifactId>
+                     <scope>runtime</scope>
+                 </dependency>
+                 <dependency>
+                     <groupId>ch.qos.logback</groupId>
+                     <artifactId>logback-core</artifactId>
+                     <scope>runtime</scope>
+                 </dependency>
+             </dependencies>
+         </profile>
+         <profile>
+             <id>log4j</id>
+             <activation>
+			     <property>
+			 	     <name>!profile.activation</name>
+			 	 </property>
+		     </activation>
+             <dependencies>
+                 <dependency>
+                     <groupId>org.slf4j</groupId>
+                     <artifactId>slf4j-log4j12</artifactId>
+                     <scope>runtime</scope>
+                 </dependency>
+                 <dependency>
+                     <groupId>log4j</groupId>
+                     <artifactId>log4j</artifactId>
+                     <scope>runtime</scope>
+                 </dependency>
+             </dependencies>
+         </profile>
+    </profiles>
 </project>

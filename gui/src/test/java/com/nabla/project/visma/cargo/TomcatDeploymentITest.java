@@ -1,6 +1,5 @@
 package com.nabla.project.visma.cargo;
 
-import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static org.codehaus.cargo.container.State.STARTED;
 import static org.codehaus.cargo.container.State.STARTING;
@@ -30,7 +29,6 @@ import org.codehaus.cargo.util.log.LogLevel;
 import org.codehaus.cargo.util.log.SimpleLogger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +38,6 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Resources;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 
 public class TomcatDeploymentITest
 {
@@ -53,7 +49,7 @@ public class TomcatDeploymentITest
     private final static int               AJP_PORT             = getFreePort();
     private final static int               RMI_PORT             = getFreePort();
     // private final static String pricerServiceBase = "http://localhost:" + applicationPort + "/scripting/services";
-    private final static String            WEBAPI_BASE          = "http://localhost:" + WEBAPI_PORT + "/api";
+    // private final static String WEBAPI_BASE = "http://localhost:" + WEBAPI_PORT + "/api";
     private final static String            WEBAPI_WAR           = "target/visma.war";
 
     private final static String            CONTAINER_TOMCAT8_ID = "tomcat8x";
@@ -176,7 +172,7 @@ public class TomcatDeploymentITest
     {
 
         // Create a web client that can be used to make requests
-        Client webClient = Client.create();
+        // Client webClient = Client.create();
 
         // 2. Generate contract from trade
         // WebResource contractDefResource = webClient.resource(format("%s/storage/fields/%s/", pricerServiceBase, scriptId));
