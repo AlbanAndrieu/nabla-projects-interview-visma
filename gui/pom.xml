@@ -674,7 +674,11 @@
                         <webdriver.safari.noinstall>true</webdriver.safari.noinstall>
                         <!--<arquillian.launch>arq-jbossas-managed</arquillian.launch>-->
                         <!--<arquillian.launch>arq-weld-ee-embedded</arquillian.launch>-->
-                     </systemPropertyVariables>
+                    </systemPropertyVariables>
+					<classpathDependencyExcludes>
+                        <classpathDependencyExcludes>org.apache.openjpa:openjpa-all</classpathDependencyExcludes>
+                        <classpathDependencyExcludes>org.ow2.asm:asm-all</classpathDependencyExcludes>
+                    </classpathDependencyExcludes>
                 </configuration>
                 <!-- run with -Prun-its instead
                 <executions>
@@ -754,8 +758,8 @@
                             <cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
-                            <!--<cargo.jvmargs><![CDATA[${newrelic.agent}]]></cargo.jvmargs>-->
-                            <cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>
+                            <!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.jvmargs>-->
+                            <cargo.jvmargs><![CDATA[${newrelic.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
