@@ -528,6 +528,13 @@
 			<type>jar</type>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>${jetty.version}</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
     </dependencies>
 
     <build>
@@ -1117,10 +1124,10 @@
 						<version>${maven.tattletale.plugin.version}</version>
 						<executions>
 							<execution>
-							<phase>verify</phase> <!-- needs to run after WAR package has been built -->
-							<goals>
-								<goal>report</goal>
-							</goals>
+								<!--<phase>verify</phase>--> <!-- needs to run after WAR package has been built -->
+								<goals>
+									<goal>report</goal>
+								</goals>
 							</execution>
 						</executions>
 						<configuration>
