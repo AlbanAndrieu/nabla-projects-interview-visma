@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/AlbanAndrieu/nabla-project-interview-visma](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AlbanAndrieu/nabla-project-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Java project for an interview request for visma
+Java project for an interview request by visma
 
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma)
 [![Jenkins Build Status](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma-nightly)

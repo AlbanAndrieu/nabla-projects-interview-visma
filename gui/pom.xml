@@ -512,6 +512,11 @@
             <version>${asm.version}</version>
         </dependency>
         -->
+        <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-debug-all</artifactId>
+                <version>${asm.ow2.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -681,10 +686,12 @@
                         <!--<arquillian.launch>arq-jbossas-managed</arquillian.launch>-->
                         <!--<arquillian.launch>arq-weld-ee-embedded</arquillian.launch>-->
                     </systemPropertyVariables>
+                    <!--
 					<classpathDependencyExcludes>
                         <classpathDependencyExcludes>org.apache.openjpa:openjpa-all</classpathDependencyExcludes>
                         <classpathDependencyExcludes>org.ow2.asm:asm-all</classpathDependencyExcludes>
                     </classpathDependencyExcludes>
+                    -->
                 </configuration>
                 <!-- run with -Prun-its instead
                 <executions>
