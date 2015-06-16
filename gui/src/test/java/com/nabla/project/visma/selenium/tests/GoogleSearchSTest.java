@@ -64,9 +64,9 @@ public class GoogleSearchSTest
     public void setUp()
     {
         WindowsUtils.tryToKillByName("firefox.exe");
-        ProfilesIni allProfiles = new ProfilesIni();
-        FirefoxProfile profile = allProfiles.getProfile("/workspace/users/albandri10/.mozilla/firefox/xhvt8rwp.selenium/");
-        // FirefoxProfile profile = new FirefoxProfile();
+        //ProfilesIni allProfiles = new ProfilesIni();
+        //FirefoxProfile profile = allProfiles.getProfile("/workspace/users/albandri10/.mozilla/firefox/xhvt8rwp.selenium/");
+        FirefoxProfile profile = new FirefoxProfile();
         // FirefoxBinary binary = new FirefoxBinary(new File(firefoxBin));
         // driver = new FirefoxDriver(binary, profile);
         this.driver = new FirefoxDriver(profile);
