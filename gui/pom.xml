@@ -1143,7 +1143,9 @@
 						<version>${maven.tattletale.plugin.version}</version>
 						<executions>
 							<execution>
-								<!--<phase>verify</phase>--> <!-- needs to run after WAR package has been built -->
+								<id>run-tattletale-report</id>
+								<!-- it is bound by default to "package" phase, which isn't what we want for reporting -->
+								<phase>verify</phase><!-- needs to run after WAR package has been built -->
 								<goals>
 									<goal>report</goal>
 								</goals>
@@ -1151,10 +1153,10 @@
 						</executions>
 						<configuration>
 							<source>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</source>
-							<destination>${project.reporting.outputDirectory}/tattletale</destination>
+							<destination>${project.reporting.outputDirectory}/tattletale-report</destination>
 							<reports>
 								<report>jar</report>
-							<!--<report>multiplejars</report>-->
+								<report>multiplejars</report>
 							</reports>
 							<profiles>
 								<profile>java6</profile>
