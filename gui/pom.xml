@@ -1154,10 +1154,10 @@
 						<configuration>
 							<source>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</source>
 							<destination>${project.reporting.outputDirectory}/tattletale-report</destination>
-							<reports>
+							<!--<reports>
 								<report>jar</report>
 								<report>multiplejars</report>
-							</reports>
+							</reports>-->
 							<profiles>
 								<profile>java6</profile>
 							</profiles>
