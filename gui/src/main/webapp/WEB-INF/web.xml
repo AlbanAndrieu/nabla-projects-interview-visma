@@ -50,6 +50,7 @@
       <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
   </listener>
 
+  <!--
   <servlet>
       <servlet-name>jersey</servlet-name>
       <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -69,6 +70,7 @@
       <servlet-name>jersey</servlet-name>
       <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+  -->
 
   <!--
    <servlet>
