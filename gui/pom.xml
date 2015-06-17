@@ -1161,7 +1161,7 @@
 							<profiles>
 								<profile>java6</profile>
 							</profiles>
-							<failOnWarn>true</failOnWarn>
+							<!--<failOnWarn>true</failOnWarn>-->
 							<!-- excluding some jars, if jar name contains any of these strings it won't be analyzed -->
 							<excludes>
 								<exclude>persistence-api-</exclude>
