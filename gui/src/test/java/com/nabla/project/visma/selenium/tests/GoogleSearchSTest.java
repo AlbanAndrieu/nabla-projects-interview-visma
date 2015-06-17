@@ -49,7 +49,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -66,10 +66,11 @@ public class GoogleSearchSTest
         WindowsUtils.tryToKillByName("firefox.exe");
         //ProfilesIni allProfiles = new ProfilesIni();
         //FirefoxProfile profile = allProfiles.getProfile("/workspace/users/albandri10/.mozilla/firefox/xhvt8rwp.selenium/");
-        FirefoxProfile profile = new FirefoxProfile();
+        //FirefoxProfile profile = new FirefoxProfile();
         // FirefoxBinary binary = new FirefoxBinary(new File(firefoxBin));
         // driver = new FirefoxDriver(binary, profile);
-        this.driver = new FirefoxDriver(profile);
+        //this.driver = new FirefoxDriver(profile);
+        this.driver = new FirefoxDriver();
         this.driver.manage().window().maximize();
         this.driver.get("http://www.google.com");
     }
