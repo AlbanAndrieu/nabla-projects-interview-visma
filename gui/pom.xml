@@ -479,7 +479,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-            -->        
+            -->
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
@@ -774,7 +774,7 @@
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
                             <!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.jvmargs>-->
-                            <cargo.jvmargs><![CDATA[${newrelic.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>
+                            <!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>-->
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
