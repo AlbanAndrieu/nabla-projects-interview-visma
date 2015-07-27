@@ -650,7 +650,8 @@
 				</executions>
 			</plugin>
 			-->
-			<!-- say to maven to use groovy-eclipse-compiler in order to compile groovy files  -->
+			<!-- say to maven to use groovy-eclipse-compiler in order to compile groovy files -->
+			<!--
             <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -671,6 +672,7 @@
 						</dependency>
                 </dependencies>
             </plugin>
+            -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -31,7 +31,7 @@ public class DeploymentITest
 
     private static String                 VISMA_URL       = DeploymentITest.BASE_URL + "/" + DeploymentITest.DEFAULT_CONTEXT;
 
-    private static long DEPLOY_WAIT = 10;
+    private static long                   DEPLOY_WAIT     = 10;
 
     @BeforeClass
     public static void setUp() throws InterruptedException
@@ -51,9 +51,7 @@ public class DeploymentITest
 
         System.out.println("URL updated to : " + DeploymentITest.VISMA_URL + "\n");
 
-        DeploymentITest.LOGGER.info(
-                "Wainting for deploy to be finished before starting test (in seconds) : {}",
-                DEPLOY_WAIT);
+        DeploymentITest.LOGGER.info("Wainting for deploy to be finished before starting test (in seconds) : {}", DEPLOY_WAIT);
         TimeUnit.SECONDS.sleep(DEPLOY_WAIT);
     }
 
