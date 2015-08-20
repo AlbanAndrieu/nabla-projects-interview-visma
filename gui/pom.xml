@@ -417,6 +417,12 @@
             <scope>compile</scope>
         </dependency>
 
+		<dependency>
+			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
+			<artifactId>http-builder</artifactId>
+			<scope>test</scope>
+		</dependency>
+
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.agent</artifactId>
@@ -1008,6 +1014,7 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!--
                     <plugin>
                         <groupId>com.lazerycode.jmeter</groupId>
                         <artifactId>jmeter-analysis-maven-plugin</artifactId>
@@ -1023,6 +1030,7 @@
                             </execution>
                         </executions>
                     </plugin>
+                    -->
                     <plugin>
                         <groupId>de.codecentric</groupId>
                         <artifactId>jmeter-graph-maven-plugin</artifactId>
