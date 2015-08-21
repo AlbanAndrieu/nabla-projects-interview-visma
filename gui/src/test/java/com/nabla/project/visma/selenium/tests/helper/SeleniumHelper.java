@@ -58,7 +58,7 @@ import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -158,7 +158,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
 
     /**
      * DOCUMENT ME! albandri.
-     * 
+     *
      * @param driver
      * @param SELENIUM
      * @throws InterruptedException
@@ -222,7 +222,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
 
         SeleniumHelper.REAL_DRIVER.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         // driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-        SeleniumHelper.REAL_DRIVER.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+        SeleniumHelper.REAL_DRIVER.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
         // driver.manage().window().setSize(new Dimension(1920, 1080));
 
         // this.driver.manage().deleteAllCookies();
