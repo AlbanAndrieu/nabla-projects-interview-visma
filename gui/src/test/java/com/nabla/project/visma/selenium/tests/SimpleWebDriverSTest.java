@@ -33,6 +33,8 @@
  */
 package com.nabla.project.visma.selenium.tests;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.lang.time.StopWatch;
 import org.jboss.arquillian.junit.InSequence;
 import org.junit.AfterClass;
@@ -97,7 +99,7 @@ public class SimpleWebDriverSTest
         SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
-        SeleniumHelper.getSelenium().open("/visma/");
+        SeleniumHelper.getDriver().get("/visma/");
         // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         // loanPage.close();
@@ -136,8 +138,9 @@ public class SimpleWebDriverSTest
         SeleniumHelper.testTakesScreenshot("testWithWrongInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
-        SeleniumHelper.getSelenium().open("/visma/");
-        SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        SeleniumHelper.getDriver().get("/visma/");
+        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         // loanPage.close();
     }

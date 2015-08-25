@@ -35,6 +35,7 @@ package com.nabla.project.visma.selenium.tests;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.jboss.arquillian.junit.InSequence;
@@ -137,8 +138,9 @@ public class SimpleParametrizedWebDriverSTest
         // SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
-        SeleniumHelper.getSelenium().open("/visma/");
-        SeleniumHelper.getSelenium().waitForPageToLoad("1500");
+        SeleniumHelper.getDriver().get("/visma/");
+        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        // SeleniumHelper.getDriver().waitForPageToLoad("1500");
     }
 
 }

@@ -53,9 +53,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thoughtworks.selenium.DefaultSelenium;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
-
 /**
  * DOCUMENT ME! albandri.
  *
@@ -71,13 +68,13 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     private static WebDriver              REAL_DRIVER;
 
     // private final StringBuffer verificationErrors = new StringBuffer();
-    private static DefaultSelenium        SELENIUM;
+    //private static DefaultSelenium        SELENIUM;
 
     // private static final String DEFAULT_CHROMEDRIVER = "C:\\chromedriver\\chromedriver.exe"; // "/var/lib/chromedriver"
     // private static final String DEFAULT_FIREFOXBIN = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; // "/usr/lib/firefox/firefox"
     public static final String            DEFAULT_CHROMEDRIVER = "/var/lib/chromedriver";                      // "C:\\chromedriver\\chromedriver.exe"
     public static final String            DEFAULT_FIREFOXBIN   = "/usr/lib/firefox/firefox";                   // "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-    public static final String            PAGE_TO_LOAD_TIMEOUT = "30000";
+    // public static final String PAGE_TO_LOAD_TIMEOUT = "30000";
 
     private final static int              MAIN_PORT            = 9090;
 
@@ -185,9 +182,9 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
             SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
 
             SeleniumHelper.CHROMEDRIVER = SeleniumHelper.DEFAULT_CHROMEDRIVER;
-            System.setProperty("webdriver.chrome.driver", SeleniumHelper.CHROMEDRIVER);
         }
 
+        System.setProperty("webdriver.chrome.driver", SeleniumHelper.CHROMEDRIVER);
         SeleniumHelper.LOGGER.debug("webdriver.chrome.driver is : {}", SeleniumHelper.CHROMEDRIVER);
 
         SeleniumHelper.FIREFOXBIN = System.getProperty("webdriver.firefox.bin");
@@ -197,9 +194,9 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
             SeleniumHelper.LOGGER.debug("Use default webdriver.firefox.bin");
 
             SeleniumHelper.FIREFOXBIN = SeleniumHelper.DEFAULT_FIREFOXBIN;
-            System.setProperty("webdriver.firefox.bin", SeleniumHelper.FIREFOXBIN);
         }
 
+        System.setProperty("webdriver.firefox.bin", SeleniumHelper.FIREFOXBIN);
         SeleniumHelper.LOGGER.debug("webdriver.firefox.bin is : {}", SeleniumHelper.FIREFOXBIN);
 
         // ProfilesIni allProfiles = new ProfilesIni();
@@ -228,8 +225,8 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
         // this.driver.manage().deleteAllCookies();
         // this.driver.get(propertyKeysLoader("login.base.url"));
 
-        SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
-        SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        //SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
+        //SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         // Thread.sleep(10000); // 10 s
     }
@@ -246,10 +243,12 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
         return SeleniumHelper.getCurrentDriver();
     }
 
+    /*
     public static DefaultSelenium getSelenium()
     {
         return SeleniumHelper.SELENIUM;
     }
+    */
 
     private synchronized static WebDriver getCurrentDriver()
     {
