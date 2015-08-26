@@ -74,7 +74,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     // private static final String DEFAULT_FIREFOXBIN = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; // "/usr/lib/firefox/firefox"
     public static final String            DEFAULT_CHROMEDRIVER = "/var/lib/chromedriver";                      // "C:\\chromedriver\\chromedriver.exe"
     public static final String            DEFAULT_FIREFOXBIN   = "/usr/lib/firefox/firefox";                   // "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-    // public static final String PAGE_TO_LOAD_TIMEOUT = "30000";
+    public static final long PAGE_TO_LOAD_TIMEOUT = 30000;
 
     private final static int              MAIN_PORT            = 9090;
 
@@ -228,7 +228,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
         //SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
         //SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
-        // Thread.sleep(10000); // 10 s
+        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
     }
 
     @AfterClass

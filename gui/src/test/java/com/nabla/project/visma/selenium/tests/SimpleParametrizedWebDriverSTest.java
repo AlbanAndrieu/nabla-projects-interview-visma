@@ -141,6 +141,8 @@ public class SimpleParametrizedWebDriverSTest
         SeleniumHelper.getDriver().get("/visma/");
         SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         // SeleniumHelper.getDriver().waitForPageToLoad("1500");
+
+        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
     }
 
 }

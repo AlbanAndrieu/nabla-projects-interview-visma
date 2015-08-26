@@ -100,7 +100,10 @@ public class SimpleWebDriverSTest
         // Thread.sleep(1000);
 
         SeleniumHelper.getDriver().get("/visma/");
-        // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+
+        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
 
         // loanPage.close();
     }
@@ -141,6 +144,8 @@ public class SimpleWebDriverSTest
         SeleniumHelper.getDriver().get("/visma/");
         SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+
+        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
 
         // loanPage.close();
     }

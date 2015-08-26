@@ -167,9 +167,8 @@ public class LoanPage extends LoadableComponent<LoanPage>
 
         // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
         // SeleniumHelper.getDriver().findElement(By.name("loan_form:payment")).click();
-        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-        // Thread.sleep(10000); // 10 s
+        // SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
     }
 
     @Then("ensure the payment schedule total is accurate with \"([^\"]*)\" message")
