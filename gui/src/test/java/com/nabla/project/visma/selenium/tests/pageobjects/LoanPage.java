@@ -58,7 +58,7 @@ import cucumber.api.java.en.When;
 
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -165,8 +165,9 @@ public class LoanPage extends LoadableComponent<LoanPage>
         SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         this.calculate.click();
 
-        SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
         // SeleniumHelper.getDriver().findElement(By.name("loan_form:payment")).click();
+        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
         // Thread.sleep(10000); // 10 s
     }
