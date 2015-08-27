@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * DOCUMENT ME! albandri.
- *
+ * 
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -68,13 +68,13 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     private static WebDriver              REAL_DRIVER;
 
     // private final StringBuffer verificationErrors = new StringBuffer();
-    //private static DefaultSelenium        SELENIUM;
+    // private static DefaultSelenium SELENIUM;
 
     // private static final String DEFAULT_CHROMEDRIVER = "C:\\chromedriver\\chromedriver.exe"; // "/var/lib/chromedriver"
     // private static final String DEFAULT_FIREFOXBIN = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; // "/usr/lib/firefox/firefox"
     public static final String            DEFAULT_CHROMEDRIVER = "/var/lib/chromedriver";                      // "C:\\chromedriver\\chromedriver.exe"
     public static final String            DEFAULT_FIREFOXBIN   = "/usr/lib/firefox/firefox";                   // "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-    public static final long PAGE_TO_LOAD_TIMEOUT = 30000;
+    public static final long              PAGE_TO_LOAD_TIMEOUT = 30000;
 
     private final static int              MAIN_PORT            = 9090;
 
@@ -155,7 +155,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
 
     /**
      * DOCUMENT ME! albandri.
-     *
+     * 
      * @param driver
      * @param SELENIUM
      * @throws InterruptedException
@@ -225,8 +225,8 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
         // this.driver.manage().deleteAllCookies();
         // this.driver.get(propertyKeysLoader("login.base.url"));
 
-        //SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
-        //SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+        // SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
+        // SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
         Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
     }
@@ -244,11 +244,11 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     }
 
     /*
-    public static DefaultSelenium getSelenium()
-    {
-        return SeleniumHelper.SELENIUM;
-    }
-    */
+     * public static DefaultSelenium getSelenium()
+     * {
+     * return SeleniumHelper.SELENIUM;
+     * }
+     */
 
     private synchronized static WebDriver getCurrentDriver()
     {

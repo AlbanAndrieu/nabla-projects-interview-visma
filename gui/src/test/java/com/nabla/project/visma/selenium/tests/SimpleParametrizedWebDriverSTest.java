@@ -138,7 +138,7 @@ public class SimpleParametrizedWebDriverSTest
         // SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
-        SeleniumHelper.getDriver().get("/visma/");
+        SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
         SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         // SeleniumHelper.getDriver().waitForPageToLoad("1500");
 

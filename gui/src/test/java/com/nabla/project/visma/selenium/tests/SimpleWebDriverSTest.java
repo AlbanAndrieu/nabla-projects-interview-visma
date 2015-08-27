@@ -99,7 +99,7 @@ public class SimpleWebDriverSTest
         SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
-        SeleniumHelper.getDriver().get("/visma/");
+        SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
         SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
@@ -141,7 +141,7 @@ public class SimpleWebDriverSTest
         SeleniumHelper.testTakesScreenshot("testWithWrongInputS.png", SeleniumHelper.getDriver());
         // Thread.sleep(1000);
 
-        SeleniumHelper.getDriver().get("/visma/");
+        SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
         SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
