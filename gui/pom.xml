@@ -819,14 +819,13 @@
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>start</goal>
-							<goal>deployer-deploy</goal>
+							<goal>deploy</goal>			
 						</goals>
 					</execution>
 					<execution>
 						<id>stop</id>
 						<phase>post-integration-test</phase>
 						<goals>
-							<!--<goal>deployer-undeploy</goal>-->
 							<goal>undeploy</goal>
 							<goal>stop</goal>
 						</goals>

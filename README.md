@@ -1,11 +1,11 @@
-# nabla-project-interview-visma
+# nabla-projects-interview-visma
 
-[![Join the chat at https://gitter.im/AlbanAndrieu/nabla-project-interview-visma](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AlbanAndrieu/nabla-project-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/AlbanAndrieu/nabla-projects-interview-visma](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AlbanAndrieu/nabla-projects-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Java project for an interview request by visma
 
-[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-project-interview-visma)
-[![Jenkins Build Status](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma-nightly)
+[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma)
+[![Jenkins Build Status](http://home.nabla.mobi:8380/jenkins/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8380/jenkins/job/nabla-projects-interview-visma-nightly)
 
 Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
 
@@ -16,6 +16,8 @@ Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndri
 [![Dependency Status main](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/visual)
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
+
+[![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower-sample/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower-sample) [![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower-sample/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower-sample/coverage)
 
 The challenge
 ================
@@ -51,15 +53,15 @@ Problem Description
 
 Please find below output of this sample:
 
-- Source code repository : [github](https://github.com/AlbanAndrieu/nabla-project-interview-visma)
+- Source code repository : [github](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 
-- Jenkins : [jenkins](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma/)
+- Jenkins : [jenkins](http://home.nabla.mobi:8380/jenkins/job/nabla-projects-interview-visma/)
 
 - Sonar metrics : [sonar](http://home.nabla.mobi:9000/dashboard/index/2831)
 
-TODO : The compiled, source, and Javadoc JAR files will be uploaded as downloads [here](https://github.com/AlbanAndrieu/nabla-project-interview-visma/downloads).
+TODO : The compiled, source, and Javadoc JAR files will be uploaded as downloads [here](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/downloads).
 
-The generated site will be committed to the [gh-pages branch](https://github.com/AlbanAndrieu/nabla-project-interview-visma/tree/gh-pages) and visible [here](http://albanandrieu.github.io/nabla-project-interview-visma/).
+The generated site will be committed to the [gh-pages branch](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/tree/gh-pages) and visible [here](http://albanandrieu.github.io/nabla-projects-interview-visma/).
 
 Remarks : visma installer is produced during the jenkins build , especially [here](http://home.nabla.mobi:8380/jenkins/job/nabla-installer-visma/).
 In order to install, double click on the [VISMAInstaller.jar](http://home.nabla.mobi:8380/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/VISMAInstaller.jar)
@@ -161,7 +163,7 @@ The goal is mostly to ensure that any of my code will be able to work with any [
 ### VISMA : An opensource project to showcase best pratices
 
 You're invited to have a quick look at the project below (it has some of the quality metrics that I am using at work, like unit tests, integration tests, mutation tests, performance tests, load tests, end2end tests, functional tests)
- - [Jenkins](http://home.nabla.mobi:8380/jenkins/job/nabla-project-interview-visma/)
+ - [Jenkins](http://home.nabla.mobi:8380/jenkins/job/nabla-projects-interview-visma/)
  - [Sonar](http://home.nabla.mobi:9000/dashboard/index/418)
 
 Visma is a very basic code done for an interview that you can easily install using [IZPack](http://izpack.org/) at [installer](http://home.nabla.mobi:8380/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/)
