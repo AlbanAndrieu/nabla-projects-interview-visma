@@ -11,7 +11,7 @@ REM call mvn clean verify -Psample -Dserver=jetty9x -Ddatabase=derby -Dwebdriver
 REM call mvn clean verify -Psample,arq-jbossas-managed -Dserver=jboss7x -Dwebdriver.base.url=http://localhost:8180 > install.log 2>&1
 
 REM OK call mvn -U -B clean install -Dserver=jetty9x > install.log 2>&1
-REM OK call mvn -U -B clean install -Dserver=jetty9x -Dsurefire.useFile=false -Psample,jacoco,integration,run-its,arq-weld-ee-embedded -Darquillian=arq-weld-ee-embedded -Darquillian.launch=arq-weld-ee-embedded > install.log 2>&1
+REM OK call mvn -U -B clean install -Dserver=jetty9x -Dsurefire.useFile=false -Psample,jacoco,integration,run-its,arq-weld-ee-embedded -Darquillian=arq-weld-ee-embedded -Darquillian.launch=arq-weld-ee-embedded -Dwebdriver.chrome.driver=/var/lib/chromedriver > install.log 2>&1
 
 REM TODO add property -Djacoco.outputDir=/workspace/users/albandri10/project/sample/interview/visma/gui/target -Ddatabase=derby -Dlog4j.configuration=log4j.properties -Dlog4j.debug=true
 REM DEBUG -Darquillian.debug=true

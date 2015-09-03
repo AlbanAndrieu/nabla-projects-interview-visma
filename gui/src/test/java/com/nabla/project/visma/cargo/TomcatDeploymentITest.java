@@ -123,6 +123,10 @@ public class TomcatDeploymentITest
         simpleLogger.setLevel(LogLevel.INFO);
         WEBAPI_CONTAINER.setLogger(simpleLogger);
 
+        String containerTimeoutProperty = System.getProperty("cargo.containers.timeout");
+        int containerTimeout = (containerTimeoutProperty != null) ? Integer.valueOf(containerTimeoutProperty) : 5 * 60 * 1000;
+        WEBAPI_CONTAINER.setTimeout(containerTimeout);
+
         /*
          * Pass in system properties
          * <application.configuration.file>${basedir}/src/test/resources/application.properties</application.configuration.file>

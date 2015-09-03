@@ -9,11 +9,7 @@ Java project for an interview request by visma
 
 Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
 
-[![Dependency Status gui](https://www.versioneye.com/user/projects/54db8c70c1bbbd9bd7000448/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c70c1bbbd9bd7000448/visual)
-[![Dependency Status core ](https://www.versioneye.com/user/projects/54db8c65c1bbbda01300036f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c65c1bbbda01300036f/visual)
-[![Dependency Status nodejs](https://www.versioneye.com/user/projects/54db8c75c1bbbd9bd7000487/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c75c1bbbd9bd7000487/visual)
-[![Dependency Status bower](https://www.versioneye.com/user/projects/54db8ddcc1bbbd5f82000498/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8ddcc1bbbd5f82000498/visual)
-[![Dependency Status main](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54db8c72c1bbbda01300037a/visual)
+[![Dependency Status](https://www.versioneye.com/user/projects/55e70677a65c8c000e00a65a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55e70677a65c8c000e00a65a)
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
 
