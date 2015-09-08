@@ -9,13 +9,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 
 public class DeploymentITest
 {
@@ -83,17 +88,38 @@ public class DeploymentITest
     }
 
     @Test
+    @Ignore
     public void testBaseRest() throws Exception
     {
 
         DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.VISMA_URL);
 
-        Client webClient = Client.create();
+        Client client = ClientBuilder.newClient();
 
-        ClientResponse serverResponse = webClient.resource(DeploymentITest.VISMA_URL).get(ClientResponse.class);
-        // serverResponse.getEntity(String.class);
+        // ClientResponse serverResponse =
+        // webClient.resource(DeploymentITest.VISMA_URL).get(ClientResponse.class);
+        // ClientResponse serverResponse =
+        // webClient.target(DeploymentITest.VISMA_URL).get(ClientResponse.class);
 
-        assertEquals(format("Error REST service is not UP at address %s", DeploymentITest.DEFAULT_CONTEXT, DeploymentITest.BASE_URL), HttpURLConnection.HTTP_OK, serverResponse.getStatus());
+        WebTarget webTarget = client.target(DeploymentITest.VISMA_URL + "/rest");
+        // webTarget.register(FilterForExampleCom.class);
+        WebTarget resourceWebTarget = webTarget.path("resource");
+        WebTarget helloworldWebTarget = resourceWebTarget.path("helloworld");
+        WebTarget helloworldWebTargetWithQueryParam = helloworldWebTarget.queryParam("greeting",
+                "Hi World!");
+
+        Invocation.Builder invocationBuilder = helloworldWebTargetWithQueryParam
+                .request(MediaType.TEXT_PLAIN_TYPE);
+        invocationBuilder.header("some-header", "true");
+
+        Response response = invocationBuilder.get();
+        System.out.println(response.getStatus());
+        System.out.println(response.readEntity(String.class));
+
+        assertEquals(
+                format("Error REST service is not UP at address %s",
+                        DeploymentITest.DEFAULT_CONTEXT, DeploymentITest.BASE_URL),
+                HttpURLConnection.HTTP_OK, response.getStatus());
     }
 
 }
