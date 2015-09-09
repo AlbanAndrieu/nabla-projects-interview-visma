@@ -27,7 +27,7 @@
     -->
     <properties>
         <!--<gatling.version>1.5.6</gatling.version>-->
-        <scala.version>2.9.3</scala.version>
+        <!--<scala.version>2.9.3</scala.version>-->
 
         <!-- for jmeter -->
         <performancetest.webservice.path>/visma</performancetest.webservice.path>
@@ -1143,6 +1143,7 @@
 								</goals>
 							</execution>
 						</executions>
+						<!--
 						<configuration>
 							<args>
 								<arg>-feature</arg>
@@ -1153,6 +1154,7 @@
 								<jvmArg>-Xmx1024m</jvmArg>
 							</jvmArgs>
 						</configuration>
+						-->
                     </plugin>
                     <plugin>
                         <groupId>com.excilys.ebi.gatling</groupId>
