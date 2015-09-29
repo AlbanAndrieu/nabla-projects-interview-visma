@@ -330,12 +330,14 @@
             <scope>test</scope>
         </dependency>
 
+	<!--
         <dependency>
             <groupId>org.jboss.arquillian</groupId>
             <artifactId>arquillian-spi</artifactId>
             <version>${org.jboss.arquillian.spi.version}</version>
             <scope>test</scope>
         </dependency>
+        -->
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
