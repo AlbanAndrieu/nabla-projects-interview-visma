@@ -31,13 +31,56 @@
 
         <!-- for jmeter -->
         <performancetest.webservice.path>/visma</performancetest.webservice.path>
+
+        <jetty9.version>9.3.3.v20150827</jetty9.version>
+        <org.jboss.arquillian.version>1.1.9.Final</org.jboss.arquillian.version>
+        <version.shrinkwrap_shrinkwrap>1.2.2</version.shrinkwrap_shrinkwrap>
+		<version.shrinkwrap_descriptors>2.0.0-alpha-7</version.shrinkwrap_descriptors>
+		<version.shrinkwrap_resolver>2.1.1</version.shrinkwrap_resolver>
+		<org.jboss.shrinkwrap.bom.version>${version.shrinkwrap_shrinkwrap}</org.jboss.shrinkwrap.bom.version>
+        <org.jboss.shrinkwrap.resolver.bom.version>${version.shrinkwrap_resolver}</org.jboss.shrinkwrap.resolver.bom.version>
+        <org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>
+
+        <org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>
     </properties>
 
-    <!--
+
     <dependencyManagement>
         <dependencies>
-            -->
+
+             <!-- Override dependency resolver with latest version.
+             This must go *BEFORE* the Arquillian BOM. -->
+			<!--  ShrinkWrap  -->
+			<dependency>
+				<groupId>org.jboss.shrinkwrap</groupId>
+				<artifactId>shrinkwrap-bom</artifactId>
+				<version>${org.jboss.shrinkwrap.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                <artifactId>shrinkwrap-resolver-bom</artifactId>
+                <version>${org.jboss.shrinkwrap.resolver.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-bom</artifactId>
+                <version>${org.jboss.shrinkwrap.descriptors.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- Arquillian : http://arquillian.org/guides/getting_started_fr -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${org.jboss.arquillian.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill
                 of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
@@ -53,9 +96,9 @@
                 <type>pom</type>
                 <scope>provided</scope>
             </dependency>
+            -->
         </dependencies>
     </dependencyManagement>
-    -->
 
     <dependencies>
 
@@ -255,22 +298,23 @@
         </dependency>
         -->
         <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <!--<version>${commons.httpclient.version}</version>-->
-                <scope>compile</scope>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <!--<version>${commons.httpclient.version}</version>-->
+            <scope>compile</scope>
         </dependency>
 
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
-			<optional>true</optional><!-- needed only for annotations -->
+			<optional>true</optional> <!-- needed only for annotations -->
+			<!-- BUT needed for proguard obfuscation -->
 		</dependency>
 
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <scope>test</scope>
+            <!--<scope>test</scope>-->
         </dependency>
 
         <dependency>
@@ -301,32 +345,23 @@
              <scope>test</scope>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.resolver</groupId>
-            <artifactId>shrinkwrap-resolver-bom</artifactId>
-            <version>2.0.0</version>
-            <scope>test</scope>
-            <type>pom</type>
-        </dependency>
-         -->
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
-            <version>${org.jboss.arquillian.junit.version}</version>
+            <!--<version>${org.jboss.arquillian.junit.version}</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
             <artifactId>arquillian-core-api</artifactId>
             <groupId>org.jboss.arquillian.core</groupId>
-            <version>${org.jboss.arquillian.core.version}</version>
+            <!--<version>${org.jboss.arquillian.core.version}</version>-->
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
             <artifactId>arquillian-protocol-servlet</artifactId>
-            <version>${org.jboss.arquillian.junit.version}</version>
+            <!--<version>${org.jboss.arquillian.junit.version}</version>-->
             <scope>test</scope>
         </dependency>
 
@@ -423,6 +458,12 @@
 			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
 			<artifactId>http-builder</artifactId>
 			<scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>asm</groupId>
+                    <artifactId>asm</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 
         <dependency>
@@ -475,32 +516,23 @@
             <scope>test</scope>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>${jersey1.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>asm</groupId>
-                    <artifactId>asm</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-            -->
-        <!--
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>${jersey1.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>${jersey1.version}</version>
-			<scope>test</scope>
-        </dependency>
-        -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-jetty-http</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-moxy</artifactId>
+		</dependency>
+
 		<!--  Jersey Client required for test *and runtime* due to Jersey bug : https://java.net/jira/browse/JERSEY-2104 -->
 		<!--  This dependency can be scoped to test when Jersey is upgraded to >=2.4 -->
 		<dependency>
@@ -543,30 +575,42 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-proxy</artifactId>
-            <version>${jetty.version}</version>
+            <version>${jetty9.version}</version>
             <scope>compile</scope>
         </dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-http</artifactId>
-			<version>${jetty.version}</version>
+			<version>${jetty9.version}</version>
 			<type>jar</type>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-rewrite</artifactId>
-			<version>${jetty.version}</version>
+			<version>${jetty9.version}</version>
 			<type>jar</type>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jetty9.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlets</artifactId>
-			<version>${jetty.version}</version>
+			<version>${jetty9.version}</version>
 			<type>jar</type>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty9.version}</version>
+			<type>jar</type>
 		</dependency>
     </dependencies>
 
@@ -782,6 +826,7 @@
                         <!--<type>${cargo.configuration.type}</type>-->
                         <!--<home>${project.build.directory}/cargo/installs/jboss-as-dist-7.1.1.Final/jboss-as-7.1.1.Final/standalone/</home>-->
                         <properties>
+							<!--<cargo.protocol>https</cargo.protocol>-->
                             <cargo.hostname>${cargo.host}</cargo.hostname>
                             <cargo.servlet.port>${cargo.port}</cargo.servlet.port>
                             <!--<cargo.rmi.port>${cargo.rmi.port}</cargo.rmi.port>-->
@@ -801,16 +846,38 @@
                             <!--<![CDATA[-Xdebug -Xrunjdwp:transport=dt_socket,address=${cargo.debug.address},server=y,suspend=${cargo.debug.suspend} -noverify ${javaagent}]]>-->
                             <cargo.jetty.createContextXml>false</cargo.jetty.createContextXml>
                         </properties>
+                        <!--
 						<configfiles>
 							<configfile>
-								<file>${project.basedir}/src/main/etc/jetty-rewrite.xml</file>
+								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-rewrite.xml</file>
 								<todir>etc</todir>
 							</configfile>
 							<configfile>
-								<file>${project.basedir}/src/main/etc/rewrite.ini</file>
-								<todir>start.d</todir>
+								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-gzip.xml</file>
+								<todir>etc</todir>
+							</configfile>
+							<configfile>
+								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-https.xml</file>
+								<todir>etc</todir>
+							</configfile>
+							<configfile>
+								<file>${project.basedir}/src/main/config/demo-base/etc/keystore</file>
+								<todir>etc</todir>
+							</configfile>
+							<configfile>
+								<file>${project.basedir}/src/main/config/demo-base/etc/jetty.csr</file>
+								<todir>etc</todir>
+							</configfile>
+							<configfile>
+								<file>${project.basedir}/src/main/config/demo-base/webapps/test.xml</file>
+								<todir>webapps</todir>
+							</configfile>
+							<configfile>
+								<file>${project.basedir}/src/main/config/demo-base/start.ini</file>
+								<todir></todir>
 							</configfile>
 						</configfiles>
+						-->
                     </configuration>
                     <deployables>
                         <deployable>
@@ -868,6 +935,71 @@
 				-->
             </plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+				<execution>
+					<phase>package</phase>
+					<goals>
+					<goal>single</goal>
+					</goals>
+					<configuration>
+					<descriptorRefs>
+						<descriptorRef>config</descriptorRef>
+					</descriptorRefs>
+					<descriptors>
+						<descriptor>src/main/assembly/web-bundle.xml</descriptor>
+					</descriptors>
+					<archive>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+					</configuration>
+				</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<supportedProjectTypes>
+						<supportedProjectType>war</supportedProjectType>
+					</supportedProjectTypes>
+					<instructions>
+						<Import-Package>javax.servlet.jsp.*;version="[2.2.0,3.0)",org.eclipse.jetty.*;version="[$(version;===;${parsedVersion.osgiVersion}),$(version;==+;${parsedVersion.osgiVersion}))",*</Import-Package>
+						<Export-Package>!com.nabla*</Export-Package>
+						<!-- the test webapp is configured via a jetty xml file
+						in order to add the security handler. -->
+						<Web-ContextPath>/</Web-ContextPath>
+						<!-- in fact the '.' must not be there
+						but Felix-BND has a bug:
+						http://www.mail-archive.com/users@felix.apache.org/msg04730.html
+						https://issues.apache.org/jira/browse/FELIX-1571
+						-->
+						<Bundle-ClassPath>.,WEB-INF/classes</Bundle-ClassPath>
+					</instructions>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- also make this webapp an osgi bundle -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+
             <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
             <!-- To use, run: mvn package jboss-as:deploy -->
             <plugin>
@@ -881,9 +1013,15 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
 				<configuration>
-                    <webApp>
-                        <contextPath>/visma</contextPath>
-                    </webApp>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<!--TODO<jettyConfig>src/main/etc/jetty.xml</jettyConfig>-->
+					<useTestClasspath>false</useTestClasspath>
+                    <httpConnector>
+                        <!--host>localhost</host-->
+                        <port>${jetty.port}</port>
+                    </httpConnector>
+					<stopPort>${jetty.stop.port}</stopPort>
+					<stopKey>STOP</stopKey>
                     <!--
                     <systemProperties>
                         <systemProperty>
@@ -896,33 +1034,33 @@
                         </systemProperty>
                     </systemProperties>
                     -->
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<!--TODO<jettyConfig>src/main/etc/jetty.xml</jettyConfig>-->
-                    <httpConnector>
-                        <!--host>localhost</host-->
-                        <port>${jetty.port}</port>
-                    </httpConnector>
-					<stopPort>${jetty.stop.port}</stopPort>
-					<stopKey>STOP</stopKey>
+                    <webApp>
+                        <contextPath>/visma</contextPath>
+                        <tempDirectory>${project.build.directory}/work</tempDirectory>
+                    </webApp>
 				</configuration>
-				<!--TODO
 				<dependencies>
 					<dependency>
 						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-client</artifactId>
+						<version>${jetty9.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-servlets</artifactId>
+						<version>${jetty9.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-http</artifactId>
-						<version>${jetty.version}</version>
-						<type>jar</type>
-						<scope>runtime</scope>
+						<version>${jetty9.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-rewrite</artifactId>
-						<version>${jetty.version}</version>
-						<type>jar</type>
-						<scope>runtime</scope>
+						<version>${jetty9.version}</version>
 					</dependency>
 				</dependencies>
-				-->
             </plugin>
 
             <!-- start app using java -jar target/dependency/jetty-runner.jar target/*.war -port 9090 -->
@@ -1020,6 +1158,24 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+			<plugin>
+				<groupId>com.github.marschall</groupId>
+				<artifactId>jdeps-maven-plugin</artifactId>
+				<version>${maven.marschall.jdeps.plugin.version}</version>
+				<!-- optionally any configuration -->
+				<executions>
+					<execution>
+						<id>jdeps</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jdeps</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<profile>true</profile>
+				</configuration>
+			</plugin>
 
             <!--
             <plugin>

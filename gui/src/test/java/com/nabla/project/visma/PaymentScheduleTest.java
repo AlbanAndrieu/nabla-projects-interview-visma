@@ -42,10 +42,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.nabla.project.visma.api.IPayment;
+
 public class PaymentScheduleTest
 {
 
-    final Payment[]       payments        = new Payment[]
+    final IPayment[]       payments        = new Payment[]
                                           { new Payment(new BigDecimal(100)), new Payment(new BigDecimal(1_000)), new Payment(new BigDecimal(10_000)) };
 
     final PaymentSchedule paymentSchedule = new PaymentSchedule(this.payments);

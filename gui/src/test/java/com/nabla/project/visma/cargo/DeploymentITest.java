@@ -17,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,38 +87,44 @@ public class DeploymentITest
     }
 
     @Test
-    @Ignore
-    public void testBaseRest() throws Exception
-    {
+    public void testBaseRest() throws Exception {
 
-        DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.VISMA_URL);
+        DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.BASE_URL);
 
         Client client = ClientBuilder.newClient();
 
-        // ClientResponse serverResponse =
-        // webClient.resource(DeploymentITest.VISMA_URL).get(ClientResponse.class);
-        // ClientResponse serverResponse =
-        // webClient.target(DeploymentITest.VISMA_URL).get(ClientResponse.class);
-
-        WebTarget webTarget = client.target(DeploymentITest.VISMA_URL + "/rest");
+        WebTarget webTarget = client.target(DeploymentITest.BASE_URL);
         // webTarget.register(FilterForExampleCom.class);
-        WebTarget resourceWebTarget = webTarget.path("resource");
-        WebTarget helloworldWebTarget = resourceWebTarget.path("helloworld");
-        WebTarget helloworldWebTargetWithQueryParam = helloworldWebTarget.queryParam("greeting",
-                "Hi World!");
+        WebTarget resourceWebTarget = webTarget.path("rest");
+        WebTarget booksTarget = resourceWebTarget.path("loan");
+        WebTarget booksTestTarget = booksTarget.path("test");
 
-        Invocation.Builder invocationBuilder = helloworldWebTargetWithQueryParam
+        // WebTarget target = client.target(DeploymentITest.BASE_URL).path("rest/{param}");
+        // String result = target.queryParam("param", "value").get(String.class);
+        // WebTarget booksTestTarget = client.target(DeploymentITest.BASE_URL + "/rest/books/test");
+        // Response responseTest = booksTestTarget.request("text/plain").get();
+
+        // System.out.println("Status : " + responseTest.getStatus());
+        // assertEquals(responseTest.getStatus(), 200);
+        // System.out.println("Response : " + responseTest.readEntity(String.class));
+
+        WebTarget helloworldWebTargetWithQueryParam = booksTarget.queryParam("test", "10");
+
+        Invocation.Builder invocationBuilder = booksTestTarget
                 .request(MediaType.TEXT_PLAIN_TYPE);
         invocationBuilder.header("some-header", "true");
 
-        Response response = invocationBuilder.get();
-        System.out.println(response.getStatus());
-        System.out.println(response.readEntity(String.class));
+        Response responseFull = invocationBuilder.get();
+        System.out.println("Status : " + responseFull.getStatus());
+        String resultTest = responseFull.readEntity(String.class);
+        System.out.println("Response : " + resultTest);
 
         assertEquals(
-                format("Error REST service is not UP at address %s",
-                        DeploymentITest.DEFAULT_CONTEXT, DeploymentITest.BASE_URL),
-                HttpURLConnection.HTTP_OK, response.getStatus());
+                format("Error getting login screen for %s at address %s", DEFAULT_CONTEXT,
+                        DeploymentITest.BASE_URL), HttpURLConnection.HTTP_OK,
+                responseFull.getStatus());
+
+        assertEquals(resultTest, "Test");
     }
 
 }

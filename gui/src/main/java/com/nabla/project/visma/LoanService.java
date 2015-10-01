@@ -41,6 +41,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,4 +119,11 @@ public class LoanService implements ILoanService
     /*
      * @GET public Collection<Book> list() { return books; }
      */
+
+    @GET
+    @Path("test")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String test() {
+        return "Test";
+    }
 }

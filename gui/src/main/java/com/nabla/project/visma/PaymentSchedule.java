@@ -47,6 +47,8 @@ import javax.faces.model.DataModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.nabla.project.visma.api.IPayment;
+
 public class PaymentSchedule implements Serializable
 {
 
@@ -54,10 +56,10 @@ public class PaymentSchedule implements Serializable
 
     private static final transient Logger LOGGER            = LoggerFactory.getLogger(PaymentSchedule.class);
 
-    private DataModel<Payment>            paymentsDataModel = null;
+    private DataModel<IPayment>            paymentsDataModel = null;
 
     @SuppressWarnings("unused")
-    private PaymentSchedule(final DataModel<Payment> paymentsDataModel)
+    private PaymentSchedule(final DataModel<IPayment> paymentsDataModel)
     {
         this.paymentsDataModel = paymentsDataModel;
 
@@ -72,19 +74,19 @@ public class PaymentSchedule implements Serializable
         this.setPayments(aPayments);
     }
 
-    public PaymentSchedule(final Payment[] aPayments)
+    public PaymentSchedule(final IPayment[] aPayments)
     {
         this.setPayments(aPayments);
     }
 
-    private void setPayments(final Payment[] aPayments)
+    private void setPayments(final IPayment[] aPayments)
     {
         if (aPayments == null)
         {
-            this.paymentsDataModel = new ArrayDataModel<Payment>(new Payment[0]);
+            this.paymentsDataModel = new ArrayDataModel<IPayment>(new Payment[0]);
         } else
         {
-            this.paymentsDataModel = new ArrayDataModel<Payment>(Arrays.copyOf(aPayments, aPayments.length));
+            this.paymentsDataModel = new ArrayDataModel<IPayment>(Arrays.copyOf(aPayments, aPayments.length));
         }
 
         if ((null == this.paymentsDataModel) || (this.paymentsDataModel.getRowCount() <= 0))
@@ -101,7 +103,7 @@ public class PaymentSchedule implements Serializable
             throw new IllegalArgumentException("Payments schedule cannot be null");
         }
 
-        final Payment[] targetPayments = new Payment[aPayments.size()];
+        final IPayment[] targetPayments = new Payment[aPayments.size()];
 
         aPayments.size();
         final Iterator<Entry<Integer, List<BigDecimal>>> it = aPayments.entrySet().iterator();
@@ -119,7 +121,7 @@ public class PaymentSchedule implements Serializable
             for (final BigDecimal bigDecimal : data)
             {
                 final BigDecimal amount = bigDecimal;
-                final Payment payment = new Payment(amount);
+                final IPayment payment = new Payment(amount);
                 targetPayments[month] = payment;
             }
 
@@ -129,7 +131,7 @@ public class PaymentSchedule implements Serializable
         this.setPayments(targetPayments);
     }
 
-    public DataModel<Payment> getPayments()
+    public DataModel<IPayment> getPayments()
     {
         return this.paymentsDataModel;
     }

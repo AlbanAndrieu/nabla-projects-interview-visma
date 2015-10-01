@@ -11,6 +11,7 @@ REM call mvn clean install cargo:undeploy cargo:deploy -Psample,run-its -Dserver
 REM call mvn org.codehaus.cargo:cargo-maven2-plugin:deployer-deploy -Psample,run-its -Dserver=tomcat7x -Ddatabase=derby > deploy.log 2>&1
 REM check result at http://192.168.0.29:8280/manager/html
 REM OK call mvn jetty:run-war -Psample,run-its -Dserver=jetty9x -Ddatabase=derby -Djetty.port=9090 > deploy.log 2>&1
+REM OK call mvn jetty:run -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 > deploy.log
 REM WAS OK call mvn org.codehaus.cargo:cargo-maven2-plugin:run -Psample,run-its,arq-jbossas-managed -Dserver=jboss7x > deploy.log 2>&1
 
 REM TO TEST mvn clean install -Dlog4j.configuration=log4j.properties -Dlog4j.debug=true -Prun-its,arq-weld-ee-embedded -Dtest=LoanServiceITest > deploy.log 2>&1
@@ -19,6 +20,7 @@ REM TODO mvn -U -B clean install -Dsurefire.useFile=false -Psample,jacoco,integr
 REM BUILD with jetty9x
 mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090  > install.log
 REM BUILD with jetty9x + integration tests
+REM ------------------- DEFAULT -----------------------
 mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
 REM BUILD with tomcat7x + integration tests
 mvn clean install -Dserver=tomcat7x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8280 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
