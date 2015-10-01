@@ -42,6 +42,9 @@ REM OK but not with integration test call java -jar target/dependency/jetty-runn
 
 REM OK mvn -U -B clean install -Dsurefire.useFile=false -Psample,jacoco,integration,run-its,arq-weld-ee-embedded -Djacoco.outputDir=/workspace/users/albandri10/project/sample/interview/visma/gui/target -Ddatabase=derby -Dserver=jboss7x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8180 -Dlog4j.configuration=log4j.properties -Dlog4j.debug=true -Darquillian=arq-weld-ee-embedded -Darquillian.launch=arq-weld-ee-embedded > install.log 2>&1
 
+#http://gatling.io/docs/2.1.7/quickstart.html
+REM OK mvn gatling:recorder -Pgatling
+#using port 8001
 REM OK TO RUN GATLING TEST mvn clean install gatling:execute -Pgatling
 REM OK TO RUN SERVER mvn clean install org.codehaus.cargo:cargo-maven2-plugin:run -Dserver=jetty9x > deploy.log 2>&1
 REM Inside Jconsole --> Remote connection to : service:jmx:rmi://localhost:1099/jndi/rmi://localhost:1099/jmxrmi

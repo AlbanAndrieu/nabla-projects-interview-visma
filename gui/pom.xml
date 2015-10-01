@@ -26,8 +26,7 @@
         </properties>
     -->
     <properties>
-        <!--<gatling.version>1.5.6</gatling.version>-->
-        <!--<scala.version>2.9.3</scala.version>-->
+        <gatling.version>2.1.7</gatling.version>
 
         <!-- for jmeter -->
         <performancetest.webservice.path>/visma</performancetest.webservice.path>
@@ -458,13 +457,26 @@
 			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
 			<artifactId>http-builder</artifactId>
 			<scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>asm</groupId>
-                    <artifactId>asm</artifactId>
-                </exclusion>
-            </exclusions>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.groovy</groupId>
+					<artifactId>groovy</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
+		<!--
+       <dependency>
+         <groupId>org.codehaus.groovy</groupId>
+         <artifactId>groovy</artifactId>
+         <exclusions>
+             <exclusion>
+                 <groupId>asm</groupId>
+                 <artifactId>asm</artifactId>
+             </exclusion>
+         </exclusions>
+       </dependency>
+       -->
 
         <dependency>
             <groupId>org.jacoco</groupId>
@@ -735,6 +747,30 @@
                 </dependencies>
             </plugin>
             -->
+            <!-- make sure our code doesn't have 1.6 dependencies except where we know it see * http://mojo.codehaus.org/animal-sniffer/index.html * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
+            <!--
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>animal-sniffer-maven-plugin</artifactId>
+				<version>${maven.animal.sniffer.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>check-java-api</id>
+						<phase>test</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<signature>
+								<groupId>org.codehaus.mojo.signature</groupId>
+								<artifactId>java15</artifactId>
+								<version>1.0</version>
+							</signature>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1266,26 +1302,44 @@
                     </property>
             </activation>
             <dependencies>
+				<dependency>
+					<groupId>io.gatling</groupId>
+					<artifactId>gatling-charts</artifactId>
+				</dependency>
                 <dependency>
-                    <groupId>com.excilys.ebi.gatling.highcharts</groupId>
+                    <!--<groupId>com.excilys.ebi.gatling.highcharts</groupId>-->
+                    <groupId>io.gatling.highcharts</groupId>
                     <artifactId>gatling-charts-highcharts</artifactId>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
-                    <groupId>com.excilys.ebi.gatling</groupId>
+                    <!--<groupId>com.excilys.ebi.gatling</groupId>-->
+                    <groupId>io.gatling</groupId>
                     <artifactId>gatling-app</artifactId>
                     <scope>test</scope>
                 </dependency>
+                <!--
                 <dependency>
                     <groupId>com.excilys.ebi.gatling</groupId>
                     <artifactId>gatling-recorder</artifactId>
                     <scope>test</scope>
                 </dependency>
+                -->
                 <dependency>
                     <groupId>org.scala-lang</groupId>
                     <artifactId>scala-library</artifactId>
                     <scope>test</scope>
                 </dependency>
+				<dependency>
+					<groupId>org.scala-lang</groupId>
+					<artifactId>scala-reflect</artifactId>
+				</dependency>
+				<!--
+				<dependency>
+					<groupId>org.json4s</groupId>
+					<artifactId>json4s-jackson_${scala.short.version}</artifactId>
+				</dependency>
+				-->
             </dependencies>
 
             <build>
@@ -1301,7 +1355,6 @@
 								</goals>
 							</execution>
 						</executions>
-						<!--
 						<configuration>
 							<args>
 								<arg>-feature</arg>
@@ -1312,10 +1365,29 @@
 								<jvmArg>-Xmx1024m</jvmArg>
 							</jvmArgs>
 						</configuration>
-						-->
                     </plugin>
+					<!-- enable scalatest -->
+					<plugin>
+						<groupId>org.scalatest</groupId>
+						<artifactId>scalatest-maven-plugin</artifactId>
+						<version>${maven.scalatest.plugin.version}</version>
+						<configuration>
+							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+							<junitxml>.</junitxml>
+							<filereports>TestSuite.txt</filereports>
+						</configuration>
+						<executions>
+							<execution>
+								<id>test</id>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
                     <plugin>
-                        <groupId>com.excilys.ebi.gatling</groupId>
+                        <!--<groupId>com.excilys.ebi.gatling</groupId>-->
+                        <groupId>io.gatling</groupId>
                         <artifactId>gatling-maven-plugin</artifactId>
                         <executions>
                             <execution>

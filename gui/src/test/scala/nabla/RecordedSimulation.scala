@@ -1,16 +1,18 @@
-package nabla 
-import com.excilys.ebi.gatling.core.Predef._
-import com.excilys.ebi.gatling.http.Predef._
-import com.excilys.ebi.gatling.jdbc.Predef._
-import com.excilys.ebi.gatling.http.Headers.Names._
-import akka.util.duration._
-import bootstrap._
-import assertions._
+package nabla
+
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
+import io.gatling.jdbc.Predef._
 
 class RecordedSimulation extends Simulation {
 
-	val httpConf = httpConfig
-			.baseURL("http://localhost:9090")
+  //val host = System.getProperty("perfHost")
+  protected val host = "localhost"
+  protected val port = "9090"
+
+	val httpProtocol = http
+			.baseURL("http://" + host + ":" + port)
+			.inferHtmlResources()
 			.acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
 			.acceptEncodingHeader("gzip, deflate")
 			.acceptLanguageHeader("en-US,en;q=0.5")
@@ -30,33 +32,18 @@ class RecordedSimulation extends Simulation {
 			"Accept" -> """text/css,*/*;q=0.1"""
 	)
 
-
-	val scn = scenario("Scenario Name")
+	val scn = scenario("RecordedSimulation")
+		.exec(http("request_0")
+			.get("/visma/loan.xhtml"))
+		.pause(11)
 		.exec(http("request_1")
-					.get("/visma/loan.xhtml")
-					.headers(headers_1)
-			)
-		.pause(13)
-		.exec(http("request_2")
-					.post("/visma/loan.xhtml")
-					.headers(headers_2)
-						.param("""loan_form""", """loan_form""")
-						.param("""loan_form:loanType""", """1""")
-						.param("""loan_form:loanAmount""", """100000""")
-						.param("""loan_form:paybackTime""", """10""")
-						.param("""loan_form:payment""", """Show monthlty payments""")
-						.param("""javax.faces.ViewState""", """2996547759582942541:511639537175624412""")
-			)
-		.pause(151 milliseconds)
-		.exec(http("request_3")
-					.get("/visma/RES_NOT_FOUND")
-					.headers(headers_3)
-					.check(status.is(404))
-			)
-		.pause(5)
-		.exec(http("request_4")
-					.get("/visma/loan.xhtml")
-			)
+			.post("/visma/loan.xhtml")
+			.formParam("loan_form", "loan_form")
+			.formParam("loan_form:loanType", "1")
+			.formParam("loan_form:loanAmount", "100000")
+			.formParam("loan_form:paybackTime", "10")
+			.formParam("loan_form:payment", "Show monthlty payments")
+			.formParam("javax.faces.ViewState", "5372695818220130002:-6817230658628640359"))
 
-	setUp(scn.users(1).protocolConfig(httpConf))
+	setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
 }
