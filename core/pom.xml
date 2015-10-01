@@ -64,6 +64,84 @@
 					</archive>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<!--groupId>com.pyx4me</groupId-->
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<version>${maven.proguard.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>proguard</id>
+						<phase>package</phase>
+						<goals>
+							<goal>proguard</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- Our application is so big that ProGuard had ran out of memory -->
+					<!--<maxMemory>1024m</maxMemory>-->
+
+					<!-- File with proguard configuration -->
+					<!--<proguardInclude>${basedir}/proguard.conf</proguardInclude>-->
+					<proguardVersion>${net.sf.proguard.version}</proguardVersion>
+					<obfuscate>true</obfuscate>
+					<!--<injarNotExistsSkip>true</injarNotExistsSkip>
+					<includeDependency>false</includeDependency>-->
+					<injar>${project.build.finalName}.jar</injar>
+					<outjar>${project.build.finalName}.jar</outjar>
+					<attach>false</attach>
+					<addMavenDescriptor>false</addMavenDescriptor>
+					<!-- Now exclude all modules that are embedded in the jar, so that
+						ProGuard won't see redefinition of each single class.
+						You don't have to write down your main module. -->
+					<exclusions>
+						<exclusion>
+							<groupId>com.sun</groupId>
+							<artifactId>tools</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>xerces</groupId>
+							<artifactId>xercesImpl</artifactId>
+						</exclusion>
+						<!--
+						<exclusion>
+							<groupId>com.yourcompany</groupId>
+							<artifactId>data</artifactId>
+						</exclusion>
+						-->
+					</exclusions>
+					<options>
+						<!--<option>-keep public class * { public protected *; }</option>-->
+						<option>-keep public class com.nabla.project.visma.Visma{public static void main(java.lang.String[]);}</option>
+						<!--<option>-dontwarn com.nabla.project.visma.**</option>-->
+						<option>-keep class com.nabla.project.visma.api.**{ *; }</option>
+						<option>-keep class com.nabla.project.visma.House{ *; }</option>
+						<option>-keep class com.nabla.project.visma.HouseLoan{ *; }</option>
+						<option>-keep class com.nabla.project.visma.Payment{ *; }</option>
+						<!--<option>-ignorewarnings</option>-->
+						<option>-allowaccessmodification</option>
+						<option>-dontskipnonpubliclibraryclasses</option>
+						<option>-dontskipnonpubliclibraryclassmembers</option>
+						<option>-optimizations !code/allocation/variable</option>
+					</options>
+					<libs>
+						<lib>${java.bootstrap.classes}</lib>
+						<lib>${java.cryptographic.extension.classes}</lib>
+						<lib>${java.secure.socket.extension.classes}</lib>
+					</libs>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.proguard</groupId>
+						<artifactId>proguard-base</artifactId>
+						<version>${net.sf.proguard.version}</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+			</plugin>
+
 		<!-- for gridgain
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

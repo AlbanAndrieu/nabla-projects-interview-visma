@@ -31,60 +31,25 @@
  *
  * License 1.0
  */
-package com.nabla.project.visma;
+package com.nabla.project.visma.api;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-import com.nabla.project.visma.api.IPayment;
+/**
+ * DOCUMENT ME! albandri.
+ * 
+ * @author $Author$
+ * @version $Revision$
+ * @since $Date$
+ */
+public interface IPayment
+{
 
-public class Payment implements IPayment, Comparable<Payment>, Serializable {
-
-    private final BigDecimal loanAmount;
-
-    // TODO add interest member
-
-    public Payment(final BigDecimal aLoanAmount)
-    {
-        this.loanAmount = aLoanAmount;
-
-        if (null == this.loanAmount)
-        {
-            throw new IllegalArgumentException("Loan amount cannot be null");
-        }
-    }
-
-    public BigDecimal getLoanAmount()
-    {
-        return this.loanAmount;
-    }
-
-    @Override
-    public String toString()
-    {
-
-        final StringBuilder str = new StringBuilder();
-
-        str.append("loanAmount:").append(this.getLoanAmount());
-
-        return str.toString();
-
-    }
-
-	@Override
-	public int compareTo(Payment aPayment) {
-		if (this == aPayment) {
-			return 0;
-		}
-
-		// the object fields are never null
-		final int comparison = this.loanAmount.compareTo(aPayment.loanAmount);
-		if (comparison != 0) // NOPMD
-		{
-			return comparison;
-		}
-
-		return 0;
-	}
+    /**
+     * Give the loan or amount of the payment in NOK.
+     * 
+     * @return the loan or amount of the payment
+     */
+    BigDecimal getLoanAmount();
 
 }
