@@ -875,7 +875,7 @@
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
                             <!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.jvmargs>-->
-                            <!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>-->
+                            <cargo.jvmargs><![CDATA[${newrelic.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
@@ -978,7 +978,7 @@
 				<execution>
 					<phase>package</phase>
 					<goals>
-					<goal>single</goal>
+						<goal>single</goal>
 					</goals>
 					<configuration>
 					<descriptorRefs>
@@ -1026,6 +1026,7 @@
 				</executions>
 			</plugin>
 			<!-- also make this webapp an osgi bundle -->
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -1035,7 +1036,7 @@
 					</archive>
 				</configuration>
 			</plugin>
-
+			-->
             <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
             <!-- To use, run: mvn package jboss-as:deploy -->
             <plugin>
@@ -1305,6 +1306,7 @@
 				<dependency>
 					<groupId>io.gatling</groupId>
 					<artifactId>gatling-charts</artifactId>
+					<scope>test</scope>
 				</dependency>
                 <dependency>
                     <!--<groupId>com.excilys.ebi.gatling.highcharts</groupId>-->
@@ -1333,6 +1335,7 @@
 				<dependency>
 					<groupId>org.scala-lang</groupId>
 					<artifactId>scala-reflect</artifactId>
+					<scope>test</scope>
 				</dependency>
 				<!--
 				<dependency>
@@ -1367,6 +1370,7 @@
 						</configuration>
                     </plugin>
 					<!-- enable scalatest -->
+					<!--
 					<plugin>
 						<groupId>org.scalatest</groupId>
 						<artifactId>scalatest-maven-plugin</artifactId>
@@ -1385,6 +1389,7 @@
 							</execution>
 						</executions>
 					</plugin>
+					-->
                     <plugin>
                         <!--<groupId>com.excilys.ebi.gatling</groupId>-->
                         <groupId>io.gatling</groupId>
