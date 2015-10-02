@@ -70,7 +70,7 @@ public class LoanService implements ILoanService
 
     public LoanService()
     {
-        throw new AssertionError();
+        //throw new AssertionError();
     }
 
     public LoanService(@Nonnull @Nonnegative final BigDecimal loanAmount, final int numberOfYears)

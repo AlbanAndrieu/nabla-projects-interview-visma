@@ -89,11 +89,11 @@ public class DeploymentITest
     @Test
     public void testBaseRest() throws Exception {
 
-        DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.BASE_URL);
+        DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.VISMA_URL);
 
         Client client = ClientBuilder.newClient();
 
-        WebTarget webTarget = client.target(DeploymentITest.BASE_URL);
+        WebTarget webTarget = client.target(DeploymentITest.VISMA_URL + "/");
         // webTarget.register(FilterForExampleCom.class);
         WebTarget resourceWebTarget = webTarget.path("rest");
         WebTarget booksTarget = resourceWebTarget.path("loan");

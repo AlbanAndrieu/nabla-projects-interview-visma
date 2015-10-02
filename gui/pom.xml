@@ -27,6 +27,8 @@
     -->
     <properties>
         <gatling.version>2.1.7</gatling.version>
+        <scala.version>2.11.7</scala.version>
+        <netty.version>3.8.0.Final</netty.version>
 
         <!-- for jmeter -->
         <performancetest.webservice.path>/visma</performancetest.webservice.path>
@@ -41,6 +43,21 @@
         <org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>
 
         <org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>
+
+		<cargo.monitoring.jmx.rmi.port>3099</cargo.monitoring.jmx.rmi.port>
+		<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>
+		<!--
+		<cargo.jetty.jmx.activation>-Dcom.sun.management.jmxremote=true
+-Dcom.sun.management.jmxremote.ssl=false
+-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.port=${cargo.monitoring.jmx.rmi.port}
+-Djetty.jmxrmihost=localhost
+-Djetty.jmxrmiport=4099
+        </cargo.jetty.jmx.activation>
+        -->
+        <cargo.jetty.jmx.activation></cargo.jetty.jmx.activation>
+
+		<cargo.jmx.activation>${cargo.jetty.jmx.activation}</cargo.jmx.activation>
     </properties>
 
 
@@ -872,6 +889,17 @@
                             <cargo.tomcat.manager.url>${deploy.url}</cargo.tomcat.manager.url>
                             <cargo.remote.username>${cargo.remote.user}</cargo.remote.username>
                             <cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
+
+							<!--
+                            <com.sun.management.jmxremote></com.sun.management.jmxremote>
+                            <com.sun.management.jmxremote.port>1099</com.sun.management.jmxremote.port>
+                            <com.sun.management.jmxremote.ssl>false</com.sun.management.jmxremote.ssl>
+                            <com.sun.management.jmxremote.authenticate>false</com.sun.management.jmxremote.authenticate>
+                            <com.sun.management.jmxremote>true</com.sun.management.jmxremote>
+
+                            <java.rmi.server.hostname>localhost</java.rmi.server.hostname>
+							-->
+
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
                             <!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.jvmargs>-->
@@ -882,7 +910,6 @@
                             <!--<![CDATA[-Xdebug -Xrunjdwp:transport=dt_socket,address=${cargo.debug.address},server=y,suspend=${cargo.debug.suspend} -noverify ${javaagent}]]>-->
                             <cargo.jetty.createContextXml>false</cargo.jetty.createContextXml>
                         </properties>
-                        <!--
 						<configfiles>
 							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-rewrite.xml</file>
@@ -897,6 +924,11 @@
 								<todir>etc</todir>
 							</configfile>
 							<configfile>
+								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-jmx-remote.xml</file>
+								<todir>etc</todir>
+							</configfile>
+							<!--
+							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/etc/keystore</file>
 								<todir>etc</todir>
 							</configfile>
@@ -904,6 +936,7 @@
 								<file>${project.basedir}/src/main/config/demo-base/etc/jetty.csr</file>
 								<todir>etc</todir>
 							</configfile>
+							-->
 							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/webapps/test.xml</file>
 								<todir>webapps</todir>
@@ -913,7 +946,6 @@
 								<todir></todir>
 							</configfile>
 						</configfiles>
-						-->
                     </configuration>
                     <deployables>
                         <deployable>
@@ -1303,6 +1335,13 @@
                     </property>
             </activation>
             <dependencies>
+				<!--
+				<dependency>
+					<groupId>com.typesafe</groupId>
+					<artifactId>config</artifactId>
+					<version>1.2.1</version>
+				</dependency>
+				-->
 				<dependency>
 					<groupId>io.gatling</groupId>
 					<artifactId>gatling-charts</artifactId>
@@ -1336,6 +1375,11 @@
 					<groupId>org.scala-lang</groupId>
 					<artifactId>scala-reflect</artifactId>
 					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>io.netty</groupId>
+					<artifactId>netty</artifactId>
+					<version>${netty.version}</version>
 				</dependency>
 				<!--
 				<dependency>
@@ -1400,11 +1444,13 @@
                                 <goals>
                                     <goal>execute</goal>
                                 </goals>
+                                <!--
                                 <configuration>
                                     <includes>
                                         <include>**/RecordedSimulation.scala</include>
                                     </includes>
                                 </configuration>
+                                -->
                             </execution>
                         </executions>
                     </plugin>
