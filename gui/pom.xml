@@ -50,6 +50,7 @@
 		<jetty.jmxremote.rmiport>3099</jetty.jmxremote.rmiport>
 		<!--<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>-->
 
+		<!--
 		<cargo.jetty.jmx.activation>-Dcom.sun.management.jmxremote=true
 -Dcom.sun.management.jmxremote.ssl=false
 -Dcom.sun.management.jmxremote.authenticate=false
@@ -57,10 +58,9 @@
 -Djetty.jmxrmihost=${jetty.jmxremote.rmihost}
 -Djetty.jmxrmiport=${jetty.jmxremote.rmiport}
          </cargo.jetty.jmx.activation>
+		-->
 
-        <!--
         <cargo.jetty.jmx.activation></cargo.jetty.jmx.activation>
-        -->
 
 		<cargo.jmx.activation>${cargo.jetty.jmx.activation}</cargo.jmx.activation>
     </properties>
