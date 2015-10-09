@@ -36,6 +36,7 @@ package com.nabla.selenium.tests;
 import java.math.BigDecimal;
 
 import org.jboss.arquillian.container.test.api.Deployment;
+//import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.Archive;
@@ -55,6 +56,7 @@ import com.nabla.project.visma.QueryBean;
 import com.nabla.project.visma.api.ILoanService;
 
 @RunWith(Arquillian.class)
+//@RunAsClient
 public class LoanServiceITest
 {
 

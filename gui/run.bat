@@ -21,9 +21,9 @@ REM BUILD with jetty9x
 mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090  > install.log
 REM BUILD with jetty9x + integration tests
 REM ------------------- DEFAULT -----------------------
-mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
+mvn clean install -Dserver=jetty9x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Psample,jacoco,integration,run-its,arq-jbossas-managed -Djacoco.outputDir=./target > install.log
 REM BUILD with tomcat7x + integration tests
-mvn clean install -Dserver=tomcat7x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8280 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
+mvn clean install -Dserver=tomcat7x -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8280 -Psample,jacoco,integration,run-its,arq-jbossas-managed -Djacoco.outputDir=./target > install.log
 REM BUILD with tomcat8x + integration tests
 REM OK mvn help:effective-pom -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > effective.log
 mvn clean install -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log

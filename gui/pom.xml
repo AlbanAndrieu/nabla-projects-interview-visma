@@ -35,6 +35,7 @@
 
         <jetty9.version>9.3.3.v20150827</jetty9.version>
         <org.jboss.arquillian.version>1.1.9.Final</org.jboss.arquillian.version>
+        <org.jboss.arquillian.bom.version>${org.jboss.arquillian.version}</org.jboss.arquillian.bom.version>
         <version.shrinkwrap_shrinkwrap>1.2.2</version.shrinkwrap_shrinkwrap>
 		<version.shrinkwrap_descriptors>2.0.0-alpha-7</version.shrinkwrap_descriptors>
 		<version.shrinkwrap_resolver>2.1.1</version.shrinkwrap_resolver>
@@ -45,17 +46,21 @@
         <org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>
 
 		<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>
-		<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>
-		<!--
+		<jetty.jmxremote.rmihost>localhost</jetty.jmxremote.rmihost>
+		<jetty.jmxremote.rmiport>3099</jetty.jmxremote.rmiport>
+		<!--<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>-->
+
 		<cargo.jetty.jmx.activation>-Dcom.sun.management.jmxremote=true
 -Dcom.sun.management.jmxremote.ssl=false
 -Dcom.sun.management.jmxremote.authenticate=false
 -Dcom.sun.management.jmxremote.port=${cargo.monitoring.jmx.rmi.port}
--Djetty.jmxrmihost=localhost
--Djetty.jmxrmiport=4099
-        </cargo.jetty.jmx.activation>
-        -->
+-Djetty.jmxrmihost=${jetty.jmxremote.rmihost}
+-Djetty.jmxrmiport=${jetty.jmxremote.rmiport}
+         </cargo.jetty.jmx.activation>
+
+        <!--
         <cargo.jetty.jmx.activation></cargo.jetty.jmx.activation>
+        -->
 
 		<cargo.jmx.activation>${cargo.jetty.jmx.activation}</cargo.jmx.activation>
     </properties>
@@ -868,7 +873,7 @@
 			    <port>${cargo.monitoring.jmx.rmi.port}</port>
 			    <!--<port>10088</port>-->
 			    <!--<output>target/mem-tracker/memory-usage.xml</output>-->
-			</configuration>				
+			</configuration>
 			<executions>
 				<execution>
 					<id>integration-test</id>
@@ -878,7 +883,7 @@
 					<phase>integration-test</phase>
 				</execution>
 			</executions>
-		</plugin>            
+		</plugin>
             <!-- for automatic running of integration tests with Jetty -->
             <!-- mvn org.codehaus.cargo:cargo-maven2-plugin:run -->
             <plugin>
@@ -933,33 +938,15 @@
                         </properties>
 						<configfiles>
 							<configfile>
-								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-rewrite.xml</file>
+								<file>${project.basedir}/src/main/config/demo-base/etc</file>
 								<todir>etc</todir>
 							</configfile>
 							<configfile>
-								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-gzip.xml</file>
-								<todir>etc</todir>
+								<file>${project.basedir}/src/main/config/demo-base/start.d</file>
+								<todir>start.d</todir>
 							</configfile>
 							<configfile>
-								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-https.xml</file>
-								<todir>etc</todir>
-							</configfile>
-							<configfile>
-								<file>${project.basedir}/src/main/config/demo-base/etc/jetty-jmx-remote.xml</file>
-								<todir>etc</todir>
-							</configfile>
-							<!--
-							<configfile>
-								<file>${project.basedir}/src/main/config/demo-base/etc/keystore</file>
-								<todir>etc</todir>
-							</configfile>
-							<configfile>
-								<file>${project.basedir}/src/main/config/demo-base/etc/jetty.csr</file>
-								<todir>etc</todir>
-							</configfile>
-							-->
-							<configfile>
-								<file>${project.basedir}/src/main/config/demo-base/webapps/test.xml</file>
+								<file>${project.basedir}/src/main/config/demo-base/webapps</file>
 								<todir>webapps</todir>
 							</configfile>
 							<configfile>
@@ -967,6 +954,15 @@
 								<todir></todir>
 							</configfile>
 						</configfiles>
+						<!-- https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html#Maven2PluginReferenceGuide-file -->
+                        <files>
+							<configfile>
+								<file>${project.basedir}/src/main/config/demo-base/keystore</file>
+								<todir>etc</todir>
+								<configfile>false</configfile>
+								<overwrite>true</overwrite>
+							</configfile>
+                        </files>
                     </configuration>
                     <deployables>
                         <deployable>
