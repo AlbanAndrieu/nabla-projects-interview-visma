@@ -82,6 +82,19 @@ Enjoy!!!
 
 ------------------
 
+### Swagger REST
+
+git clone https://github.com/swagger-api/swagger-ui.git
+cd swagger-ui
+sudo docker build -t swagger-ui-builder .
+sudo docker run -p 127.0.0.1:8080:8080 swagger-ui-builder
+
+http://localhost:8080
+
+http://online.swagger.io/
+
+http://editor.swagger.io/#/
+
 ### My resources
 
 Other resources can be found on my [googlecode](https://code.google.com/p/alban/w/list) wiki:

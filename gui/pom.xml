@@ -29,6 +29,9 @@
         <gatling.version>2.1.7</gatling.version>
         <scala.version>2.11.7</scala.version>
         <netty.version>3.8.0.Final</netty.version>
+        <swagger.version>1.5.3</swagger.version>
+        <jaxrs.doclet.version>0.0.4-SNAPSHOT</jaxrs.doclet.version>
+        <swagger.doclet.version>1.0.5</swagger.doclet.version>
 
         <!-- for jmeter -->
         <performancetest.webservice.path>/visma</performancetest.webservice.path>
@@ -44,13 +47,16 @@
         <org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>
 
         <org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>
+        <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
+        <maven.swagger.plugin.version>3.0.0</maven.swagger.plugin.version>
 
-		<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>
+		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
+		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
+
 		<jetty.jmxremote.rmihost>localhost</jetty.jmxremote.rmihost>
 		<jetty.jmxremote.rmiport>3099</jetty.jmxremote.rmiport>
 		<!--<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>-->
 
-		<!--
 		<cargo.jetty.jmx.activation>-Dcom.sun.management.jmxremote=true
 -Dcom.sun.management.jmxremote.ssl=false
 -Dcom.sun.management.jmxremote.authenticate=false
@@ -58,11 +64,11 @@
 -Djetty.jmxrmihost=${jetty.jmxremote.rmihost}
 -Djetty.jmxrmiport=${jetty.jmxremote.rmiport}
          </cargo.jetty.jmx.activation>
-		-->
 
-        <cargo.jetty.jmx.activation></cargo.jetty.jmx.activation>
+        <!--<cargo.jetty.jmx.activation></cargo.jetty.jmx.activation>-->
 
 		<cargo.jmx.activation>${cargo.jetty.jmx.activation}</cargo.jmx.activation>
+		<!--<jacoco.agent>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.agent.version}/org.jacoco.agent-${jacoco.agent.version}-runtime.jar=output=tcpserver</jacoco.agent>-->
     </properties>
 
 
@@ -646,6 +652,19 @@
 			<version>${jetty9.version}</version>
 			<type>jar</type>
 		</dependency>
+
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-core</artifactId>
+			<scope>compile</scope>
+			<version>${swagger.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.ws.rs</groupId>
+					<artifactId>jsr311-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
     </dependencies>
 
     <build>
@@ -929,7 +948,7 @@
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
                             <!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.jvmargs>-->
-                            <cargo.jvmargs><![CDATA[${newrelic.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>
+                            <cargo.jvmargs><![CDATA[${cargo.jmx.activation} ${jacoco.agent}]]></cargo.jvmargs>
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
@@ -972,7 +991,8 @@
                             <properties>
                                 <context>/visma</context>
                             </properties>
-                            <pingURL>http://${cargo.host}:${cargo.port}/visma</pingURL>
+                            <!--<pingURL>http://${cargo.host}:${cargo.port}/visma/rest/ping</pingURL>-->
+							<pingURL>http://${cargo.host}:${cargo.port}/visma/rest/loan/test</pingURL>
                             <pingTimeout>60000</pingTimeout> <!-- 1 minute -->
                         </deployable>
                     </deployables>
@@ -1099,7 +1119,8 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
 				<configuration>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<!--<scanIntervalSeconds>10</scanIntervalSeconds>-->
+                    <scanIntervalSeconds>0</scanIntervalSeconds> <!-- for jrebel -->
 					<!--TODO<jettyConfig>src/main/etc/jetty.xml</jettyConfig>-->
 					<useTestClasspath>false</useTestClasspath>
                     <httpConnector>
@@ -1148,6 +1169,21 @@
 					</dependency>
 				</dependencies>
             </plugin>
+
+			<plugin>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>jrebel-maven-plugin</artifactId>
+				<version>${maven.jrebel.plugin.version}</version>
+				<executions>
+					<execution>
+					<id>generate-rebel-xml</id>
+					<phase>process-resources</phase>
+					<goals>
+						<goal>generate</goal>
+					</goals>
+					</execution>
+				</executions>
+			</plugin>
 
             <!-- start app using java -jar target/dependency/jetty-runner.jar target/*.war -port 9090 -->
             <plugin>
@@ -1281,6 +1317,126 @@
                 </executions>
             </plugin>
             -->
+			<plugin>
+				<groupId>com.sebastian-daschner</groupId>
+				<artifactId>jaxrs-analyzer-maven-plugin</artifactId>
+				<version>${maven.jaxrs.analyzer.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>analyze-jaxrs</goal>
+						</goals>
+						<configuration>
+							<!--<backend>plaintext</backend>-->
+							<backend>swagger</backend>
+							<deployedDomain>localhost</deployedDomain>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!--
+			<plugin>
+				<groupId>com.garethevans.plugin</groupId>
+				<artifactId>swagger-codegen-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>src/main/resources/api.yaml</inputSpec>
+							<language>java</language>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			-->
+			<plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>${maven.swagger.plugin.version}</version>
+                <configuration>
+                    <apiSources>
+                      <apiSource>
+                            <springmvc>false</springmvc>
+                            <!--<locations>com.github.kongchen.swagger.sample.wordnik.resource</locations>-->
+                            <locations>com.nabla.project.visma</locations>
+                            <schemes>http,https</schemes>
+                            <host>localhost:9090</host>
+							<basePath>/visma</basePath>
+                            <!--
+                            <host>petstore.swagger.wordnik.com</host>
+                            <basePath>/api</basePath>
+                            -->
+                            <info>
+                                <title>Swagger Maven Plugin Sample</title>
+                                <version>v1</version>
+                                <description>This is a sample </description>
+                                <termsOfService>
+                                    http://www.github.com/kongchen/swagger-maven-plugin
+                                </termsOfService>
+                                <contact>
+                                    <email>kongchen@gmail.com</email>
+                                    <name>Kong Chen</name>
+                                    <url>http://kongch.com</url>
+                                </contact>
+                                <license>
+                                    <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+                                    <name>Apache 2.0</name>
+                                </license>
+                            </info>
+                            <!-- Support classpath or file absolute path here.
+                            1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
+                            2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
+                                "${basedir}/src/main/resources/template/hello.html" -->
+                            <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
+                            <outputPath>${basedir}/build/swagger/document.html</outputPath>
+                            <swaggerDirectory>${basedir}/build/swagger/swagger-ui</swaggerDirectory>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-service-docs</id>
+                        <phase>generate-resources</phase>
+                        <configuration>
+							<!--
+                            <doclet>com.hypnoticocelot.jaxrs.doclet.ServiceDoclet</doclet>
+                            <docletArtifact>
+                                <groupId>com.hypnoticocelot</groupId>
+                                <artifactId>jaxrs-doclet</artifactId>
+                                <version>${jaxrs.doclet.version}</version>
+                            </docletArtifact>
+                            -->
+                            <doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
+                            <docletArtifact>
+                                <groupId>com.carma</groupId>
+                                <artifactId>swagger-doclet</artifactId>
+                                <version>1.0.5</version>
+                            </docletArtifact>
+                            <reportOutputDirectory>${project.build.outputDirectory}</reportOutputDirectory>
+                            <useStandardDocletOptions>false</useStandardDocletOptions>
+                            <additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath /</additionalparam>
+                        </configuration>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

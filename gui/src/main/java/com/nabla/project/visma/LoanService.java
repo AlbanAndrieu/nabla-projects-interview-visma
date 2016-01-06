@@ -33,16 +33,23 @@
  */
 package com.nabla.project.visma;
 
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,8 +59,10 @@ import com.nabla.project.visma.api.ILoanService;
 import com.nabla.project.visma.api.IProduct;
 
 //The @Stateless annotation eliminates the need for manual transaction
-//TODO @Stateless
 @Path("/loan")
+// @Stateless
+// @Produces(MediaType.APPLICATION_JSON)
+// @Consumes(MediaType.APPLICATION_JSON)
 public class LoanService implements ILoanService
 {
 
@@ -66,6 +75,7 @@ public class LoanService implements ILoanService
 
     // IProduct product;
 
+    // @Inject
     ILoan                                 loan;
 
     public LoanService()
@@ -116,9 +126,35 @@ public class LoanService implements ILoanService
         return loan.getTotalPayment();
     }
 
+    @GET
+    @ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid value") })
+    public Response getTotalPayment(
+            @DefaultValue("100000") @QueryParam("loanAmount") @Nonnull @Nonnegative int loanAmount,
+            @DefaultValue("10") @QueryParam("numberOfYears") int numberOfYears) {
+
+        IProduct product = new House(this.loanAmount);
+        this.loan = new HouseLoan(product, this.numberOfYears);
+
+        LoanService.LOGGER.debug(
+                "Start getTotalPayment for loan amount: {} and number of years : {}", loan
+                        .getProduct().getPrice(), loan.getPaybackTime());
+
+        return Response.ok("TotalPayment: " + loan.getTotalPayment()).build();
+    }
+
     /*
      * @GET public Collection<Book> list() { return books; }
      */
+    /*
+     * curl -XGET http://localhost:8090/rest/orders/2004-12-24 Year: 2004, month: 12, day: 24%
+     */
+    @GET
+    @Path("/orders/{year:\\d{4}}-{month:\\d{2}}-{day:\\d{2}}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response getOrders(@PathParam("year") final int year,
+            @PathParam("month") final int month, @PathParam("day") final int day) {
+        return Response.ok("Year: " + year + ", month: " + month + ", day: " + day).build();
+    }
 
     @GET
     @Path("test")

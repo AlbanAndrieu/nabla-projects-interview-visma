@@ -7,8 +7,17 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -37,8 +46,28 @@ public class DeploymentITest
 
     private static long                   DEPLOY_WAIT     = 10;
 
+    /*
+     *  fix for
+     *    Exception in thread "main" javax.net.ssl.SSLHandshakeException:
+     *       sun.security.validator.ValidatorException:
+     *           PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException:
+     *               unable to find valid certification path to requested target
+     */
+    static TrustManager[] trustAllCerts = new TrustManager[] {
+       new X509TrustManager() {
+          public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+            return null;
+          }
+
+          public void checkClientTrusted(X509Certificate[] certs, String authType) {  }
+
+          public void checkServerTrusted(X509Certificate[] certs, String authType) {  }
+
+       }
+    };
+    
     @BeforeClass
-    public static void setUp() throws InterruptedException
+    public static void setUp() throws InterruptedException, NoSuchAlgorithmException, KeyManagementException
     {
 
         DeploymentITest.BASE_URL = System.getProperty("webdriver.base.url");
@@ -57,6 +86,20 @@ public class DeploymentITest
 
         DeploymentITest.LOGGER.info("Wainting for deploy to be finished before starting test (in seconds) : {}", DEPLOY_WAIT);
         TimeUnit.SECONDS.sleep(DEPLOY_WAIT);
+        
+        SSLContext sc = SSLContext.getInstance("SSL");
+        
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        // Create all-trusting host name verifier
+        HostnameVerifier allHostsValid = new HostnameVerifier() {
+            public boolean verify(String hostname, SSLSession session) {
+              return true;
+            }
+        };
+        // Install the all-trusting host verifier
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);                
     }
 
     public static int getResponseCode(String urlString) throws MalformedURLException, IOException
