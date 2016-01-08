@@ -55,17 +55,20 @@ public class DeploymentITest
      */
     static TrustManager[] trustAllCerts = new TrustManager[] {
        new X509TrustManager() {
-          public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+          @Override
+        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
             return null;
           }
 
-          public void checkClientTrusted(X509Certificate[] certs, String authType) {  }
+          @Override
+        public void checkClientTrusted(X509Certificate[] certs, String authType) {  }
 
-          public void checkServerTrusted(X509Certificate[] certs, String authType) {  }
+          @Override
+        public void checkServerTrusted(X509Certificate[] certs, String authType) {  }
 
        }
     };
-    
+
     @BeforeClass
     public static void setUp() throws InterruptedException, NoSuchAlgorithmException, KeyManagementException
     {
@@ -86,20 +89,21 @@ public class DeploymentITest
 
         DeploymentITest.LOGGER.info("Wainting for deploy to be finished before starting test (in seconds) : {}", DEPLOY_WAIT);
         TimeUnit.SECONDS.sleep(DEPLOY_WAIT);
-        
+
         SSLContext sc = SSLContext.getInstance("SSL");
-        
+
         sc.init(null, trustAllCerts, new java.security.SecureRandom());
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
         // Create all-trusting host name verifier
         HostnameVerifier allHostsValid = new HostnameVerifier() {
+            @Override
             public boolean verify(String hostname, SSLSession session) {
               return true;
             }
         };
         // Install the all-trusting host verifier
-        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);                
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
     }
 
     public static int getResponseCode(String urlString) throws MalformedURLException, IOException
@@ -151,7 +155,7 @@ public class DeploymentITest
         // assertEquals(responseTest.getStatus(), 200);
         // System.out.println("Response : " + responseTest.readEntity(String.class));
 
-        WebTarget helloworldWebTargetWithQueryParam = booksTarget.queryParam("test", "10");
+        // WebTarget helloworldWebTargetWithQueryParam = booksTarget.queryParam("test", "10");
 
         Invocation.Builder invocationBuilder = booksTestTarget
                 .request(MediaType.TEXT_PLAIN_TYPE);

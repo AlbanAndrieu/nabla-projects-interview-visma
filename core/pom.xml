@@ -14,6 +14,10 @@
 	<name>Maven core for visma</name>
 	<description>Maven core for visma</description>
 
+	<properties>
+		<bundle.namespace>com.nabla.project.sample.interview.visma.core</bundle.namespace>
+	</properties>
+
 	<!-- DEPENDENCIES -->
 	<dependencies>
 		<dependency>
@@ -55,14 +59,27 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<archive>
 						<manifest>
 							<mainClass>com.nabla.project.visma.Visma</mainClass>
 							<addClasspath>true</addClasspath>
 						</manifest>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
 			</plugin>
 
 			<plugin>
