@@ -51,9 +51,11 @@
         <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
         <maven.swagger.plugin.version>3.0.0</maven.swagger.plugin.version>
         <!--<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>-->
+        <!--<groovy.eclipse.compiler.version>2.8.0-01</groovy.eclipse.compiler.version>-->
+        <groovy.eclipse.compiler.version>2.9.0-01</groovy.eclipse.compiler.version>
         <!--<groovy.eclipse.batch.version>2.4.3-01</groovy.eclipse.batch.version>-->
         <groovy.eclipse.batch.version>2.3.7-01</groovy.eclipse.batch.version>
-        <groovy.version>2.4.5</groovy.version>
+        <!--<groovy.version>2.4.5</groovy.version>-->
         <groovy.version>2.3.7</groovy.version>
 
 		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
@@ -487,6 +489,7 @@
             <scope>compile</scope>
         </dependency>
 
+		<!--
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>core</artifactId>
@@ -495,6 +498,7 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		-->
 
 		<dependency>
 			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
