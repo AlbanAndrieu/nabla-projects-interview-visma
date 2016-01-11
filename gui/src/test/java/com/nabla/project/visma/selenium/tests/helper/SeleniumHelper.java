@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -155,7 +155,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
 
     /**
      * DOCUMENT ME! albandri.
-     * 
+     *
      * @param driver
      * @param SELENIUM
      * @throws InterruptedException

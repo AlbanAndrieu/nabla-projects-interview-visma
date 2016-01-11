@@ -892,7 +892,6 @@
                 </executions>
             </plugin>
             -->
-            <!--
 			<plugin>
 				<groupId>com.sinapsi.memtracker</groupId>
 				<artifactId>mem-tracker-maven-plugin</artifactId>
@@ -911,7 +910,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			-->
             <!-- for automatic running of integration tests with Jetty -->
             <!-- mvn org.codehaus.cargo:cargo-maven2-plugin:run -->
             <plugin>
@@ -1025,6 +1023,9 @@
 					  </goals>
 					  <configuration>
 						<timeout>60000</timeout>
+						<properties>
+							<cargo.jvmargs><![CDATA[]]></cargo.jvmargs>
+						</properties>
 					  </configuration>
 					</execution>
 				</executions>
