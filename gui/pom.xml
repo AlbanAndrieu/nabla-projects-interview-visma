@@ -30,6 +30,7 @@
         <scala.version>2.11.7</scala.version>
         <netty.version>3.8.0.Final</netty.version>
         <swagger.version>1.5.3</swagger.version>
+        <lombok.version>1.14.8</lombok.version>
         <jaxrs.doclet.version>0.0.4-SNAPSHOT</jaxrs.doclet.version>
         <swagger.doclet.version>1.0.5</swagger.doclet.version>
 
@@ -49,6 +50,11 @@
         <org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>
         <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
         <maven.swagger.plugin.version>3.0.0</maven.swagger.plugin.version>
+        <!--<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>-->
+        <!--<groovy.eclipse.batch.version>2.4.3-01</groovy.eclipse.batch.version>-->
+        <groovy.eclipse.batch.version>2.3.7-01</groovy.eclipse.batch.version>
+        <groovy.version>2.4.5</groovy.version>
+        <groovy.version>2.3.7</groovy.version>
 
 		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
 		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
@@ -663,6 +669,12 @@
 		</dependency>
 
 		<dependency>
+		  <groupId>org.projectlombok</groupId>
+		  <artifactId>lombok</artifactId>
+		  <version>${lombok.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-core</artifactId>
 			<scope>compile</scope>
@@ -775,13 +787,20 @@
 			</plugin>
 			-->
 			<!-- say to maven to use groovy-eclipse-compiler in order to compile groovy files -->
-			<!--
             <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <extensions>true</extensions>
                     <configuration>
                             <compilerId>groovy-eclipse-compiler</compilerId>
                             <verbose>true</verbose>
+                            <!--
+                            <compilerArguments>
+								<javaAgentClass>lombok.core.Agent</javaAgentClass>
+							</compilerArguments>
+							-->
+							<!--<fork>true</fork>-->
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -796,7 +815,17 @@
 						</dependency>
                 </dependencies>
             </plugin>
-            -->
+			<!--
+			This plugin is important, because without
+			<extensions>true</extensions> no files will be compiled.
+			See http://groovy.codehaus.org/Groovy-Eclipse+compiler+plugin+for+Maven
+			-->
+            <plugin>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-eclipse-compiler</artifactId>
+                <version>${groovy.eclipse.compiler.version}</version>
+                <extensions>true</extensions>
+            </plugin>
             <!-- make sure our code doesn't have 1.6 dependencies except where we know it see * http://mojo.codehaus.org/animal-sniffer/index.html * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
             <!--
 			<plugin>
@@ -916,6 +945,7 @@
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <!--<version>${maven.cargo.maven2.plugin.version}</version>-->
+                <extensions>true</extensions>
                 <configuration>
                     <skip>${maven.test.skip}</skip>
                     <wait>${cargo.wait}</wait>
@@ -954,8 +984,8 @@
 
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
-                            <!--<cargo.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.jvmargs>-->
-                            <cargo.jvmargs><![CDATA[${cargo.jmx.activation} ${jacoco.agent}]]></cargo.jvmargs>
+                            <!--<cargo.start.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.start.jvmargs>-->
+                            <cargo.start.jvmargs><![CDATA[${cargo.jmx.activation} ${jacoco.agent}]]></cargo.start.jvmargs>
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
@@ -1024,7 +1054,8 @@
 					  <configuration>
 						<timeout>60000</timeout>
 						<properties>
-							<cargo.jvmargs><![CDATA[]]></cargo.jvmargs>
+							<cargo.jmx.activation></cargo.jmx.activation>
+							<cargo.jvmargs><![CDATA[EMPTY]]></cargo.jvmargs>
 						</properties>
 					  </configuration>
 					</execution>
@@ -1435,7 +1466,7 @@
                             <docletArtifact>
                                 <groupId>com.carma</groupId>
                                 <artifactId>swagger-doclet</artifactId>
-                                <version>1.0.5</version>
+                                <version>${swagger.doclet.version}</version>
                             </docletArtifact>
                             <reportOutputDirectory>${project.build.outputDirectory}</reportOutputDirectory>
                             <useStandardDocletOptions>false</useStandardDocletOptions>
