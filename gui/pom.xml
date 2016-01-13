@@ -989,7 +989,7 @@
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
                             <!--<cargo.start.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.start.jvmargs>-->
-                            <cargo.start.jvmargs><![CDATA[${cargo.jmx.activation} ${jacoco.agent}]]></cargo.start.jvmargs>
+                            <cargo.start.jvmargs><![CDATA[${jacoco.agent.it.arg} ${cargo.jmx.activation} ${newrelic.agent}]]></cargo.start.jvmargs>
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
@@ -1057,10 +1057,12 @@
 					  </goals>
 					  <configuration>
 						<timeout>60000</timeout>
+						<!--
 						<properties>
 							<cargo.jmx.activation></cargo.jmx.activation>
 							<cargo.jvmargs><![CDATA[EMPTY]]></cargo.jvmargs>
 						</properties>
+						-->
 					  </configuration>
 					</execution>
 				</executions>
