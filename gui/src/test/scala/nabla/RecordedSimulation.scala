@@ -11,7 +11,7 @@ class RecordedSimulation extends Simulation {
   protected val port = "9090"
 
 	val httpProtocol = http
-			.baseURL("http://" + host + ":" + port)
+			.baseURL("http://" + host + ":" + port + "/visma")
 			.inferHtmlResources()
 			.acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
 			.acceptEncodingHeader("gzip, deflate")
@@ -34,10 +34,10 @@ class RecordedSimulation extends Simulation {
 
 	val scn = scenario("RecordedSimulation")
 		.exec(http("request_0")
-			.get("/visma/loan.xhtml"))
+			.get("/loan.xhtml"))
 		.pause(11)
 		.exec(http("request_1")
-			.post("/visma/loan.xhtml")
+			.post("/loan.xhtml")
 			.formParam("loan_form", "loan_form")
 			.formParam("loan_form:loanType", "1")
 			.formParam("loan_form:loanAmount", "100000")
