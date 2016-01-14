@@ -1045,9 +1045,11 @@
 						</goals>
 						<configuration>
 							<timeout>240000</timeout>
+							<!--
 							<properties>
 								<cargo.jvmargs>${jacoco.agent.it.arg}</cargo.jvmargs>
 							</properties>
+							-->
 						</configuration>
 					</execution>
 					<execution>

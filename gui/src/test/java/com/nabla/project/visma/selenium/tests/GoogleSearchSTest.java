@@ -33,21 +33,21 @@
  */
 package com.nabla.project.visma.selenium.tests;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.os.WindowsUtils;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
+
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -55,13 +55,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class GoogleSearchSTest
 {
 
-    protected WebDriver        driver;
-    private final StringBuffer verificationErrors = new StringBuffer();
-
-    @Before
-    public void setUp()
+    @BeforeClass
+    public static void setUp() throws Exception
     {
-        WindowsUtils.tryToKillByName("firefox.exe");
         // ProfilesIni allProfiles = new ProfilesIni();
         // FirefoxProfile profile = allProfiles.getProfile("/workspace/users/albandri10/.mozilla/firefox/xhvt8rwp.selenium/");
         // FirefoxProfile profile = new FirefoxProfile();
@@ -69,19 +65,23 @@ public class GoogleSearchSTest
         // driver = new FirefoxDriver(binary, profile);
         // this.driver = new FirefoxDriver(profile);
         // this.driver = new FirefoxDriver();
-        this.driver = new ChromeDriver();
-        this.driver.manage().window().maximize();
-        this.driver.get("http://www.google.com");
+
+        SeleniumHelper.setUp();
+
+    }
+
+    @AfterClass
+    public static void tearDown() throws Exception {
+        SeleniumHelper.tearDown();
     }
 
     @Test
     public void testGoogleSearch()
     {
-        // try
-        // {
+        SeleniumHelper.getDriver().get("http://www.google.com");
 
         // Find the text input element by its name
-        final WebElement element = this.driver.findElement(By.name("q"));
+        final WebElement element = SeleniumHelper.getDriver().findElement(By.name("q"));
 
         // Enter something to search for
         element.sendKeys("Selenium testing tools cookbook");
@@ -91,7 +91,7 @@ public class GoogleSearchSTest
 
         // Google's search is rendered dynamically with JavaScript.
         // Wait for the page to load, timeout after 10 seconds
-        (new WebDriverWait(this.driver, 10)).until(new ExpectedCondition<Boolean>()
+        (new WebDriverWait(SeleniumHelper.getDriver(), 10)).until(new ExpectedCondition<Boolean>()
         {
             @Override
             public Boolean apply(final WebDriver d)
@@ -102,29 +102,8 @@ public class GoogleSearchSTest
 
         // Should see: selenium testing tools cookbook - Google Search
         // Assert.assertEquals("Selenium testing tools cookbook - Google Search", this.driver.getTitle());
-        Assert.assertEquals("Selenium testing tools cookbook - Recherche Google", this.driver.getTitle());
-        /*
-         * } catch (final Error e)
-         * {
-         * // Capture and append Exceptions/Errors
-         * this.verificationErrors.append(e.toString());
-         * }
-         */
-    }
+        Assert.assertEquals("Selenium testing tools cookbook - Recherche Google", SeleniumHelper
+                .getDriver().getTitle());
 
-    @After
-    public void tearDown() throws Exception
-    {
-        if (null != this.driver)
-        {
-            // Close the browser
-            this.driver.quit();
-        }
-
-        final String verificationErrorString = this.verificationErrors.toString();
-        if (!"".equals(verificationErrorString))
-        {
-            Assert.fail(verificationErrorString);
-        }
     }
 }

@@ -50,6 +50,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.os.WindowsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,6 +165,8 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     public static void setUp() throws InterruptedException
     {
 
+        WindowsUtils.tryToKillByName("firefox.exe");
+
         SeleniumHelper.BASE_URL = System.getProperty("webdriver.base.url");
 
         if (null == SeleniumHelper.BASE_URL)
@@ -222,6 +225,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
         SeleniumHelper.REAL_DRIVER.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
         // driver.manage().window().setSize(new Dimension(1920, 1080));
 
+        SeleniumHelper.REAL_DRIVER.manage().window().maximize();
         // this.driver.manage().deleteAllCookies();
         // this.driver.get(propertyKeysLoader("login.base.url"));
 

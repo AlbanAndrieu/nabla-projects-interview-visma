@@ -33,9 +33,6 @@
  */
 package com.nabla.project.visma;
 
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +124,7 @@ public class LoanService implements ILoanService
     }
 
     @GET
-    @ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid value") })
+    // @ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid value") })
     public Response getTotalPayment(
             @DefaultValue("100000") @QueryParam("loanAmount") @Nonnull @Nonnegative int loanAmount,
             @DefaultValue("10") @QueryParam("numberOfYears") int numberOfYears) {
