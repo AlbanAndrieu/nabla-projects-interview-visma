@@ -50,13 +50,11 @@
         <org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>
         <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
         <maven.swagger.plugin.version>3.0.0</maven.swagger.plugin.version>
-        <!--<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>-->
-        <!--<groovy.eclipse.compiler.version>2.8.0-01</groovy.eclipse.compiler.version>-->
-        <groovy.eclipse.compiler.version>2.9.0-01</groovy.eclipse.compiler.version>
-        <!--<groovy.eclipse.batch.version>2.4.3-01</groovy.eclipse.batch.version>-->
-        <groovy.eclipse.batch.version>2.3.7-01</groovy.eclipse.batch.version>
-        <!--<groovy.version>2.4.5</groovy.version>-->
-        <groovy.version>2.3.7</groovy.version>
+        <!--<groovy.eclipse.compiler.version>2.9.0-01</groovy.eclipse.compiler.version>-->
+        <groovy.eclipse.batch.version>2.4.3-01</groovy.eclipse.batch.version>
+        <!--<groovy.eclipse.batch.version>2.3.7-01</groovy.eclipse.batch.version>-->
+        <groovy.version>2.4.5</groovy.version>
+        <!--<groovy.version>2.3.7</groovy.version>-->
 
 		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
 		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
@@ -989,7 +987,7 @@
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
                             <!--<cargo.start.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.start.jvmargs>-->
-                            <cargo.start.jvmargs><![CDATA[${jacoco.agent.it.arg} ${cargo.jmx.activation} ${newrelic.agent}]]></cargo.start.jvmargs>
+                            <cargo.start.jvmargs><![CDATA[${cargo.jmx.activation} ${jacoco.agent.it.arg} ${newrelic.agent}]]></cargo.start.jvmargs>
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
@@ -999,7 +997,7 @@
 						<configfiles>
 							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/etc</file>
-								<todir>etc</todir>
+								<todir>etc</todir>	<todir>etc</todir>
 							</configfile>
 							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/start.d</file>
@@ -1040,17 +1038,22 @@
                 </configuration>
 				<executions>
 					<execution>
-					  <id>start</id>
-					  <phase>pre-integration-test</phase>
-					  <goals>
-						<goal>start</goal>
-					  </goals>
-					  <configuration>
-						<timeout>240000</timeout>
-					  </configuration>
+						<id>start-container</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<configuration>
+								<timeout>240000</timeout>
+								<properties>
+									<cargo.jvmargs>${jacoco.agent.it.arg}</cargo.jvmargs>
+								</properties>
+							</configuration>
+						</configuration>
 					</execution>
 					<execution>
-					  <id>stop</id>
+					  <id>stop-container</id>
 					  <phase>post-integration-test</phase>
 					  <goals>
 						<goal>stop</goal>
