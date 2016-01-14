@@ -55,6 +55,8 @@
         <!--<groovy.eclipse.batch.version>2.3.7-01</groovy.eclipse.batch.version>-->
         <groovy.version>2.4.5</groovy.version>
         <!--<groovy.version>2.3.7</groovy.version>-->
+        <cargo.core.uberjar.version>1.4.18-SNAPSHOT</cargo.core.uberjar.version>
+        <maven.cargo.maven2.plugin.version>1.4.18-SNAPSHOT</maven.cargo.maven2.plugin.version>
 
 		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
 		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
@@ -958,6 +960,8 @@
                         <timeout>480000</timeout> <!-- 8 minutes -->
                         <!--<containerId>${cargo.container}</containerId> -->
                         <!--<type>${cargo.container.type}</type> -->
+                        <log>${project.build.directory}/cargo.log</log>
+						<logLevel>debug</logLevel>
                     </container>
                     <configuration>
                         <!--<type>${cargo.configuration.type}</type>-->
@@ -986,8 +990,9 @@
 
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
-                            <!--<cargo.start.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent}]]></cargo.start.jvmargs>-->
-                            <cargo.start.jvmargs><![CDATA[${cargo.jmx.activation} ${jacoco.agent.it.arg} ${newrelic.agent}]]></cargo.start.jvmargs>
+                            <!--<cargo.start.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent} ${jacoco.agent.it.arg} ${newrelic.agent}]]></cargo.start.jvmargs>-->
+                            <cargo.start.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.start.jvmargs>
+                            <!--<cargo.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>-->
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
                             <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
@@ -1038,7 +1043,7 @@
                 </configuration>
 				<executions>
 					<execution>
-						<id>start-container</id>
+						<id>start-container-overrided</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>start</goal>
@@ -1046,26 +1051,29 @@
 						<configuration>
 							<timeout>240000</timeout>
 							<!--
-							<properties>
-								<cargo.jvmargs>${jacoco.agent.it.arg}</cargo.jvmargs>
-							</properties>
+							<configuration>
+								<properties>
+									<cargo.start.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.start.jvmargs>
+								</properties>
+							</configuration>
 							-->
 						</configuration>
 					</execution>
 					<execution>
-					  <id>stop-container</id>
+					  <id>stop-container-overrided</id>
 					  <phase>post-integration-test</phase>
 					  <goals>
 						<goal>stop</goal>
 					  </goals>
 					  <configuration>
 						<timeout>60000</timeout>
-						<!--
-						<properties>
-							<cargo.jmx.activation></cargo.jmx.activation>
-							<cargo.jvmargs><![CDATA[EMPTY]]></cargo.jvmargs>
-						</properties>
-						-->
+						<configuration>
+							<properties>
+								<cargo.jmx.activation></cargo.jmx.activation>
+								<cargo.start.jvmargs></cargo.start.jvmargs>
+								<cargo.jvmargs><![CDATA[]]></cargo.jvmargs>
+							</properties>
+						</configuration>
 					  </configuration>
 					</execution>
 				</executions>
@@ -1094,23 +1102,23 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
-				<execution>
-					<phase>package</phase>
-					<goals>
-						<goal>single</goal>
-					</goals>
-					<configuration>
-					<descriptorRefs>
-						<descriptorRef>config</descriptorRef>
-					</descriptorRefs>
-					<descriptors>
-						<descriptor>src/main/assembly/web-bundle.xml</descriptor>
-					</descriptors>
-					<archive>
-						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-					</archive>
-					</configuration>
-				</execution>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptorRefs>
+								<descriptorRef>config</descriptorRef>
+							</descriptorRefs>
+							<descriptors>
+								<descriptor>src/main/assembly/web-bundle.xml</descriptor>
+							</descriptors>
+							<archive>
+								<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+							</archive>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
