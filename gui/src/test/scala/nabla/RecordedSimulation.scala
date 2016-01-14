@@ -38,12 +38,12 @@ class RecordedSimulation extends Simulation {
 		.pause(11)
 		.exec(http("request_1")
 			.post("/loan.xhtml")
-			.formParam("loan_form", "loan_form")
+			//.formParam("loan_form", "loan_form")
 			.formParam("loan_form:loanType", "1")
 			.formParam("loan_form:loanAmount", "100000")
 			.formParam("loan_form:paybackTime", "10")
 			.formParam("loan_form:payment", "Show monthlty payments")
-			.formParam("javax.faces.ViewState", "5372695818220130002:-6817230658628640359"))
+			//.formParam("javax.faces.ViewState", "5372695818220130002:-6817230658628640359"))
 
 	setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
 }
