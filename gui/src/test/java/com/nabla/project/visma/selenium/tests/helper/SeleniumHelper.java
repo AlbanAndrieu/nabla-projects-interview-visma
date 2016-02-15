@@ -261,6 +261,17 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
             // try
             // {
             // driver = new FirefoxDriver(new FirefoxProfile());
+
+            //ChromeOptions options = new ChromeOptions();
+        	//options.addArguments("no-sandbox");
+
+        	//CAPABILITIES = DesiredCapabilities.chrome();
+        	//CAPABILITIES.setCapability(ChromeOptions.CAPABILITY, options);
+
+        	//CAPABILITIES.setJavascriptEnabled(true);
+
+        	//SimpleWebDriverSTest.REAL_DRIVER = new ChromeDriver(CAPABILITIES);
+
             SeleniumHelper.REAL_DRIVER = new ChromeDriver();
             // } finally
             // {

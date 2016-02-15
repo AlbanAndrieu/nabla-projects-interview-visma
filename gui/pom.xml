@@ -47,7 +47,7 @@
         <org.jboss.shrinkwrap.resolver.bom.version>${version.shrinkwrap_resolver}</org.jboss.shrinkwrap.resolver.bom.version>
         <org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>
 
-        <org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>
+        <!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->
         <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
         <maven.swagger.plugin.version>3.0.0</maven.swagger.plugin.version>
         <!--<groovy.eclipse.compiler.version>2.9.0-01</groovy.eclipse.compiler.version>-->
@@ -55,8 +55,10 @@
         <!--<groovy.eclipse.batch.version>2.3.7-01</groovy.eclipse.batch.version>-->
         <groovy.version>2.4.5</groovy.version>
         <!--<groovy.version>2.3.7</groovy.version>-->
+        <!--
         <cargo.core.uberjar.version>1.4.18-SNAPSHOT</cargo.core.uberjar.version>
         <maven.cargo.maven2.plugin.version>1.4.18-SNAPSHOT</maven.cargo.maven2.plugin.version>
+        -->
 
 		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
 		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
