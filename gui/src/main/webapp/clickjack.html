@@ -1,0 +1,36 @@
+<html>
+
+   <head>
+
+     <title>Clickjack test page</title>
+
+   </head>
+
+   <body>
+
+     <p>Website is to clickjacking!</p>
+
+	 <div class="framebox">
+		<a href="http://hackademix.net">
+		<img src="http://hackademix.net/logo.png">
+		</a>
+		<h1>X-FRAME-OPTIONS Demo</h1>
+		<a id="noscript" href="http://noscript.net">
+		<img src="http://software.informaction.com/data/noscript/logo.png">
+		</a>
+	  </div>
+	  <div class="framebox">
+		<h3>noscript.net - SAMEORIGIN</h3>
+		<iframe src="http://noscript.net"></iframe>
+	  </div>
+	  <div class="framebox">
+		<h3>zone - SAMEORIGIN</h3>
+		<iframe src="/loan.xhtml"></iframe>
+	  </div>
+	  <div class="framebox">
+		<h3>http://www.google.com/</h3>
+		<iframe src="http://www.misys.com/"></iframe>
+	  </div>
+
+	</body>
+</html>
