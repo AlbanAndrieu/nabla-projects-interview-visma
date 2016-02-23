@@ -1159,6 +1159,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<inherited>true</inherited>
 				<configuration>
 					<webXml>src/main/webapp/WEB-INF/web-overlay.xml</webXml>
 					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
