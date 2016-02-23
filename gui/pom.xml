@@ -297,6 +297,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <!--<version>${servlet.api.version}</version>-->
+            <scope>${scope.tomcat.never.type}</scope>
         </dependency>
 
         <dependency>

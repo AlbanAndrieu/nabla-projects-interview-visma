@@ -147,7 +147,7 @@ public class LoanService implements ILoanService
      */
     @GET
     @Path("/orders/{year:\\d{4}}-{month:\\d{2}}-{day:\\d{2}}")
-    @Produces(MediaType.TEXT_PLAIN)
+    //@Produces(MediaType.TEXT_PLAIN)
     public Response getOrders(@PathParam("year") final int year,
             @PathParam("month") final int month, @PathParam("day") final int day) {
         return Response.ok("Year: " + year + ", month: " + month + ", day: " + day).build();
@@ -155,7 +155,7 @@ public class LoanService implements ILoanService
 
     @GET
     @Path("test")
-    @Produces(MediaType.TEXT_PLAIN)
+    //@Produces(MediaType.TEXT_PLAIN)
     public String test() {
         return "Test";
     }
