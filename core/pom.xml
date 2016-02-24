@@ -28,6 +28,13 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <exclusions>
+                <!-- circular dependency -->
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>               
         </dependency>
 		<!-- <dependency> <groupId>org.mockito</groupId> <artifactId>mockito-all</artifactId>
 			<scope>test</scope> </dependency> -->

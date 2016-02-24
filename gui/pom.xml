@@ -287,11 +287,13 @@
         </dependency>
 
         <!-- http://repo1.maven.org/maven -->
+        <!--
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <!--<version>${jstl.version}</version>-->
+            <version>${jstl.version}</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -564,6 +566,13 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <exclusions>
+                <!-- circular dependency -->
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Log4J Adapter for SLF4J
         <dependency>
