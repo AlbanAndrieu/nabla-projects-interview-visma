@@ -230,15 +230,15 @@
 
         <!-- for cannot access javax.faces.application.FacesMessage -->
         <!-- see in core project it is provided (needed for jboss 7) -->
+        <!-- TODO remove old API -->
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
-            <!--<version>${jsf.api.version}</version>-->
             <scope>${scope.tomcat.never.type}</scope>
             <!-- <scope>compile</scope> compile needed for jetty -->
         </dependency>
 
-        <!-- TODO remove not needed
+        <!-- TODO remove not needed old impl
                 <dependency>
                         <groupId>javax.faces</groupId>
                         <artifactId>jsf-impl</artifactId>
