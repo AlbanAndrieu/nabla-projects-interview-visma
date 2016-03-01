@@ -87,14 +87,14 @@
 
              <!-- Override dependency resolver with latest version.
              This must go *BEFORE* the Arquillian BOM. -->
-			<!--  ShrinkWrap  -->
-			<dependency>
-				<groupId>org.jboss.shrinkwrap</groupId>
-				<artifactId>shrinkwrap-bom</artifactId>
-				<version>${org.jboss.shrinkwrap.bom.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+	    <!--  ShrinkWrap  -->
+	    <dependency>
+	    	<groupId>org.jboss.shrinkwrap</groupId>
+	    	<artifactId>shrinkwrap-bom</artifactId>
+	    	<version>${org.jboss.shrinkwrap.bom.version}</version>
+	    	<type>pom</type>
+	    	<scope>import</scope>
+	    </dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap.resolver</groupId>
                 <artifactId>shrinkwrap-resolver-bom</artifactId>
@@ -230,13 +230,13 @@
 
         <!-- for cannot access javax.faces.application.FacesMessage -->
         <!-- see in core project it is provided (needed for jboss 7) -->
-        <!-- TODO remove old API -->
+        <!-- TODO remove old API 
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <scope>${scope.tomcat.never.type}</scope>
-            <!-- <scope>compile</scope> compile needed for jetty -->
         </dependency>
+        -->
 
         <!-- TODO remove not needed old impl
                 <dependency>
@@ -273,16 +273,16 @@
         -->
         <!-- http://download.java.net/maven/2 needed for tomcat only -->
         <!-- replaced by javax.faces for other except tomcat -->
+        <!--
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
-            <!--<version>${sun.jsf.version}</version>-->
             <scope>${scope.tomcat.only.type}</scope>
         </dependency>
+        -->
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
-            <!--<version>${sun.jsf.version}</version>-->
             <scope>${scope.tomcat.only.type}</scope>
         </dependency>
 
@@ -388,20 +388,16 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
-            <!--<version>${org.jboss.arquillian.junit.version}</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
             <artifactId>arquillian-core-api</artifactId>
             <groupId>org.jboss.arquillian.core</groupId>
-            <!--<version>${org.jboss.arquillian.core.version}</version>-->
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
             <artifactId>arquillian-protocol-servlet</artifactId>
-            <!--<version>${org.jboss.arquillian.junit.version}</version>-->
             <scope>test</scope>
         </dependency>
 
