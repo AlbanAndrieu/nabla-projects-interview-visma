@@ -12,6 +12,13 @@
     <param-value>Development</param-value>
   </context-param>
 
+  <!--
+  <context-param>
+    <param-name>com.sun.faces.expressionFactory</param-name>
+    <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
+  </context-param>
+  -->
+
   <!-- Welcome page -->
   <welcome-file-list>
     <welcome-file>faces/loan.xhtml</welcome-file>

@@ -230,7 +230,7 @@
 
         <!-- for cannot access javax.faces.application.FacesMessage -->
         <!-- see in core project it is provided (needed for jboss 7) -->
-        <!-- TODO remove old API 
+        <!-- TODO remove old API
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
@@ -273,13 +273,11 @@
         -->
         <!-- http://download.java.net/maven/2 needed for tomcat only -->
         <!-- replaced by javax.faces for other except tomcat -->
-        <!--
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <scope>${scope.tomcat.only.type}</scope>
         </dependency>
-        -->
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
