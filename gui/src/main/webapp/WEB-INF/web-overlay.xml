@@ -49,6 +49,19 @@
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
 
+  <!-- To get CDI (Weld in particular) running in Jetty or Tomcat -->
+  <!-- One very important thing to note is to define the Weld-listener before the JSF-Listener. Otherwise the CDI environment won’t be setup at the startup of JSF and the Flows aren’t loaded. -->
+  <!--
+  <listener>
+      <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+  </listener>
+  -->
+  <!-- For Jetty to work -->
+  <!-- works with com.sun.faces -->
+  <listener>
+      <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+  </listener>
+
   <!-- For Jetty to work -->
   <!-- works with com.sun.faces -->
   <listener>

@@ -968,6 +968,23 @@
                         <!--<type>${cargo.container.type}</type> -->
                         <log>${project.build.directory}/cargo.log</log>
 						<logLevel>debug</logLevel>
+						<systemProperties>
+							<log4j.debug>true</log4j.debug>
+						</systemProperties>
+						<dependencies>
+							<dependency>
+								<groupId>org.slf4j</groupId>
+								<artifactId>slf4j-api</artifactId>
+							</dependency>
+							<dependency>
+								<groupId>org.slf4j</groupId>
+								<artifactId>slf4j-log4j12</artifactId>
+							</dependency>
+							<dependency>
+								<groupId>log4j</groupId>
+								<artifactId>log4j</artifactId>
+							</dependency>
+						</dependencies>
                     </container>
                     <configuration>
                         <!--<type>${cargo.configuration.type}</type>-->
