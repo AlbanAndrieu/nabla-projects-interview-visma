@@ -4,7 +4,7 @@
 target/
 target-eclipse/
 .tern-project
-/build/
+build/
 .DS_Store
 .idea/workspace.xml
 *~

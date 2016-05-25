@@ -47,6 +47,9 @@
         <org.jboss.shrinkwrap.resolver.bom.version>${version.shrinkwrap_resolver}</org.jboss.shrinkwrap.resolver.bom.version>
         <org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>
 
+        <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
+        <httpclient.version>4.5.2</httpclient.version>
+
         <!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->
         <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
         <maven.swagger.plugin.version>3.0.0</maven.swagger.plugin.version>
@@ -293,12 +296,19 @@
         </dependency>
         -->
 
+		<!--
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <!--<version>${servlet.api.version}</version>-->
             <scope>${scope.tomcat.never.type}</scope>
-        </dependency>
+        </dependency>-->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.api.version}</version>
+			<scope>provided</scope> <!-- javax.servlet-api-3.0.1.jar Offending class javax/servlet/Servlet.class  in Tomcat -->
+		</dependency>
 
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
@@ -335,12 +345,18 @@
             <scope>${scope.type}</scope>
         </dependency>
         -->
+        <!--
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
-            <!--<version>${commons.httpclient.version}</version>-->
             <scope>compile</scope>
         </dependency>
+        -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
@@ -1053,7 +1069,7 @@
                     <deployables>
                         <deployable>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>gui</artifactId>
+                            <artifactId>${project.artifactId}</artifactId>
                             <type>war</type>
                             <properties>
                                 <context>/visma</context>
@@ -1343,7 +1359,7 @@
                 <dependencies>
                     <dependency>
                         <groupId>${project.groupId}</groupId>
-                        <artifactId>gui</artifactId>
+                        <artifactId>${project.artifactId}</artifactId>
                         <version>${project.version}</version>
                         <type>war</type>
                     </dependency>

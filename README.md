@@ -5,7 +5,7 @@
 Java project for an interview request by visma
 
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma)
-[![Jenkins Build Status](http://home.nabla.mobi:8380/jenkins/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8380/jenkins/job/nabla-projects-interview-visma-nightly)
+[![Jenkins Build Status](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma-nightly)
 [![Quality Gate](http://home.nabla.mobi:9000/api/badges/gate?key=com.nabla.project.sample.interview.visma:visma:master)](http://home.nabla.mobi:9000/dashboard/index/com.nabla.project.sample.interview.visma:visma:master)
 
 Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
@@ -52,7 +52,7 @@ Please find below output of this sample:
 
 - Source code repository : [github](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 
-- Jenkins : [jenkins](http://home.nabla.mobi:8380/jenkins/job/nabla-projects-interview-visma/)
+- Jenkins : [jenkins](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma/)
 
 - Sonar metrics : [sonar](http://home.nabla.mobi:9000/dashboard/index/2831)
 
@@ -60,8 +60,8 @@ TODO : The compiled, source, and Javadoc JAR files will be uploaded as downloads
 
 The generated site will be committed to the [gh-pages branch](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/tree/gh-pages) and visible [here](http://albanandrieu.github.io/nabla-projects-interview-visma/).
 
-Remarks : visma installer is produced during the jenkins build , especially [here](http://home.nabla.mobi:8380/jenkins/job/nabla-installer-visma/).
-In order to install, double click on the [VISMAInstaller.jar](http://home.nabla.mobi:8380/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/VISMAInstaller.jar)
+Remarks : visma installer is produced during the jenkins build , especially [here](http://home.nabla.mobi:7072/jenkins/job/nabla-installer-visma/).
+In order to install, double click on the [VISMAInstaller.jar](http://home.nabla.mobi:7072/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/VISMAInstaller.jar)
 
 On unix, please make sure you can execute the installer :
 
@@ -160,23 +160,23 @@ I am now using this project more because it generates a lot of code and it is re
 This project is using JBoss, Seam, Hibernate, Spring,GWT, JSF, Arquillian, ... So it was quite hard to get Jacoco with mutation testing to work with it.
 In this repo there's also some sample projects used as ProofOfConcept
 
- - Database best pratices [nabla-databases-integration](http://home.nabla.mobi:8380/jenkins/job/nabla-databases-integration/)
+ - Database best pratices [nabla-databases-integration](http://home.nabla.mobi:7072/jenkins/job/nabla-databases-integration/)
 
- - Server integration best pratices [nabla-uml-integration](http://home.nabla.mobi:8380/jenkins/job/nabla-servers-integration/)
+ - Server integration best pratices [nabla-uml-integration](http://home.nabla.mobi:7072/jenkins/job/nabla-servers-integration/)
 
- - UML best pratices [nabla-uml-integration](http://home.nabla.mobi:8380/jenkins/job/nabla-uml-integration/)
+ - UML best pratices [nabla-uml-integration](http://home.nabla.mobi:7072/jenkins/job/nabla-uml-integration/)
 
-The goal is mostly to ensure that any of my code will be able to work with any [database](http://home.nabla.mobi:8380/jenkins/job/nabla-databases-matrix/) on any [servers/browsers](http://home.nabla.mobi:8380/jenkins/job/nabla-browsers-matrix/) using [selenium](http://home.nabla.mobi:8380/jenkins/job/nabla-servers-jsf-simple-selenium/).
+The goal is mostly to ensure that any of my code will be able to work with any [database](http://home.nabla.mobi:7072/jenkins/job/nabla-databases-matrix/) on any [servers/browsers](http://home.nabla.mobi:7072/jenkins/job/nabla-browsers-matrix/) using [selenium](http://home.nabla.mobi:7072/jenkins/job/nabla-servers-jsf-simple-selenium/).
 
 ------------------
 
 ### VISMA : An opensource project to showcase best pratices
 
 You're invited to have a quick look at the project below (it has some of the quality metrics that I am using at work, like unit tests, integration tests, mutation tests, performance tests, load tests, end2end tests, functional tests)
- - [Jenkins](http://home.nabla.mobi:8380/jenkins/job/nabla-projects-interview-visma/)
+ - [Jenkins](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma/)
  - [Sonar](http://home.nabla.mobi:9000/dashboard/index/418)
 
-Visma is a very basic code done for an interview that you can easily install using [IZPack](http://izpack.org/) at [installer](http://home.nabla.mobi:8380/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/)
+Visma is a very basic code done for an interview that you can easily install using [IZPack](http://izpack.org/) at [installer](http://home.nabla.mobi:7072/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/)
 The goal is to provide an easy Maven starter with basic integration and metrics for any code interview working.
 The goal is also to have as many testing tools ready to work altogether (like junit, mock, selenium, cucumber).
 because there is always some form of incompatiblity between them...

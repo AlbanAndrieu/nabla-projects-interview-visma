@@ -153,13 +153,13 @@
                      <groupId>ch.qos.logback</groupId>
                      <artifactId>logback-classic</artifactId>
                      <scope>runtime</scope>
-		            <exclusions>
+		             <exclusions>
 		                <!-- circular dependency -->
 		                <exclusion>
 		                    <groupId>org.slf4j</groupId>
             			    <artifactId>slf4j-api</artifactId>
 		                </exclusion>
-		            </exclusions>                         
+		             </exclusions>
                  </dependency>
                  <dependency>
                      <groupId>ch.qos.logback</groupId>
@@ -180,6 +180,13 @@
                      <groupId>org.slf4j</groupId>
                      <artifactId>slf4j-log4j12</artifactId>
                      <scope>runtime</scope>
+		             <exclusions>
+		                <!-- circular dependency -->
+		                <exclusion>
+		                    <groupId>org.slf4j</groupId>
+            			    <artifactId>slf4j-api</artifactId>
+		                </exclusion>
+		             </exclusions>
                  </dependency>
                  <dependency>
                      <groupId>log4j</groupId>
