@@ -156,7 +156,7 @@
   <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html -->
   <security-constraint>
     <web-resource-collection>
-	  <web-resource-name><strong>restricted methods</strong></web-resource-name>
+	  <web-resource-name>Restricted methods</web-resource-name>
       <url-pattern>/*</url-pattern>
       <http-method>PUT</http-method>
       <!--<http-method>POST</http-method>-->
@@ -169,6 +169,7 @@
 
   <security-constraint>
     <web-resource-collection>
+      <web-resource-name>Administration</web-resource-name>
       <url-pattern>/admin/*</url-pattern>
       <http-method>GET</http-method>
       <http-method>POST</http-method>
@@ -179,15 +180,15 @@
   </security-constraint>
 
    <!-- Redirecting http requests to https -->
-   <security-constraint>
-         <web-resource-collection>
-                 <web-resource-name>Entire Application</web-resource-name>
-                 <url-pattern>/*</url-pattern>
-         </web-resource-collection>
-         <user-data-constraint>
-                <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-         </user-data-constraint>
-   </security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Entire Application</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
 
    <!-- allow Favicons -->
    <security-constraint>
@@ -204,10 +205,13 @@
   <session-config>
 	<session-timeout>60</session-timeout>
 	<tracking-mode>COOKIE</tracking-mode>
+  </session-config>
+
+  <session-config>
     <cookie-config>
 		<http-only>true</http-only>
 		<secure>true</secure>
     </cookie-config>
   </session-config>
-
+  
 </web-app>
