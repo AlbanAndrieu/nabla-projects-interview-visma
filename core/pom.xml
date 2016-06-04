@@ -34,7 +34,7 @@
                     <groupId>ch.qos.logback</groupId>
                     <artifactId>logback-classic</artifactId>
                 </exclusion>
-            </exclusions>               
+            </exclusions>
         </dependency>
 		<!-- <dependency> <groupId>org.mockito</groupId> <artifactId>mockito-all</artifactId>
 			<scope>test</scope> </dependency> -->
@@ -88,6 +88,30 @@
 					</archive>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+				  <execution>
+					<goals>
+					  <goal>exec</goal>
+					</goals>
+				  </execution>
+				</executions>
+				<configuration>
+				  <executable>maven</executable>
+				  <mainClass>com.nabla.project.visma.Visma</mainClass>
+				  <!-- optional
+				  <workingDirectory>/tmp</workingDirectory>
+				   -->
+				  <arguments>
+					<argument>-XX:+UnlockDiagnosticVMOptions -XX:+TraceClassLoading -XX:+LogCompilation -XX:LogFile=hotspot.log</argument>
+					<!--<argument>myproject:dist</argument> -->
+				  </arguments>
+
+				</configuration>
+		    </plugin>
 
 			<plugin>
 				<groupId>org.apache.felix</groupId>

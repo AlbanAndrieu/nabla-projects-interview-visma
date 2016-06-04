@@ -153,13 +153,13 @@
   </filter-mapping>
 
   <!-- rest/ping -->
-  <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html -->
+  <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html
   <security-constraint>
     <web-resource-collection>
 	  <web-resource-name>Restricted methods</web-resource-name>
       <url-pattern>/*</url-pattern>
       <http-method>PUT</http-method>
-      <!--<http-method>POST</http-method>-->
+      <http-method>POST</http-method>
       <http-method>DELETE</http-method>
       <http-method>OPTIONS</http-method>
       <http-method>TRACE</http-method>
@@ -178,8 +178,9 @@
       <role-name>admin</role-name>
     </auth-constraint>
   </security-constraint>
+  -->
 
-   <!-- Redirecting http requests to https -->
+   <!-- Redirecting http requests to https
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Entire Application</web-resource-name>
@@ -189,6 +190,7 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
+	-->
 
    <!-- allow Favicons -->
    <security-constraint>
@@ -210,5 +212,5 @@
     </cookie-config>
     <tracking-mode>COOKIE</tracking-mode>
   </session-config>
-  
+
 </web-app>
