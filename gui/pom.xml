@@ -82,6 +82,14 @@
 
 		<cargo.jmx.activation>${cargo.jetty.jmx.activation}</cargo.jmx.activation>
 		<!--<jacoco.agent>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.agent.version}/org.jacoco.agent-${jacoco.agent.version}-runtime.jar=output=tcpserver</jacoco.agent>-->
+
+		<!-- Note that jersey.version that corresponds to Jersey 1 is used
+		by maven-wadl-plugin -->
+		<!-- jersey 2 implements JAX RS 2.0 API 
+		<jersey2.version>2.22.2</jersey2.version>-->
+		<!-- Used by jersey maven wadl plugin 
+		<javax.inject.version>1</javax.inject.version>-->
+
     </properties>
 
 
@@ -1399,24 +1407,29 @@
 				</configuration>
 			</plugin>
 
-            <!--
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>${maven.exec.plugin.version}</version>
-                <configuration>
-                  <mainClass>Engine</mainClass>
-                </configuration>
-                <executions>
-                  <execution>
-                    <phase>integration-test</phase>
-                    <goals>
-                      <goal>java</goal>
-                    </goals>
-                  </execution>
-                </executions>
-            </plugin>
-            -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+				  <execution>
+					<goals>
+					  <goal>exec</goal>
+					</goals>
+				  </execution>
+				</executions>
+				<configuration>
+				  <executable>maven</executable>
+				  <mainClass>com.nabla.project.visma.App</mainClass>
+				  <!-- optional
+				  <workingDirectory>/tmp</workingDirectory>
+				  <arguments>
+					<argument>-X</argument>
+					<argument>myproject:dist</argument>
+				  </arguments>
+				   -->
+				</configuration>
+		    </plugin>
+
 			<plugin>
 				<groupId>com.sebastian-daschner</groupId>
 				<artifactId>jaxrs-analyzer-maven-plugin</artifactId>
@@ -1537,42 +1550,145 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo.jspc</groupId>
+				<artifactId>jspc-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- Extended Wadl Config: javadoc plugin generates resourcedoc.xml during the compilation using doclet.
+             Generated file is then used during runtime to attach javadoc information to wadl. -->
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-javadoc-plugin</artifactId>
+                 <executions>
+                     <execution>
+                         <goals>
+                             <goal>javadoc</goal>
+                         </goals>
+                         <phase>compile</phase>
+                     </execution>
+                 </executions>
+                 <configuration>
+                     <encoding>UTF-8</encoding>
+                     <verbose>false</verbose>
+                     <show>public</show>
+                     <subpackages>com.misys.mgr.hub.war.guice.services</subpackages>
+                     <doclet>org.glassfish.jersey.wadl.doclet.ResourceDoclet</doclet>
+                     <docletPath>${path.separator}${project.build.outputDirectory}</docletPath>
+                     <docletArtifacts>
+                         <!-- jersey doclet generator -->
+                         <docletArtifact>
+                             <groupId>org.glassfish.jersey.ext</groupId>
+                             <artifactId>jersey-wadl-doclet</artifactId>
+                             <version>${jersey2.version}</version>
+                         </docletArtifact>
+                         <!--
+                             Also specify jersey and xerces as doclet artifacts as the ResourceDoclet
+                             uses classes provided by them to generate the resourcedoc.
+                          -->
+                         <docletArtifact>
+                             <groupId>org.glassfish.jersey.core</groupId>
+                             <artifactId>jersey-server</artifactId>
+                             <version>${jersey2.version}</version>
+                         </docletArtifact>
+                         <docletArtifact>
+                             <groupId>xerces</groupId>
+                             <artifactId>xercesImpl</artifactId>
+							<version>${xerces.version}</version>
+                         </docletArtifact>
+                     </docletArtifacts>
+                     <!-- the following option is required as a work around for
+                          version 2.5 of the javadoc plugin which will be used
+                          by a maven version > 2.0.9 -->
+                     <useStandardDocletOptions>false</useStandardDocletOptions>
+                     <additionalparam>-output ${project.build.outputDirectory}/resourcedoc.xml</additionalparam>
+                 </configuration>
+             </plugin>
+
+			<!--
+			<plugin>
+				<groupId>com.sun.jersey.contribs</groupId>
+				<artifactId>maven-wadl-plugin</artifactId>
+				<version>${jersey.version}</version>
+			    <dependencies>
+					<dependency>
+						<groupId>com.misys.mgr</groupId>
+						<artifactId>hedge-service-api</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+				        <groupId>org.glassfish.jersey.media</groupId>
+				        <artifactId>jersey-media-json-jackson</artifactId>
+				        <version>${jersey2.version}</version>
+      			  	</dependency>
+      			  	<dependency>
+                       <groupId>org.glassfish.jersey.core</groupId>
+                       <artifactId>jersey-server</artifactId>
+                       <version>${jersey2.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>xerces</groupId>
+						<artifactId>xercesImpl</artifactId>
+						<version>${xerces.version}</version>
+					</dependency>
+					<dependency>
+					    <groupId>javax.inject</groupId>
+					    <artifactId>javax.inject</artifactId>
+					    <version>${javax.inject.version}</version>
+					</dependency>
+			    </dependencies>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<phase>compile</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<wadlFile>${project.build.outputDirectory}/application.wadl</wadlFile>
+					<formatWadlFile>true</formatWadlFile>
+					<baseUri>https://[host]:8444/riskinsight/private</baseUri>
+					<packagesResourceConfig>
+						<param>com.misys.mgr.hub.war.guice.services</param>
+					</packagesResourceConfig>
+					<wadlGenerators>
+						<wadlGeneratorDescription>
+							<className>com.sun.jersey.server.wadl.generators.WadlGeneratorApplicationDoc
+							</className>
+							<properties>
+								<property>
+									<name>applicationDocsFile</name>
+									<value>${project.basedir}/src/main/resources/application-doc.xml</value>
+								</property>
+							</properties>
+						</wadlGeneratorDescription>
+						<wadlGeneratorDescription>
+							<className>com.sun.jersey.server.wadl.generators.WadlGeneratorGrammarsSupport
+							</className>
+							<properties>
+								<property>
+									<name>grammarsFile</name>
+									<value>${project.basedir}/src/main/resources/application-grammars.xml</value>
+								</property>
+							</properties>
+						</wadlGeneratorDescription>
+						<wadlGeneratorDescription>
+							<className>com.sun.jersey.server.wadl.generators.resourcedoc.WadlGeneratorResourceDocSupport
+							</className>
+							<properties>
+								<property>
+									<name>resourceDocFile</name>
+									<value>${project.build.outputDirectory}/resourcedoc.xml</value>
+								</property>
+							</properties>
+						</wadlGeneratorDescription>
+					</wadlGenerators>
+				</configuration>
+			</plugin>
+			-->
         </plugins>
-        <pluginManagement>
-        	<plugins>
-        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        		<plugin>
-        			<groupId>org.eclipse.m2e</groupId>
-        			<artifactId>lifecycle-mapping</artifactId>
-        			<version>1.0.0</version>
-        			<configuration>
-        				<lifecycleMappingMetadata>
-        					<pluginExecutions>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>
-        									com.github.kongchen
-        								</groupId>
-        								<artifactId>
-        									swagger-maven-plugin
-        								</artifactId>
-        								<versionRange>
-        									[3.0.0,)
-        								</versionRange>
-        								<goals>
-        									<goal>generate</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<ignore></ignore>
-        							</action>
-        						</pluginExecution>
-        					</pluginExecutions>
-        				</lifecycleMappingMetadata>
-        			</configuration>
-        		</plugin>
-        	</plugins>
-        </pluginManagement>
     </build>
 
   <profiles>
