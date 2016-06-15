@@ -52,7 +52,6 @@
 
         <!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->
         <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
-        <maven.swagger.plugin.version>3.0.0</maven.swagger.plugin.version>
         <!--<groovy.eclipse.compiler.version>2.9.0-01</groovy.eclipse.compiler.version>-->
         <groovy.eclipse.batch.version>2.4.3-01</groovy.eclipse.batch.version>
         <!--<groovy.eclipse.batch.version>2.3.7-01</groovy.eclipse.batch.version>-->
@@ -85,10 +84,8 @@
 
 		<!-- Note that jersey.version that corresponds to Jersey 1 is used
 		by maven-wadl-plugin -->
-		<!-- jersey 2 implements JAX RS 2.0 API 
-		<jersey2.version>2.22.2</jersey2.version>-->
-		<!-- Used by jersey maven wadl plugin 
-		<javax.inject.version>1</javax.inject.version>-->
+		<!-- jersey 2 implements JAX RS 2.0 API-->
+		<jersey.version>2.22.2</jersey.version>
 
     </properties>
 
@@ -1580,7 +1577,7 @@
                          <docletArtifact>
                              <groupId>org.glassfish.jersey.ext</groupId>
                              <artifactId>jersey-wadl-doclet</artifactId>
-                             <version>${jersey2.version}</version>
+                             <version>${jersey.version}</version>
                          </docletArtifact>
                          <!--
                              Also specify jersey and xerces as doclet artifacts as the ResourceDoclet
@@ -1589,7 +1586,7 @@
                          <docletArtifact>
                              <groupId>org.glassfish.jersey.core</groupId>
                              <artifactId>jersey-server</artifactId>
-                             <version>${jersey2.version}</version>
+                             <version>${jersey.version}</version>
                          </docletArtifact>
                          <docletArtifact>
                              <groupId>xerces</groupId>
@@ -1612,19 +1609,14 @@
 				<version>${jersey.version}</version>
 			    <dependencies>
 					<dependency>
-						<groupId>com.misys.mgr</groupId>
-						<artifactId>hedge-service-api</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
 				        <groupId>org.glassfish.jersey.media</groupId>
 				        <artifactId>jersey-media-json-jackson</artifactId>
-				        <version>${jersey2.version}</version>
+				        <version>${jersey.version}</version>
       			  	</dependency>
       			  	<dependency>
                        <groupId>org.glassfish.jersey.core</groupId>
                        <artifactId>jersey-server</artifactId>
-                       <version>${jersey2.version}</version>
+                       <version>${jersey.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>xerces</groupId>
@@ -1634,7 +1626,7 @@
 					<dependency>
 					    <groupId>javax.inject</groupId>
 					    <artifactId>javax.inject</artifactId>
-					    <version>${javax.inject.version}</version>
+					    <version>${inject.version}</version>
 					</dependency>
 			    </dependencies>
 				<executions>
@@ -1649,9 +1641,9 @@
 				<configuration>
 					<wadlFile>${project.build.outputDirectory}/application.wadl</wadlFile>
 					<formatWadlFile>true</formatWadlFile>
-					<baseUri>https://[host]:8444/riskinsight/private</baseUri>
+					<baseUri>https://[host]:8444/visma/private</baseUri>
 					<packagesResourceConfig>
-						<param>com.misys.mgr.hub.war.guice.services</param>
+						<param>com.nabla.project.hub.war.guice.services</param>
 					</packagesResourceConfig>
 					<wadlGenerators>
 						<wadlGeneratorDescription>
