@@ -5,6 +5,7 @@
       version="3.0">
 
   <display-name>visma</display-name>
+  <description>Nbala sample project for visma</description>
 
   <!-- Change to "Production" when you are ready to deploy -->
   <context-param>
@@ -94,20 +95,30 @@
        <url-pattern>/rest/*</url-pattern>
    </servlet-mapping>
 
+   <!-- disable directory listing -->
+   <servlet>
+       <servlet-name>default</servlet-name>
+       <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+       <init-param>
+           <param-name>dirAllowed</param-name>
+           <param-value>false</param-value>
+       </init-param>
+   </servlet>
+
   <!--
    <servlet>
       <servlet-name>proxy-login</servlet-name>
       <servlet-class>org.eclipse.jetty.proxy.ProxyServlet$Transparent</servlet-class>
 
-	  <init-param>
-	    <param-name>proxyTo</param-name>
-	    <param-value>http://home.nabla.mobi:8080/login</param-value>
-	  </init-param>
+      <init-param>
+        <param-name>proxyTo</param-name>
+        <param-value>http://home.nabla.mobi:8080/login</param-value>
+      </init-param>
 
-	  <init-param>
-	    <param-name>prefix</param-name>
-	    <param-value>/login</param-value>
-	  </init-param>
+      <init-param>
+        <param-name>prefix</param-name>
+        <param-value>/login</param-value>
+      </init-param>
 
       <async-supported>true</async-supported>
       <load-on-startup>1</load-on-startup>
@@ -122,15 +133,15 @@
       <servlet-name>proxy-apidocs</servlet-name>
       <servlet-class>org.eclipse.jetty.proxy.ProxyServlet$Transparent</servlet-class>
 
-	  <init-param>
-	    <param-name>proxyTo</param-name>
-	    <param-value>http://home.nabla.mobi:8080/apidocs</param-value>
-	  </init-param>
+      <init-param>
+        <param-name>proxyTo</param-name>
+        <param-value>http://home.nabla.mobi:8080/apidocs</param-value>
+      </init-param>
 
-	  <init-param>
-	    <param-name>prefix</param-name>
-	    <param-value>/apidocs</param-value>
-	  </init-param>
+      <init-param>
+        <param-name>prefix</param-name>
+        <param-value>/apidocs</param-value>
+      </init-param>
 
       <async-supported>true</async-supported>
       <load-on-startup>1</load-on-startup>
@@ -164,12 +175,64 @@
       <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>DoSFilter</filter-name>
+    <filter-class>org.eclipse.jetty.servlets.DoSFilter</filter-class>
+    <init-param>
+      <param-name>maxRequestsPerSec</param-name>
+      <param-value>30</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>DoSFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>QoSFilter</filter-name>
+    <filter-class>org.eclipse.jetty.servlets.QoSFilter</filter-class>
+    <init-param>
+      <param-name>maxRequests</param-name>
+      <param-value>50</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>QoSFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>cross-origin</filter-name>
+    <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+    <!--
+    <init-param>
+        <param-name>allowedOrigins</param-name>
+        <param-value>*</param-value>
+    </init-param>
+    <init-param>
+        <param-name>allowedMethods</param-name>
+        <param-value>GET,POST,OPTIONS,DELETE,PUT,HEAD</param-value>
+    </init-param>
+    <init-param>
+        <param-name>allowedHeaders</param-name>
+        <param-value>origin, Content-Type, accept, authorization, GET, OPTIONS, X-XSRF-TOKEN</param-value>
+    </init-param>
+    -->
+  </filter>
+  <filter-mapping>
+    <filter-name>cross-origin</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <!-- rest/ping -->
-  <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html
+  <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html -->
   <security-constraint>
     <web-resource-collection>
-	  <web-resource-name>Restricted methods</web-resource-name>
+      <web-resource-name>Restricted methods</web-resource-name>
       <url-pattern>/*</url-pattern>
+      <http-method>HEAD</http-method>
       <http-method>PUT</http-method>
       <http-method>POST</http-method>
       <http-method>DELETE</http-method>
@@ -179,6 +242,7 @@
     <auth-constraint />
   </security-constraint>
 
+  <!--
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Administration</web-resource-name>
@@ -193,26 +257,26 @@
   -->
 
    <!-- Redirecting http requests to https
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>Entire Application</web-resource-name>
-			<url-pattern>/*</url-pattern>
-		</web-resource-collection>
-		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
-		</user-data-constraint>
-	</security-constraint>
-	-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Entire Application</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    -->
 
    <!-- allow Favicons
    <security-constraint>
-		<web-resource-collection>
-			<web-resource-name>NonSecureConnectionOK</web-resource-name>
-			<url-pattern>*.ico</url-pattern>
-		</web-resource-collection>
-		<user-data-constraint>
-			<transport-guarantee>NONE</transport-guarantee>
-		</user-data-constraint>
+        <web-resource-collection>
+            <web-resource-name>NonSecureConnectionOK</web-resource-name>
+            <url-pattern>*.ico</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
    </security-constraint>
    -->
 
@@ -220,8 +284,8 @@
   <session-config>
     <session-timeout>1440</session-timeout><!-- 24hours -->
     <cookie-config>
-		<http-only>true</http-only>
-		<!--<secure>true</secure>-->
+        <http-only>true</http-only>
+        <!--<secure>true</secure>-->
     </cookie-config>
     <tracking-mode>COOKIE</tracking-mode>
   </session-config>

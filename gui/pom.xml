@@ -26,41 +26,23 @@
         </properties>
     -->
     <properties>
-        <gatling.version>2.1.7</gatling.version>
-        <scala.version>2.11.7</scala.version>
-        <netty.version>3.8.0.Final</netty.version>
-        <swagger.version>1.5.3</swagger.version>
-        <lombok.version>1.14.8</lombok.version>
+        <gatling.version>2.2.2</gatling.version>
+        <scala.version>2.11.8</scala.version>
+        <netty.version>3.10.5.Final</netty.version>
+        <swagger.version>1.5.9</swagger.version>
+        <lombok.version>1.16.8</lombok.version>
         <jaxrs.doclet.version>0.0.4-SNAPSHOT</jaxrs.doclet.version>
         <swagger.doclet.version>1.0.5</swagger.doclet.version>
+        <appsensor.core.version>2.2.0</appsensor.core.version>
 
         <!-- for jmeter -->
         <performancetest.webservice.path>/visma</performancetest.webservice.path>
-
-        <jetty9.version>9.3.3.v20150827</jetty9.version>
-        <org.jboss.arquillian.version>1.1.9.Final</org.jboss.arquillian.version>
-        <org.jboss.arquillian.bom.version>${org.jboss.arquillian.version}</org.jboss.arquillian.bom.version>
-        <version.shrinkwrap_shrinkwrap>1.2.2</version.shrinkwrap_shrinkwrap>
-		<version.shrinkwrap_descriptors>2.0.0-alpha-7</version.shrinkwrap_descriptors>
-		<version.shrinkwrap_resolver>2.1.1</version.shrinkwrap_resolver>
-		<org.jboss.shrinkwrap.bom.version>${version.shrinkwrap_shrinkwrap}</org.jboss.shrinkwrap.bom.version>
-        <org.jboss.shrinkwrap.resolver.bom.version>${version.shrinkwrap_resolver}</org.jboss.shrinkwrap.resolver.bom.version>
-        <org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>
 
         <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
         <httpclient.version>4.5.2</httpclient.version>
 
         <!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->
         <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
-        <!--<groovy.eclipse.compiler.version>2.9.0-01</groovy.eclipse.compiler.version>-->
-        <groovy.eclipse.batch.version>2.4.3-01</groovy.eclipse.batch.version>
-        <!--<groovy.eclipse.batch.version>2.3.7-01</groovy.eclipse.batch.version>-->
-        <groovy.version>2.4.5</groovy.version>
-        <!--<groovy.version>2.3.7</groovy.version>-->
-        <!--
-        <cargo.core.uberjar.version>1.4.18-SNAPSHOT</cargo.core.uberjar.version>
-        <maven.cargo.maven2.plugin.version>1.4.18-SNAPSHOT</maven.cargo.maven2.plugin.version>
-        -->
 
 		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
 		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
@@ -81,12 +63,6 @@
 
 		<cargo.jmx.activation>${cargo.jetty.jmx.activation}</cargo.jmx.activation>
 		<!--<jacoco.agent>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.agent.version}/org.jacoco.agent-${jacoco.agent.version}-runtime.jar=output=tcpserver</jacoco.agent>-->
-
-		<!-- Note that jersey.version that corresponds to Jersey 1 is used
-		by maven-wadl-plugin -->
-		<!-- jersey 2 implements JAX RS 2.0 API-->
-		<jersey.version>2.22.2</jersey.version>
-
     </properties>
 
 
@@ -717,6 +693,32 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- this is just one of the appsensor dependencies you'll need - see step
+			below called pluggable components -->
+		<dependency>
+			<groupId>org.owasp.appsensor</groupId>
+			<artifactId>appsensor-core</artifactId>
+			<version>${appsensor.core.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.inject</groupId>
+					<artifactId>javax.inject</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>aopalliance</groupId>
+					<artifactId>aopalliance</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
     </dependencies>
 
     <build>
@@ -1111,13 +1113,14 @@
 					  </goals>
 					  <configuration>
 						<timeout>60000</timeout>
+						<!--
 						<configuration>
 							<properties>
 								<cargo.jmx.activation></cargo.jmx.activation>
 								<cargo.start.jvmargs></cargo.start.jvmargs>
 								<cargo.jvmargs><![CDATA[]]></cargo.jvmargs>
 							</properties>
-						</configuration>
+						</configuration>-->
 					  </configuration>
 					</execution>
 				</executions>
@@ -1520,7 +1523,7 @@
                 <version>${maven.javadoc.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>generate-service-docs</id>
+                        <id>generate-swagger-docs</id>
                         <phase>generate-resources</phase>
                         <configuration>
 							<!--
@@ -1545,62 +1548,53 @@
                             <goal>javadoc</goal>
                         </goals>
                     </execution>
+			        <!-- Extended Wadl Config: javadoc plugin generates resourcedoc.xml during the compilation using doclet.
+                     Generated file is then used during runtime to attach javadoc information to wadl. -->
+                    <execution>
+                        <id>generate-jersey-docs</id>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                             <subpackages>com.nabla.project.services</subpackages>
+							 <doclet>org.glassfish.jersey.wadl.doclet.ResourceDoclet</doclet>
+							 <docletPath>${path.separator}${project.build.outputDirectory}</docletPath>
+							 <docletArtifacts>
+								 <!-- jersey doclet generator -->
+								 <docletArtifact>
+									 <groupId>org.glassfish.jersey.ext</groupId>
+									 <artifactId>jersey-wadl-doclet</artifactId>
+									 <version>${jersey.version}</version>
+								 </docletArtifact>
+								 <!--
+									 Also specify jersey and xerces as doclet artifacts as the ResourceDoclet
+									 uses classes provided by them to generate the resourcedoc.
+								  -->
+								 <docletArtifact>
+									 <groupId>org.glassfish.jersey.core</groupId>
+									 <artifactId>jersey-server</artifactId>
+									 <version>${jersey.version}</version>
+								 </docletArtifact>
+								 <docletArtifact>
+									 <groupId>xerces</groupId>
+									 <artifactId>xercesImpl</artifactId>
+									<version>${xerces.version}</version>
+								 </docletArtifact>
+							 </docletArtifacts>
+							 <!-- the following option is required as a work around for
+								  version 2.5 of the javadoc plugin which will be used
+								  by a maven version > 2.0.9 -->
+							 <useStandardDocletOptions>false</useStandardDocletOptions>
+							 <additionalparam>-output ${project.build.outputDirectory}/resourcedoc.xml</additionalparam>
+                        </configuration>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo.jspc</groupId>
 				<artifactId>jspc-maven-plugin</artifactId>
 			</plugin>
-
-			<!-- Extended Wadl Config: javadoc plugin generates resourcedoc.xml during the compilation using doclet.
-             Generated file is then used during runtime to attach javadoc information to wadl. -->
-             <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-javadoc-plugin</artifactId>
-                 <executions>
-                     <execution>
-                         <goals>
-                             <goal>javadoc</goal>
-                         </goals>
-                         <phase>compile</phase>
-                     </execution>
-                 </executions>
-                 <configuration>
-                     <encoding>UTF-8</encoding>
-                     <verbose>false</verbose>
-                     <show>public</show>
-                     <subpackages>com.misys.mgr.hub.war.guice.services</subpackages>
-                     <doclet>org.glassfish.jersey.wadl.doclet.ResourceDoclet</doclet>
-                     <docletPath>${path.separator}${project.build.outputDirectory}</docletPath>
-                     <docletArtifacts>
-                         <!-- jersey doclet generator -->
-                         <docletArtifact>
-                             <groupId>org.glassfish.jersey.ext</groupId>
-                             <artifactId>jersey-wadl-doclet</artifactId>
-                             <version>${jersey.version}</version>
-                         </docletArtifact>
-                         <!--
-                             Also specify jersey and xerces as doclet artifacts as the ResourceDoclet
-                             uses classes provided by them to generate the resourcedoc.
-                          -->
-                         <docletArtifact>
-                             <groupId>org.glassfish.jersey.core</groupId>
-                             <artifactId>jersey-server</artifactId>
-                             <version>${jersey.version}</version>
-                         </docletArtifact>
-                         <docletArtifact>
-                             <groupId>xerces</groupId>
-                             <artifactId>xercesImpl</artifactId>
-							<version>${xerces.version}</version>
-                         </docletArtifact>
-                     </docletArtifacts>
-                     <!-- the following option is required as a work around for
-                          version 2.5 of the javadoc plugin which will be used
-                          by a maven version > 2.0.9 -->
-                     <useStandardDocletOptions>false</useStandardDocletOptions>
-                     <additionalparam>-output ${project.build.outputDirectory}/resourcedoc.xml</additionalparam>
-                 </configuration>
-             </plugin>
 
 			<!--
 			<plugin>
@@ -1810,6 +1804,7 @@
                     <plugin>
                         <groupId>net.alchim31.maven</groupId>
                         <artifactId>scala-maven-plugin</artifactId>
+                        <version>${maven.scala.plugin.version}</version>
 						<executions>
 							<execution>
 								<goals>
@@ -1854,6 +1849,7 @@
                         <!--<groupId>com.excilys.ebi.gatling</groupId>-->
                         <groupId>io.gatling</groupId>
                         <artifactId>gatling-maven-plugin</artifactId>
+                        <version>${maven.gatling.plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>integration-test</phase>

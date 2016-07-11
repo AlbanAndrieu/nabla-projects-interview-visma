@@ -29,7 +29,8 @@ REM OK mvn help:effective-pom -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.c
 mvn clean install -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration,run-its -Djacoco.outputDir=./target > install.log
 #-Dcargo.tomcat.ajp.port=8399
 REM FOR MANUAL TEST IN ECLIPSE
-mvn clean install org.codehaus.cargo:cargo-maven2-plugin:run -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration -Djacoco.outputDir=./target > install.log
+mvn org.codehaus.cargo:cargo-maven2-plugin:run -Dserver=tomcat8x -Dtomcat.port=8480 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:8480 -Psample,jacoco,integration -Djacoco.outputDir=./target > install.log
+mvn org.codehaus.cargo:cargo-maven2-plugin:run -Dserver=jetty9x -Djetty.port=9090 -Dwebdriver.chrome.driver=/var/lib/chromedriver -Dwebdriver.base.url=http://localhost:9090 -Psample,jacoco,integration -Djacoco.outputDir=./target > install.log
 #-Dcargo.debug.address=9000
 REM PACKAGE tomcat8x
 REM http://cargo.codehaus.org/Generating+a+container+configuration+deployment+structure

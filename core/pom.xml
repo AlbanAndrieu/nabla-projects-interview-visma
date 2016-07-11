@@ -173,6 +173,7 @@
 						<option>-keep class com.nabla.project.visma.House{ *; }</option>
 						<option>-keep class com.nabla.project.visma.HouseLoan{ *; }</option>
 						<option>-keep class com.nabla.project.visma.Payment{ *; }</option>
+						<option>-keep class com.nabla.project.visma.BasicPaymentMethod{ *; }</option>
 						<!--<option>-ignorewarnings</option>-->
 						<option>-allowaccessmodification</option>
 						<option>-dontskipnonpubliclibraryclasses</option>

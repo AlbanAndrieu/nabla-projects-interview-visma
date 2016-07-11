@@ -64,8 +64,6 @@ public class HouseTest
     @Test(expected = IllegalArgumentException.class)
     public final void testProductNull()
     {
-
-        @SuppressWarnings("null")
         final IProduct product = new House(null);
         Assert.assertNotNull(product);
 
@@ -91,8 +89,6 @@ public class HouseTest
     @Test(expected = IllegalArgumentException.class)
     public final void testPriceNotNull()
     {
-
-        @SuppressWarnings("null")
         final IProduct product = new House(null);
         Assert.assertNotNull(product);
 
@@ -112,7 +108,6 @@ public class HouseTest
         Assert.assertEquals(new BigDecimal(-100), new House(-100));
     }
 
-    @SuppressWarnings("null")
     @Test(expected = IllegalArgumentException.class)
     public final void testPriceZero1()
     {
@@ -145,7 +140,6 @@ public class HouseTest
         Assert.assertFalse(new House(1_000_000).equals(null));
     }
 
-    @SuppressWarnings("null")
     @Test(expected = IllegalArgumentException.class)
     public final void testCompareZero()
     {

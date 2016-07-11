@@ -83,6 +83,12 @@ Enjoy!!!
 
 ------------------
 
+### WhiteSource security tests
+
+[WhiteSource](www.whitesourcesoftware.com) is providing free open source analysis solution to this project, as part of its on-going support to the open source community
+
+------------------
+
 ### Swagger REST
 
 git clone https://github.com/swagger-api/swagger-ui.git
