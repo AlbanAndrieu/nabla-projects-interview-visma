@@ -71,14 +71,14 @@
 
              <!-- Override dependency resolver with latest version.
              This must go *BEFORE* the Arquillian BOM. -->
-	    <!--  ShrinkWrap  -->
-	    <dependency>
-	    	<groupId>org.jboss.shrinkwrap</groupId>
-	    	<artifactId>shrinkwrap-bom</artifactId>
-	    	<version>${org.jboss.shrinkwrap.bom.version}</version>
-	    	<type>pom</type>
-	    	<scope>import</scope>
-	    </dependency>
+			<!--  ShrinkWrap  -->
+			<dependency>
+				<groupId>org.jboss.shrinkwrap</groupId>
+				<artifactId>shrinkwrap-bom</artifactId>
+				<version>${org.jboss.shrinkwrap.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap.resolver</groupId>
                 <artifactId>shrinkwrap-resolver-bom</artifactId>
@@ -395,6 +395,14 @@
             <artifactId>arquillian-protocol-servlet</artifactId>
             <scope>test</scope>
         </dependency>
+
+		<!-- ClassNotFoundException: org.w3c.dom.ElementTraversal for arquillian -->
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>${xml.apis.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 	<!--
         <dependency>
