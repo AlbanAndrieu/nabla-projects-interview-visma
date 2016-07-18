@@ -1002,6 +1002,7 @@
 						<systemProperties>
 							<log4j.debug>true</log4j.debug>
 						</systemProperties>
+						<!-- Class path contains multiple SLF4J bindings.
 						<dependencies>
 							<dependency>
 								<groupId>org.slf4j</groupId>
@@ -1016,6 +1017,7 @@
 								<artifactId>log4j</artifactId>
 							</dependency>
 						</dependencies>
+						-->
                     </container>
                     <configuration>
                         <!--<type>${cargo.configuration.type}</type>-->
