@@ -994,7 +994,8 @@
                         <!--<timeout>180000</timeout>--> <!-- 3 minutes -->
                         <!--<timeout>240000</timeout>--> <!-- 4 minutes -->
                         <!--<timeout>300000</timeout>--> <!-- 5 minutes -->
-                        <timeout>480000</timeout> <!-- 8 minutes -->
+                        <!--<timeout>480000</timeout>--> <!-- 8 minutes -->
+                        <timeout>600000</timeout> <!-- 10 minutes -->
                         <!--<containerId>${cargo.container}</containerId> -->
                         <!--<type>${cargo.container.type}</type> -->
                         <log>${project.build.directory}/cargo.log</log>
