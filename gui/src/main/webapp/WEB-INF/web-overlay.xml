@@ -95,7 +95,7 @@
        <url-pattern>/rest/*</url-pattern>
    </servlet-mapping>
 
-   <!-- disable directory listing
+   <!-- disable directory listing -->
    <servlet>
        <servlet-name>default</servlet-name>
        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
@@ -104,7 +104,6 @@
            <param-value>false</param-value>
        </init-param>
    </servlet>
-   -->
 
   <!--
    <servlet>
@@ -228,22 +227,18 @@
   </filter-mapping>
 
   <!-- rest/ping -->
-  <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html -->
+  <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Restricted methods</web-resource-name>
       <url-pattern>/*</url-pattern>
       <http-method>HEAD</http-method>
-      <!--
-      <http-method>PUT</http-method>
-      <http-method>POST</http-method>
-      <http-method>DELETE</http-method>
-      -->
       <http-method>OPTIONS</http-method>
       <http-method>TRACE</http-method>
     </web-resource-collection>
     <auth-constraint />
   </security-constraint>
+  -->
 
   <!--
   <security-constraint>
