@@ -130,7 +130,6 @@
     </build>
 
     <properties>
-		<!--
         <xerces.version>2.11.0</xerces.version>
         <xalan.version>2.7.2</xalan.version>
         <junit.version>4.12</junit.version>
@@ -139,9 +138,7 @@
         <jdbc.h2.version>1.4.192</jdbc.h2.version>
         <asm.ow2.version>5.1</asm.ow2.version>
         <easymock.version>3.4</easymock.version>
-        -->
         <!-- WARNING jmockit does not work wit jacoco coverage -->
-        <!--
 		<jmockit.version>1.25</jmockit.version>
 		<dbunit.version>2.5.2</dbunit.version>
         <testng.version>6.9.12</testng.version>
@@ -152,7 +149,6 @@
         <ant.version>1.9.7</ant.version>
         <groovy.version>2.4.7</groovy.version>
         <xml.apis.version>1.4.01</xml.apis.version>
-        -->
         <!--<cargo.core.uberjar.version>1.4.19</cargo.core.uberjar.version>-->
         <!--<jacoco.version>0.7.7.201606060606</jacoco.version>-->
         <!--<groovy.version>2.4.5</groovy.version>-->
