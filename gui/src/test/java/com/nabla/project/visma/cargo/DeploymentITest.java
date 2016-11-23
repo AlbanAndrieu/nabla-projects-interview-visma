@@ -130,7 +130,7 @@ public class DeploymentITest
 
         int good_service_response = getResponseCode(DeploymentITest.VISMA_URL + "/");
 
-        assertEquals(format("Error getting main screen for %s at address %s", DeploymentITest.DEFAULT_CONTEXT, DeploymentITest.VISMA_URL), HttpURLConnection.HTTP_OK, good_service_response);
+        assertEquals(format("Error getting main screen for %s at address %s", DeploymentITest.DEFAULT_CONTEXT, DeploymentITest.VISMA_URL), HttpURLConnection.HTTP_FORBIDDEN /*HTTP_OK*/, good_service_response);
     }
 
     @Test

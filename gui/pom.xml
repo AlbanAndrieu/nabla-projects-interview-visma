@@ -51,6 +51,13 @@
 		<jetty.jmxremote.rmiport>3099</jetty.jmxremote.rmiport>
 		<!--<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>-->
 
+		<!--
+		<cargo.eclipse.debug><![CDATA[-Xdebug
+		-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=2924
+		-Xnoagent
+		-Djava.compiler=NONE]]></cargo.eclipse.debug>
+		-->
+
 		<cargo.jetty.jmx.activation>-Dcom.sun.management.jmxremote=true
 -Dcom.sun.management.jmxremote.ssl=false
 -Dcom.sun.management.jmxremote.authenticate=false
@@ -1048,7 +1055,7 @@
                             <cargo.logging>high</cargo.logging>
                             <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
                             <!--<cargo.start.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent} ${jacoco.agent.it.arg} ${newrelic.agent}]]></cargo.start.jvmargs>-->
-                            <cargo.start.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.start.jvmargs>
+                            <cargo.start.jvmargs><![CDATA[${cargo.eclipse.debug} ${jacoco.agent} ${cargo.jmx.activation}]]></cargo.start.jvmargs>
                             <!--<cargo.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>-->
                             <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
@@ -1248,6 +1255,8 @@
                     </httpConnector>
 					<stopPort>${jetty.stop.port}</stopPort>
 					<stopKey>STOP</stopKey>
+					<stopPort>9999</stopPort>
+					<stopWait>10</stopWait>
                     <!--
                     <systemProperties>
                         <systemProperty>
@@ -1265,6 +1274,28 @@
                         <tempDirectory>${project.build.directory}/work</tempDirectory>
                     </webApp>
 				</configuration>
+				<!--
+				<executions>
+					<execution>
+						<id>start-jetty</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>run-war</goal>
+						</goals>
+						<configuration>
+							<scanIntervalSeconds>0</scanIntervalSeconds>
+							<daemon>true</daemon>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+				-->
 				<dependencies>
 					<dependency>
 						<groupId>org.eclipse.jetty</groupId>

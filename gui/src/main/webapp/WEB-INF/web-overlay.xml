@@ -203,10 +203,10 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!--
   <filter>
     <filter-name>cross-origin</filter-name>
     <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
-    <!--
     <init-param>
         <param-name>allowedOrigins</param-name>
         <param-value>*</param-value>
@@ -219,15 +219,15 @@
         <param-name>allowedHeaders</param-name>
         <param-value>origin, Content-Type, accept, authorization, GET, OPTIONS, X-XSRF-TOKEN</param-value>
     </init-param>
-    -->
   </filter>
   <filter-mapping>
     <filter-name>cross-origin</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  -->
 
   <!-- rest/ping -->
-  <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html
+  <!-- see http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Restricted methods</web-resource-name>
@@ -238,7 +238,6 @@
     </web-resource-collection>
     <auth-constraint />
   </security-constraint>
-  -->
 
   <!--
   <security-constraint>

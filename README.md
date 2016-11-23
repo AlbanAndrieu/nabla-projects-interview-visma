@@ -1,20 +1,30 @@
 # nabla-projects-interview-visma
+![nabla-projects-interview-visma](http://home.nabla.mobi/sample/images/mroizo.1f00120c.png)
 
-[![Join the chat at https://gitter.im/AlbanAndrieu/nabla-projects-interview-visma](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AlbanAndrieu/nabla-projects-interview-visma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/blob/master/LICENSE)
+[![Gitter](https://badges.gitter.im/nabla-projects-interview-visma/Lobby.svg)](https://gitter.im/nabla-projects-interview-visma/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Java project for an interview request by visma
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma)
 [![Jenkins Build Status](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma-nightly)
 [![Quality Gate](http://home.nabla.mobi:9000/api/badges/gate?key=com.nabla.project.sample.interview.visma:visma:master)](http://home.nabla.mobi:9000/dashboard/index/com.nabla.project.sample.interview.visma:visma:master)
 
 Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
 
-[![Dependency Status](https://www.versioneye.com/user/projects/55e70677a65c8c000e00a65a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55e70677a65c8c000e00a65a)
+[![Versioneye Status](https://www.versioneye.com/user/projects/55e70677a65c8c000e00a65a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55e70677a65c8c000e00a65a)
+[![Dependency Status](https://img.shields.io/david/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-projects-interview-visma)
+[![devDependency Status](https://img.shields.io/david/dev/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-projects-interview-visma#info=devDependencies)
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
+[![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma)
+[![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/coverage)
 
-[![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower-sample/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower-sample) [![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower-sample/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower-sample/coverage)
+[![OpenCollective](https://opencollective.com/nabla-projects-interview-visma/backers/badge.svg)](#backers)
+[![OpenCollective](https://opencollective.com/nabla-projects-interview-visma/sponsors/badge.svg)](#sponsors)
+
+[![Xing](http://www.xing.com/img/buttons/45_fr_btn.gif)](http://www.xing.com/profile/Alban_Andrieu)
 
 The challenge
 ================
@@ -194,6 +204,11 @@ It takes 1 hour to build for 1000 lines of code on an old laptop...
 Writing code is just one step among many others: building, testing, documenting, releasing, packaging, deploying, monitoring
 
 Thanks for reading!
+
+License
+-------
+
+[Apache v2](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ***
 
