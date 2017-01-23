@@ -1,0 +1,55 @@
+elasticsearch:
+  image: elasticsearch:2.3.3
+  ports:
+   - "9200:9200"
+   - "9300:9300"
+  ## uncomment and adjust the path before the colon to some local directory where the data should be stored at
+  ## NOTE: if you don't do that, the data will not be persistent!
+  #volumes:
+  # - /var/data/docker/es-stagemonitor:/usr/share/elasticsearch/data
+  #environment:
+  # - ES_HEAP_SIZE=6g # adjust heap size, should be half of your nodes RAM (max 30g)
+  command: elasticsearch
+    --cluster.name monitoring-cluster
+    --index.number_of_replicas 0
+    --network.bind_host _non_loopback:ipv4_
+    --node.name es-monitoring-01
+    --http.cors.enabled true
+    --http.cors.allow-origin *
+    ##  only needed if you want to cluster elasticsearch across multiple hosts
+    #--network.publish_host <ip of docker host>
+    #--discovery.zen.ping.unicast.hosts <ip of other ES hosts>
+
+    ##  Note:
+    #   set 'node.box_type hot' for your beefy nodes with SSDs which hold the new indices and 'node.box_type cold' for historical nodes (see https://github.com/stagemonitor/stagemonitor/wiki/Elasticsearch#hot-cold-architecture)
+    #   increase 'index.number_of_replicas' if you want backups (needs more disk space)
+    #   don't forget to change the 'node.name' if you want multiple instances
+  log_driver: "json-file"
+  log_opt: # log rotation
+    max-size: "10m"
+    max-file: "20"
+kibana:
+  image: kibana:4.5.1
+  ports:
+   - "5601:5601"
+  links:
+   - elasticsearch:elasticsearch
+  log_driver: "json-file"
+  log_opt: # log rotation
+    max-size: "10m"
+    max-file: "20"
+grafana:
+  image: grafana/grafana:3.0.4
+  ports:
+    - "3000:3000"
+  links:
+    - elasticsearch:elasticsearch
+  ## uncomment and adjust the path before the colon to some local directory where the data should be stored at
+  ## NOTE: if you don't do that, the data will not be persistent!
+  #volumes:
+  # - /var/data/docker/grafana/lib:/var/lib/grafana
+  # - /var/data/docker/grafana/log:/var/log/grafana
+  log_driver: "json-file"
+  log_opt: # log rotation
+    max-size: "10m"
+    max-file: "20"
