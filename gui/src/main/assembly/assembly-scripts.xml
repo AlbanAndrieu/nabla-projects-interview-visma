@@ -23,11 +23,13 @@
             <includes>
                 <include>**/*.groovy</include>
             </includes>
+            <!--
             <excludes>
                 <exclude>**/*Test*</exclude>
             </excludes>
+            -->
             <fileMode>644</fileMode>
             <directoryMode>0755</directoryMode>
         </fileSet>
     </fileSets>
-</assembly>    
+</assembly>
