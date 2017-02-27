@@ -1,0 +1,25 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+    logicalFilePath="db-changelog-1.6.xml">
+
+	<changeSet author="Alban Andrieu" id="01.01.2017-12:00-FLOATINGCALENDARELT" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<comment>Rename column Year to YEAR in FLOATINGCALENDARELT table</comment>
+		<renameColumn newColumnName="YEAR"
+			oldColumnName="Year"
+			schemaName="RKNET"
+			tableName="FLOATINGCALENDARELT"/>
+	</changeSet>
+
+	<changeSet author="Alban Andrieu" id="01.01.2017-12:00-VARIABLEHOLIDAY" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<comment>Rename column Year to YEAR in VARIABLEHOLIDAY table</comment>
+		<renameColumn newColumnName="YEAR"
+			oldColumnName="Year"
+			schemaName="RKNET"
+			tableName="VARIABLEHOLIDAY"/>
+	</changeSet>
+
+</databaseChangeLog>
