@@ -147,7 +147,7 @@
         <wss4j.version>1.6.19</wss4j.version>
         <tomcat.version>6.0.45</tomcat.version>
         <ant.version>1.9.7</ant.version>
-        <groovy.version>2.4.7</groovy.version>
+        <groovy.version>2.4.10</groovy.version>
         <xml.apis.version>1.4.01</xml.apis.version>
         <!--<cargo.core.uberjar.version>1.4.19</cargo.core.uberjar.version>-->
         <!--<jacoco.version>0.7.7.201606060606</jacoco.version>-->
@@ -160,12 +160,9 @@
 		<org.jboss.shrinkwrap.bom.version>${version.shrinkwrap_shrinkwrap}</org.jboss.shrinkwrap.bom.version>
         <org.jboss.shrinkwrap.resolver.bom.version>${version.shrinkwrap_resolver}</org.jboss.shrinkwrap.resolver.bom.version>
         <org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>-->
-        <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
-        <maven.proguard.plugin.version>2.0.13</maven.proguard.plugin.version>
+        <maven.proguard.plugin.version>2.0.14</maven.proguard.plugin.version>
+        <maven.dependency.check.plugin.version>1.4.5</maven.dependency.check.plugin.version>
         <maven.swagger.plugin.version>3.1.3</maven.swagger.plugin.version>
-        <maven.dependency.check.plugin.version>1.4.0</maven.dependency.check.plugin.version>
-        <maven.jrebel.plugin.version>1.1.6</maven.jrebel.plugin.version>
-        <maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
     </properties>
 
     <profiles>

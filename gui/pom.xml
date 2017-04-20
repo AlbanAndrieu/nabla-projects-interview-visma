@@ -868,12 +868,14 @@
 			<extensions>true</extensions> no files will be compiled.
 			See http://groovy.codehaus.org/Groovy-Eclipse+compiler+plugin+for+Maven
 			-->
+			<!-- 
             <plugin>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-eclipse-compiler</artifactId>
                 <version>${groovy.eclipse.compiler.version}</version>
                 <extensions>true</extensions>
             </plugin>
+            -->
             <!-- make sure our code doesn't have 1.6 dependencies except where we know it see * http://mojo.codehaus.org/animal-sniffer/index.html * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
             <!--
 			<plugin>
@@ -1599,7 +1601,7 @@
                             </docletArtifact>
                             <reportOutputDirectory>${project.build.outputDirectory}</reportOutputDirectory>
                             <useStandardDocletOptions>false</useStandardDocletOptions>
-                            <additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath /</additionalparam>
+                            <additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath / -verbose</additionalparam>
                         </configuration>
                         <goals>
                             <goal>javadoc</goal>
@@ -2013,34 +2015,6 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!--
-					<plugin>
-						<groupId>com.github.eirslett</groupId>
-						<artifactId>frontend-maven-plugin</artifactId>
-						<version>${maven.frontend.plugin.version}</version>
-
-						<configuration>
-							<nodeVersion>${node.version}</nodeVersion>
-							<npmVersion>${npm.version}</npmVersion>
-							<nodeDownloadRoot>http://kgrweb/download/nodejs/</nodeDownloadRoot>
-							<npmDownloadRoot>http://kgrweb/download/npm/-/</npmDownloadRoot>
-						</configuration>
-
-						<executions>
-							<execution>
-								<id>grunt integration-test</id>
-								<goals>
-									<goal>grunt</goal>
-								</goals>
-								<phase>integration-test</phase>
-								<configuration>
-									<arguments>integration-test</arguments>
-								</configuration>
-							</execution>
-						</executions>
-
-					</plugin>
-					-->
 				</plugins>
 		   </build>
         </profile>
