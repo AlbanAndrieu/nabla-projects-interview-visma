@@ -55,7 +55,15 @@ public class House implements IProduct, Comparable<House>, Serializable
 
     public static final String DEFAULT_NAME     = "House";
 
+    /**
+     * The house name.
+     * @serial
+     */	
     private final String       name             = House.DEFAULT_NAME; // NOSONAR
+    /**
+     * The house price.
+     * @serial
+     */	
     private final BigDecimal   price;
 
     public House()

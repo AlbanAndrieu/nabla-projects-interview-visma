@@ -40,7 +40,13 @@ import com.nabla.project.visma.api.IPayment;
 
 public class Payment implements IPayment, Comparable<Payment>, Serializable {
 
-    private final BigDecimal loanAmount;
+	private static final long serialVersionUID = 1L;
+
+   /**
+   * The payment loan amount.
+   * @serial
+   */	
+	private final BigDecimal loanAmount;
 
     // TODO add interest member
 
