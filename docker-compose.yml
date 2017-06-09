@@ -25,7 +25,7 @@ services:
     - /home/nabla/data/profiles:rw,exec,nosuid,size=2g
     - /home/nabla/data/executions:rw,exec,nosuid,size=2g
     - /home/nabla/data/sessions:rw,exec,nosuid,size=2g
-    - /home/nabla/webapps:rw,exec,nosuid,size=2g      
+    - /home/nabla/webapps:rw,exec,nosuid,size=2g
   ports:
    - "1099:1099" #jmx remote
    - "9090:9090" #http
@@ -55,7 +55,7 @@ services:
      ##  only needed if you want to cluster elasticsearch across multiple hosts
      #--network.publish_host <ip of docker host>
      #--discovery.zen.ping.unicast.hosts <ip of other ES hosts>
- 
+
      ##  Note:
      #   set 'node.box_type hot' for your beefy nodes with SSDs which hold the new indices and 'node.box_type cold' for historical nodes (see https://github.com/stagemonitor/stagemonitor/wiki/Elasticsearch#hot-cold-architecture)
      #   increase 'index.number_of_replicas' if you want backups (needs more disk space)
@@ -66,7 +66,7 @@ services:
      max-file: "20"
  kibana:
    image: kibana:4.5.1
-   container_name: kibana  
+   container_name: kibana
    ports:
     - "5601:5601"
    links:
