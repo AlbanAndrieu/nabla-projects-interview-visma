@@ -1,94 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <parent>
-        <groupId>com.nabla.project.sample.interview</groupId>
-        <artifactId>interview</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-    </parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.nabla.project.sample.interview.visma</groupId>
-    <artifactId>visma</artifactId>
-    <packaging>pom</packaging>
-    <name>Maven assembly for visma</name>
-    <description>Maven assembly for visma</description>
-    <url>https://github.com/AlbanAndrieu/nabla-project-interview-visma</url>
+	<parent>
+		<artifactId>interview</artifactId>
+		<groupId>com.nabla.project.sample.interview</groupId>
+		<version>1.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.nabla.project.sample.interview.visma</groupId>
+	<artifactId>visma</artifactId>
+	<packaging>pom</packaging>
+	<name>Maven assembly for visma</name>
+	<description>Maven assembly for visma</description>
+	<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma</url>
 
-    <scm>
+	<modules>
+		<module>core</module>
+		<module>gui</module>
+	</modules>
+
+	<scm>
 		<connection>scm:git:git://github.com/AlbanAndrieu/nabla-project-interview-visma.git</connection>
 		<developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-project-interview-visma.git</developerConnection>
 		<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma</url>
-    </scm>
+	</scm>
 
-    <ciManagement>
-    	<system>Jenkins</system>
-    	<!--<url>${JENKINS_URL}/job/${JOB_NAME}</url>-->
-        <url>${JOB_URL}</url>
-    </ciManagement>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma/issues</url>
+	</issueManagement>
 
-    <issueManagement>
-    	<url>https://github.com/AlbanAndrieu/nabla-project-interview-visma/issues</url>
-    	<system>GitHub Issues</system>
-    </issueManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+		<!--<url>${JENKINS_URL}/job/${JOB_NAME}</url>-->
+		<url>${JOB_URL}</url>
+	</ciManagement>
 
-    <!-- DEPENDENCIES -->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-all</artifactId>
-                <version>${mockito.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons.lang.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.findbugs</groupId>
-                <artifactId>jsr305</artifactId>
-                <version>${jsr305.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+	<properties>
+		<ant.version>1.9.7</ant.version>
+		<asm.ow2.version>5.1</asm.ow2.version>
+		<dbunit.version>2.5.2</dbunit.version>
+		<easymock.version>3.4</easymock.version>
+		<groovy.version>2.4.11</groovy.version>
+		<guava.version>22.0</guava.version>
+		<guice.version>4.1.0</guice.version>
+		<jdbc.h2.version>1.4.192</jdbc.h2.version>
+		<jersey.version>2.23.1</jersey.version>
+		<jetty9.version>9.3.10.v20160621</jetty9.version>
+		<!-- WARNING jmockit does not work wit jacoco coverage -->
+		<jmockit.version>1.25</jmockit.version>
+		<jsr305.version>3.0.1</jsr305.version>
+		<junit.version>4.12</junit.version>
+		<maven.dependency.check.plugin.version>1.4.5</maven.dependency.check.plugin.version>
+		<maven.proguard.plugin.version>2.0.14</maven.proguard.plugin.version>
+		<maven.swagger.plugin.version>3.1.3</maven.swagger.plugin.version>
+		<org.jboss.arquillian.bom.version>${org.jboss.arquillian.version}</org.jboss.arquillian.bom.version>
+		<!--<cargo.core.uberjar.version>1.4.19</cargo.core.uberjar.version>-->
+		<!--<jacoco.version>0.7.7.201606060606</jacoco.version>-->
+		<!--<groovy.version>2.4.5</groovy.version>-->
+		<org.jboss.arquillian.version>1.1.11.Final</org.jboss.arquillian.version>
+		<org.jboss.shrinkwrap.bom.version>${version.shrinkwrap_shrinkwrap}</org.jboss.shrinkwrap.bom.version>
+		<org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>
+		<org.jboss.shrinkwrap.resolver.bom.version>${version.shrinkwrap_resolver}</org.jboss.shrinkwrap.resolver.bom.version>
+		<slf4j.version>1.7.21</slf4j.version>
+		<testng.version>6.9.12</testng.version>
+		<tomcat.version>6.0.45</tomcat.version>
+		<version.shrinkwrap_descriptors>2.0.0-alpha-9</version.shrinkwrap_descriptors>
+		<version.shrinkwrap_resolver>2.1.1</version.shrinkwrap_resolver>
+		<version.shrinkwrap_shrinkwrap>1.2.2</version.shrinkwrap_shrinkwrap>
+		<wss4j.version>1.6.19</wss4j.version>
+		<xalan.version>2.7.2</xalan.version>
+		<xerces.version>2.11.0</xerces.version>
+		<xml.apis.version>1.4.01</xml.apis.version>
+	</properties>
 
-    <modules>
-        <module>core</module>
-        <module>gui</module>
-    </modules>
+	<!-- DEPENDENCIES -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons.lang.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId>
+				<artifactId>jsr305</artifactId>
+				<version>${jsr305.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-            </plugin>
-            <!--
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+			<!--
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>downloads-maven-plugin</artifactId>
@@ -126,94 +163,58 @@
 				</executions>
 			</plugin>
             -->
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 
-    <properties>
-        <xerces.version>2.11.0</xerces.version>
-        <xalan.version>2.7.2</xalan.version>
-        <junit.version>4.12</junit.version>
-        <jsr305.version>3.0.1</jsr305.version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <jdbc.h2.version>1.4.192</jdbc.h2.version>
-        <asm.ow2.version>5.1</asm.ow2.version>
-        <easymock.version>3.4</easymock.version>
-        <!-- WARNING jmockit does not work wit jacoco coverage -->
-		<jmockit.version>1.25</jmockit.version>
-		<dbunit.version>2.5.2</dbunit.version>
-        <testng.version>6.9.12</testng.version>
-        <jersey.version>2.23.1</jersey.version>
-        <jetty9.version>9.3.10.v20160621</jetty9.version>
-        <wss4j.version>1.6.19</wss4j.version>
-        <tomcat.version>6.0.45</tomcat.version>
-        <ant.version>1.9.7</ant.version>
-        <groovy.version>2.4.11</groovy.version>
-        <xml.apis.version>1.4.01</xml.apis.version>
-        <!--<cargo.core.uberjar.version>1.4.19</cargo.core.uberjar.version>-->
-        <!--<jacoco.version>0.7.7.201606060606</jacoco.version>-->
-        <!--<groovy.version>2.4.5</groovy.version>-->
-        <org.jboss.arquillian.version>1.1.11.Final</org.jboss.arquillian.version>
-        <org.jboss.arquillian.bom.version>${org.jboss.arquillian.version}</org.jboss.arquillian.bom.version>
-        <version.shrinkwrap_shrinkwrap>1.2.2</version.shrinkwrap_shrinkwrap>
-		<version.shrinkwrap_descriptors>2.0.0-alpha-9</version.shrinkwrap_descriptors>
-		<version.shrinkwrap_resolver>2.1.1</version.shrinkwrap_resolver>
-		<org.jboss.shrinkwrap.bom.version>${version.shrinkwrap_shrinkwrap}</org.jboss.shrinkwrap.bom.version>
-        <org.jboss.shrinkwrap.resolver.bom.version>${version.shrinkwrap_resolver}</org.jboss.shrinkwrap.resolver.bom.version>
-        <org.jboss.shrinkwrap.descriptors.bom.version>${version.shrinkwrap_descriptors}</org.jboss.shrinkwrap.descriptors.bom.version>
-        <maven.proguard.plugin.version>2.0.14</maven.proguard.plugin.version>
-        <maven.dependency.check.plugin.version>1.4.5</maven.dependency.check.plugin.version>
-        <maven.swagger.plugin.version>3.1.3</maven.swagger.plugin.version>
-    </properties>
-
-    <profiles>
-         <profile>
-             <id>logback</id>
-             <dependencies>
-                 <dependency>
-                     <groupId>ch.qos.logback</groupId>
-                     <artifactId>logback-classic</artifactId>
-                     <scope>runtime</scope>
-		             <exclusions>
-		                <!-- circular dependency -->
-		                <exclusion>
-		                    <groupId>org.slf4j</groupId>
-            			    <artifactId>slf4j-api</artifactId>
-		                </exclusion>
-		             </exclusions>
-                 </dependency>
-                 <dependency>
-                     <groupId>ch.qos.logback</groupId>
-                     <artifactId>logback-core</artifactId>
-                     <scope>runtime</scope>
-                 </dependency>
-             </dependencies>
-         </profile>
-         <profile>
-             <id>log4j</id>
-             <activation>
-			     <property>
-			 	     <name>!profile.activation</name>
-			 	 </property>
-		     </activation>
-             <dependencies>
-                 <dependency>
-                     <groupId>org.slf4j</groupId>
-                     <artifactId>slf4j-log4j12</artifactId>
-                     <scope>runtime</scope>
-		             <exclusions>
-		                <!-- circular dependency -->
-		                <exclusion>
-		                    <groupId>org.slf4j</groupId>
-            			    <artifactId>slf4j-api</artifactId>
-		                </exclusion>
-		             </exclusions>
-                 </dependency>
-                 <dependency>
-                     <groupId>log4j</groupId>
-                     <artifactId>log4j</artifactId>
-                     <scope>runtime</scope>
-                 </dependency>
-             </dependencies>
-         </profile>
-    </profiles>
+	<profiles>
+		<profile>
+			<id>logback</id>
+			<dependencies>
+				<dependency>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+					<scope>runtime</scope>
+					<exclusions>
+						<!-- circular dependency -->
+						<exclusion>
+							<artifactId>slf4j-api</artifactId>
+							<groupId>org.slf4j</groupId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-core</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>log4j</id>
+			<activation>
+				<property>
+					<name>!profile.activation</name>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+					<scope>runtime</scope>
+					<exclusions>
+						<!-- circular dependency -->
+						<exclusion>
+							<artifactId>slf4j-api</artifactId>
+							<groupId>org.slf4j</groupId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

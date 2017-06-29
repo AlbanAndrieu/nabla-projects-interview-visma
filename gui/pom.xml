@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <parent>
-        <groupId>com.nabla.project.sample.interview.visma</groupId>
-        <artifactId>visma</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-    </parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>gui</artifactId>
-    <packaging>war</packaging>
-    <name>Maven Java Server Faces Webapp for Visma</name>
+	<parent>
+		<artifactId>visma</artifactId>
+		<groupId>com.nabla.project.sample.interview.visma</groupId>
+		<version>1.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>gui</artifactId>
+	<packaging>war</packaging>
+	<name>Maven Java Server Faces Webapp for Visma</name>
 
-    <!--
+	<!--
         <properties>
             <jsf.api.version>2.1</jsf.api.version>
             <jsf.impl.version>2.1</jsf.impl.version>
@@ -25,30 +24,8 @@
             <jboss.el.version>1.0_02.CR6</jboss.el.version>
         </properties>
     -->
-    <properties>
-        <gatling.version>2.2.2</gatling.version>
-        <scala.version>2.11.8</scala.version>
-        <netty.version>3.10.5.Final</netty.version>
-        <swagger.version>1.5.9</swagger.version>
-        <lombok.version>1.16.8</lombok.version>
-        <jaxrs.doclet.version>0.0.4-SNAPSHOT</jaxrs.doclet.version>
-        <swagger.doclet.version>1.0.5</swagger.doclet.version>
-        <appsensor.core.version>2.2.0</appsensor.core.version>
-
-        <!-- for jmeter -->
-        <performancetest.webservice.path>/visma</performancetest.webservice.path>
-
-        <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
-        <httpclient.version>4.5.2</httpclient.version>
-
-        <!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->
-        <maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
-
-		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
-		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
-
-		<jetty.jmxremote.rmihost>localhost</jetty.jmxremote.rmihost>
-		<jetty.jmxremote.rmiport>3099</jetty.jmxremote.rmiport>
+	<properties>
+		<appsensor.core.version>2.2.0</appsensor.core.version>
 		<!--<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>-->
 
 		<!--
@@ -63,20 +40,40 @@
 -Dcom.sun.management.jmxremote.authenticate=false
 -Dcom.sun.management.jmxremote.port=${cargo.monitoring.jmx.rmi.port}
 -Djetty.jmxrmihost=${jetty.jmxremote.rmihost}
--Djetty.jmxrmiport=${jetty.jmxremote.rmiport}
-         </cargo.jetty.jmx.activation>
+-Djetty.jmxrmiport=${jetty.jmxremote.rmiport}</cargo.jetty.jmx.activation>
 
-        <!--<cargo.jetty.jmx.activation></cargo.jetty.jmx.activation>-->
+		<!--<cargo.jetty.jmx.activation></cargo.jetty.jmx.activation>-->
 
 		<cargo.jmx.activation>${cargo.jetty.jmx.activation}</cargo.jmx.activation>
+
+		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
+		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
+		<gatling.version>2.2.2</gatling.version>
+		<httpclient.version>4.5.2</httpclient.version>
+
+		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
+		<jaxrs.doclet.version>0.0.4-SNAPSHOT</jaxrs.doclet.version>
+
+		<jetty.jmxremote.rmihost>localhost</jetty.jmxremote.rmihost>
+		<jetty.jmxremote.rmiport>3099</jetty.jmxremote.rmiport>
+		<lombok.version>1.16.8</lombok.version>
+
+		<!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->
+		<maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
+		<netty.version>3.10.5.Final</netty.version>
+
+		<!-- for jmeter -->
+		<performancetest.webservice.path>/visma</performancetest.webservice.path>
+		<scala.version>2.11.8</scala.version>
+		<swagger.doclet.version>1.0.5</swagger.doclet.version>
+		<swagger.version>1.5.9</swagger.version>
 		<!--<jacoco.agent>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.agent.version}/org.jacoco.agent-${jacoco.agent.version}-runtime.jar=output=tcpserver</jacoco.agent>-->
-    </properties>
+	</properties>
 
+	<dependencyManagement>
+		<dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-
-             <!-- Override dependency resolver with latest version.
+			<!-- Override dependency resolver with latest version.
              This must go *BEFORE* the Arquillian BOM. -->
 			<!--  ShrinkWrap  -->
 			<dependency>
@@ -86,37 +83,37 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.resolver</groupId>
-                <artifactId>shrinkwrap-resolver-bom</artifactId>
-                <version>${org.jboss.shrinkwrap.resolver.bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-bom</artifactId>
-                <version>${org.jboss.shrinkwrap.descriptors.bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+			<dependency>
+				<groupId>org.jboss.shrinkwrap.resolver</groupId>
+				<artifactId>shrinkwrap-resolver-bom</artifactId>
+				<version>${org.jboss.shrinkwrap.resolver.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.shrinkwrap.descriptors</groupId>
+				<artifactId>shrinkwrap-descriptors-bom</artifactId>
+				<version>${org.jboss.shrinkwrap.descriptors.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 
-            <!-- Arquillian : http://arquillian.org/guides/getting_started_fr -->
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>${org.jboss.arquillian.bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+			<!-- Arquillian : http://arquillian.org/guides/getting_started_fr -->
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>${org.jboss.arquillian.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 
-            <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill
+			<!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill
                 of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
                 of artifacts. We use this here so that we always get the correct versions
                 of artifacts. Here we use the jboss-javaee-6.0-with tools stack (you can
                 read this as the JBoss stack of the Java EE 6 APIs, with some extras tools
                 for your project, such as Arquillian for testing) -->
-            <!--
+			<!--
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-javaee-6.0-with-tools</artifactId>
@@ -125,193 +122,25 @@
                 <scope>provided</scope>
             </dependency>
             -->
-        </dependencies>
-    </dependencyManagement>
+		</dependencies>
+	</dependencyManagement>
 
-    <dependencies>
-
-        <!-- First declare the APIs we depend on and need for compilation. All
-            of them are provided by JBoss AS 7 -->
-
-        <!-- Import the CDI API, we use provided scope as the API is included in
-            JBoss AS 7 -->
-        <!--
-        <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        -->
-
-        <!-- Import the JPA API, we use provided scope as the API is included in
-            JBoss AS 7 -->
-        <!--
-        <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        -->
-
-        <!-- Import the Common Annotations API (JSR-250), we use provided scope
-            as the API is included in JBoss AS 7 -->
-        <!--
-        <dependency>
-            <groupId>org.jboss.spec.javax.annotation</groupId>
-            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        -->
-
-        <!-- Import the JAX-RS API, we use provided scope as the API is included
-            in JBoss AS 7 -->
-        <!--
-        <dependency>
-            <groupId>org.jboss.spec.javax.ws.rs</groupId>
-            <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        -->
-
-        <!-- Import the JPA API, we use provided scope as the API is included in
-            JBoss AS 7 -->
-        <!--
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        -->
-
-        <!-- Import the EJB API, we use provided scope as the API is included in
-            JBoss AS 7 -->
-        <!--
-        <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        -->
-
-        <!-- Import the Bean Validation API, which is used both on the server and
-            the client. -->
-        <!--
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
-        -->
-
-        <!-- Import the JSF API, we use provided scope as the API is included
-            in JBoss AS 7 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
-            <version>${org.jboss.spec.javax.faces.jsf.api.2.1.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!--
-      <dependency>
-         <groupId>org.jboss.weld.servlet</groupId>
-         <artifactId>weld-servlet</artifactId>
-         <version>${weld.servlet.version}</version>
-      </dependency>
-      -->
-
-        <!-- for cannot access javax.faces.application.FacesMessage -->
-        <!-- see in core project it is provided (needed for jboss 7) -->
-        <!-- TODO remove old API
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <scope>${scope.tomcat.never.type}</scope>
-        </dependency>
-        -->
-
-        <!-- TODO remove not needed old impl
-                <dependency>
-                        <groupId>javax.faces</groupId>
-                        <artifactId>jsf-impl</artifactId>
-                        <version>${jsf.impl.version}</version>
-                        <scope>${scope.type}</scope>
-                </dependency>
-        -->
-
-        <!-- TODO remove
-            <dependency>
-                <groupId>org.primefaces</groupId>
-                <artifactId>primefaces</artifactId>
-                <version>4.0</version>
-            </dependency>
-         -->
-
-            <!-- Javaee API -->
-        <!-- TODO remove
-        <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-api</artifactId>
-                <version>${javax.javaee.api.version}</version>
-            <scope>${scope.type}</scope>
-        </dependency>
-         recommended way is to include
-        <dependency>
-                    <groupId>javax.faces</groupId>
-                    <artifactId>javax.faces-api</artifactId>
-                    <version>2.1</version>
-                <scope>${scope.type}</scope>
-        </dependency>
-        -->
-        <!-- http://download.java.net/maven/2 needed for tomcat only -->
-        <!-- replaced by javax.faces for other except tomcat -->
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <scope>${scope.tomcat.only.type}</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <scope>${scope.tomcat.only.type}</scope>
-        </dependency>
-
-        <!-- http://repo1.maven.org/maven -->
-        <!--
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${jstl.version}</version>
-        </dependency>
-        -->
-
-		<!--
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <scope>${scope.tomcat.never.type}</scope>
-        </dependency>-->
+	<dependencies>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.servlet.api.version}</version>
-			<scope>provided</scope> <!-- javax.servlet-api-3.0.1.jar Offending class javax/servlet/Servlet.class  in Tomcat -->
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<!--<version>${jsp-api.version}</version>-->
 		</dependency>
 
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <!--<version>${jsp-api.version}</version>-->
-        </dependency>
+		<!-- Tomcat 6 need this -->
+		<dependency>
+			<groupId>com.sun.el</groupId>
+			<artifactId>el-ri</artifactId>
+			<!--<version>${el.ri.version}</version>-->
+		</dependency>
 
-        <!-- Tomcat 6 need this -->
-        <dependency>
-            <groupId>com.sun.el</groupId>
-            <artifactId>el-ri</artifactId>
-            <!--<version>${el.ri.version}</version>-->
-        </dependency>
-
-        <!-- TODO must be needed later
+		<!-- TODO must be needed later
         <dependency>
             <groupId>org.jboss.el</groupId>
             <artifactId>jboss-el</artifactId>
@@ -333,7 +162,7 @@
             <scope>${scope.type}</scope>
         </dependency>
         -->
-        <!--
+		<!--
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
@@ -349,249 +178,34 @@
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
-			<optional>true</optional> <!-- needed only for annotations -->
+			<optional>true</optional>
+			<!-- needed only for annotations -->
 			<!-- BUT needed for proguard obfuscation -->
 		</dependency>
 
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <!--<scope>test</scope>-->
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <!--<version>${junit.version}</version>-->
-            <type>jar</type>
-            <scope>test</scope>
-        </dependency>
-        <!-- in order to use @net.jcip.annotations.NotThreadSafe in junit test -->
-        <dependency>
-            <groupId>com.github.stephenc.jcip</groupId>
-            <artifactId>jcip-annotations</artifactId>
-            <!--<version>${jcip.annotations.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>info.cukes</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>${cucumber.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- WARNING cucumber does not work with Jacoco when activated with surefire-->
-        <dependency>
-            <groupId>info.cukes</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>${cucumber.version}</version>
-             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <artifactId>arquillian-core-api</artifactId>
-            <groupId>org.jboss.arquillian.core</groupId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.protocol</groupId>
-            <artifactId>arquillian-protocol-servlet</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-		<!-- ClassNotFoundException: org.w3c.dom.ElementTraversal for arquillian -->
 		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<version>${xml.apis.version}</version>
-			<scope>test</scope>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<!--<scope>test</scope>-->
 		</dependency>
 
-	<!--
-        <dependency>
-            <groupId>org.jboss.arquillian</groupId>
-            <artifactId>arquillian-spi</artifactId>
-            <version>${org.jboss.arquillian.spi.version}</version>
-            <scope>test</scope>
-        </dependency>
-        -->
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <!--<version>${selenium.firefox.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-support</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-safari-driver</artifactId>
-            <!--<version>${selenium.safari.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-iphone-driver</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-ie-driver</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-htmlunit-driver</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-android-driver</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-            <!--<version>${selenium.driver.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <!--<version>${selenium.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>core</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-		<!--
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>core</artifactId>
 			<version>${project.version}</version>
-			<type>test-jar</type>
-			<classifier>tests</classifier>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
-		-->
-
 		<dependency>
-			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
-			<artifactId>http-builder</artifactId>
-			<scope>test</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
 			<exclusions>
+				<!-- circular dependency -->
 				<exclusion>
-					<groupId>org.codehaus.groovy</groupId>
-					<artifactId>groovy</artifactId>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!--
-       <dependency>
-         <groupId>org.codehaus.groovy</groupId>
-         <artifactId>groovy</artifactId>
-         <exclusions>
-             <exclusion>
-                 <groupId>asm</groupId>
-                 <artifactId>asm</artifactId>
-             </exclusion>
-         </exclusions>
-       </dependency>
-       -->
-
-        <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>org.jacoco.agent</artifactId>
-            <version>${jacoco.agent.version}</version>
-            <type>jar</type>
-            <classifier>runtime</classifier>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>com.newrelic.agent.java</groupId>
-          <artifactId>newrelic-agent</artifactId>
-          <version>${newrelic.version}</version>
-          <scope>test</scope>
-          <!--<scope>runtime</scope>-->
-        </dependency>
-
-        <!-- The newrelic-java.zip dependency. -->
-        <!--
-        <dependency>
-          <groupId>com.newrelic.agent.java</groupId>
-          <artifactId>newrelic-java</artifactId>
-          <version>${newrelic.version}</version>
-          <scope>provided</scope>
-          <type>zip</type>
-        </dependency>
-        -->
-       <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${jdbc.h2.version}</version>
-            <!-- <scope>runtime</scope>-->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <exclusions>
-                <!-- circular dependency -->
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-classic</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- Log4J Adapter for SLF4J
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <scope>test</scope>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <scope>test</scope>
-        </dependency>
 
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
@@ -615,21 +229,9 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-            <!--<scope>test</scope>-->
+			<!--<scope>test</scope>-->
 		</dependency>
-
-        <dependency>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-core-uberjar</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>asm</groupId>
-                    <artifactId>asm</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- replaced by ow2 asm-debug-all
+		<!-- replaced by ow2 asm-debug-all
         <dependency>
                 <groupId>asm</groupId>
                 <artifactId>asm</artifactId>
@@ -641,7 +243,7 @@
             <version>${asm.version}</version>
         </dependency>
         -->
-        <!--
+		<!--
         <dependency>
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-debug-all</artifactId>
@@ -649,12 +251,174 @@
         </dependency>
         -->
 
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-proxy</artifactId>
+			<version>${jetty9.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jetty9.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty9.version}</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-core</artifactId>
+			<version>${swagger.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>jsr311-api</artifactId>
+					<groupId>javax.ws.rs</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- this is just one of the appsensor dependencies you'll need - see step
+			below called pluggable components -->
+		<dependency>
+			<groupId>org.owasp.appsensor</groupId>
+			<artifactId>appsensor-core</artifactId>
+			<version>${appsensor.core.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>javax.inject</artifactId>
+					<groupId>javax.inject</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>aopalliance</artifactId>
+					<groupId>aopalliance</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logback-core</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- First declare the APIs we depend on and need for compilation. All
+            of them are provided by JBoss AS 7 -->
+
+		<!-- Import the CDI API, we use provided scope as the API is included in
+            JBoss AS 7 -->
+		<!--
         <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-proxy</artifactId>
-            <version>${jetty9.version}</version>
-            <scope>compile</scope>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
         </dependency>
+        -->
+
+		<!-- Import the JPA API, we use provided scope as the API is included in
+            JBoss AS 7 -->
+		<!--
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        -->
+
+		<!-- Import the Common Annotations API (JSR-250), we use provided scope
+            as the API is included in JBoss AS 7 -->
+		<!--
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        -->
+
+		<!-- Import the JAX-RS API, we use provided scope as the API is included
+            in JBoss AS 7 -->
+		<!--
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        -->
+
+		<!-- Import the JPA API, we use provided scope as the API is included in
+            JBoss AS 7 -->
+		<!--
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        -->
+
+		<!-- Import the EJB API, we use provided scope as the API is included in
+            JBoss AS 7 -->
+		<!--
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        -->
+
+		<!-- Import the Bean Validation API, which is used both on the server and
+            the client. -->
+		<!--
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        -->
+
+		<!-- Import the JSF API, we use provided scope as the API is included
+            in JBoss AS 7 -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.1_spec</artifactId>
+			<version>${org.jboss.spec.javax.faces.jsf.api.2.1.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- http://repo1.maven.org/maven -->
+		<!--
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+        -->
+
+		<!--
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>${scope.tomcat.never.type}</scope>
+        </dependency>-->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.api.version}</version>
+			<scope>provided</scope>
+			<!-- javax.servlet-api-3.0.1.jar Offending class javax/servlet/Servlet.class  in Tomcat -->
+		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -672,74 +436,309 @@
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>${jetty9.version}</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlets</artifactId>
 			<version>${jetty9.version}</version>
 			<type>jar</type>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlet</artifactId>
-			<version>${jetty9.version}</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<!--<version>${junit.version}</version>-->
 			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<!-- in order to use @net.jcip.annotations.NotThreadSafe in junit test -->
+		<dependency>
+			<groupId>com.github.stephenc.jcip</groupId>
+			<artifactId>jcip-annotations</artifactId>
+			<!--<version>${jcip.annotations.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- WARNING cucumber does not work with Jacoco when activated with surefire-->
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-		  <groupId>org.projectlombok</groupId>
-		  <artifactId>lombok</artifactId>
-		  <version>${lombok.version}</version>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.core</groupId>
+			<artifactId>arquillian-core-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.protocol</groupId>
+			<artifactId>arquillian-protocol-servlet</artifactId>
+			<scope>test</scope>
 		</dependency>
 
+		<!-- ClassNotFoundException: org.w3c.dom.ElementTraversal for arquillian -->
 		<dependency>
-			<groupId>io.swagger</groupId>
-			<artifactId>swagger-core</artifactId>
-			<scope>compile</scope>
-			<version>${swagger.version}</version>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>${xml.apis.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!--
+        <dependency>
+            <groupId>org.jboss.arquillian</groupId>
+            <artifactId>arquillian-spi</artifactId>
+            <version>${org.jboss.arquillian.spi.version}</version>
+            <scope>test</scope>
+        </dependency>
+        -->
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-firefox-driver</artifactId>
+			<!--<version>${selenium.firefox.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-api</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-safari-driver</artifactId>
+			<!--<version>${selenium.safari.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-iphone-driver</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-ie-driver</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-htmlunit-driver</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-android-driver</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<!--<version>${selenium.driver.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<!--<version>${selenium.version}</version>-->
+			<scope>test</scope>
+		</dependency>
+
+		<!--
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>core</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
+			<artifactId>http-builder</artifactId>
+			<scope>test</scope>
 			<exclusions>
 				<exclusion>
-					<groupId>javax.ws.rs</groupId>
-					<artifactId>jsr311-api</artifactId>
+					<artifactId>groovy</artifactId>
+					<groupId>org.codehaus.groovy</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 
-		<!-- this is just one of the appsensor dependencies you'll need - see step
-			below called pluggable components -->
+		<!--
+       <dependency>
+         <groupId>org.codehaus.groovy</groupId>
+         <artifactId>groovy</artifactId>
+         <exclusions>
+             <exclusion>
+                 <groupId>asm</groupId>
+                 <artifactId>asm</artifactId>
+             </exclusion>
+         </exclusions>
+       </dependency>
+       -->
+
 		<dependency>
-			<groupId>org.owasp.appsensor</groupId>
-			<artifactId>appsensor-core</artifactId>
-			<version>${appsensor.core.version}</version>
+			<groupId>org.jacoco</groupId>
+			<artifactId>org.jacoco.agent</artifactId>
+			<version>${jacoco.agent.version}</version>
+			<type>jar</type>
+			<classifier>runtime</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.newrelic.agent.java</groupId>
+			<artifactId>newrelic-agent</artifactId>
+			<version>${newrelic.version}</version>
+			<scope>test</scope>
+			<!--<scope>runtime</scope>-->
+		</dependency>
+
+		<!-- The newrelic-java.zip dependency. -->
+		<!--
+        <dependency>
+          <groupId>com.newrelic.agent.java</groupId>
+          <artifactId>newrelic-java</artifactId>
+          <version>${newrelic.version}</version>
+          <scope>provided</scope>
+          <type>zip</type>
+        </dependency>
+        -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${jdbc.h2.version}</version>
+			<!-- <scope>runtime</scope>-->
+			<scope>test</scope>
+		</dependency>
+		<!-- Log4J Adapter for SLF4J
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.cargo</groupId>
+			<artifactId>cargo-core-uberjar</artifactId>
+			<scope>test</scope>
 			<exclusions>
 				<exclusion>
-					<groupId>javax.inject</groupId>
-					<artifactId>javax.inject</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>aopalliance</groupId>
-					<artifactId>aopalliance</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-core</artifactId>
+					<artifactId>asm</artifactId>
+					<groupId>asm</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-    </dependencies>
 
-    <build>
-        <finalName>visma</finalName>
-        <plugins>
-            <!--
+		<!--
+      <dependency>
+         <groupId>org.jboss.weld.servlet</groupId>
+         <artifactId>weld-servlet</artifactId>
+         <version>${weld.servlet.version}</version>
+      </dependency>
+      -->
+
+		<!-- for cannot access javax.faces.application.FacesMessage -->
+		<!-- see in core project it is provided (needed for jboss 7) -->
+		<!-- TODO remove old API
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <scope>${scope.tomcat.never.type}</scope>
+        </dependency>
+        -->
+
+		<!-- TODO remove not needed old impl
+                <dependency>
+                        <groupId>javax.faces</groupId>
+                        <artifactId>jsf-impl</artifactId>
+                        <version>${jsf.impl.version}</version>
+                        <scope>${scope.type}</scope>
+                </dependency>
+        -->
+
+		<!-- TODO remove
+            <dependency>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces</artifactId>
+                <version>4.0</version>
+            </dependency>
+         -->
+
+		<!-- Javaee API -->
+		<!-- TODO remove
+        <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${javax.javaee.api.version}</version>
+            <scope>${scope.type}</scope>
+        </dependency>
+         recommended way is to include
+        <dependency>
+                    <groupId>javax.faces</groupId>
+                    <artifactId>javax.faces-api</artifactId>
+                    <version>2.1</version>
+                <scope>${scope.type}</scope>
+        </dependency>
+        -->
+		<!-- http://download.java.net/maven/2 needed for tomcat only -->
+		<!-- replaced by javax.faces for other except tomcat -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<scope>${scope.tomcat.only.type}</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<scope>${scope.tomcat.only.type}</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>visma</finalName>
+		<plugins>
+			<!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>selenium-maven-plugin</artifactId>
@@ -750,7 +749,7 @@
                     <startURL>http://${cargo.host}:${cargo.port}/visma</startURL>
                 </configuration>
                 -->
-                <!--
+			<!--
                 <executions>
                     <execution>
                         <id>xvfb</id>
@@ -789,7 +788,7 @@
 
                 </executions>
             -->
-            <!--
+			<!--
             </plugin>
             -->
 
@@ -835,34 +834,34 @@
 			</plugin>
 			-->
 			<!-- say to maven to use groovy-eclipse-compiler in order to compile groovy files -->
-            <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven.compiler.plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                            <compilerId>groovy-eclipse-compiler</compilerId>
-                            <verbose>true</verbose>
-                            <!--
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<extensions>true</extensions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-eclipse-compiler</artifactId>
+						<version>${groovy.eclipse.compiler.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-eclipse-batch</artifactId>
+						<version>${groovy.eclipse.batch.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<compilerId>groovy-eclipse-compiler</compilerId>
+					<verbose>true</verbose>
+					<!--
                             <compilerArguments>
 								<javaAgentClass>lombok.core.Agent</javaAgentClass>
 							</compilerArguments>
 							-->
-							<!--<fork>true</fork>-->
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.codehaus.groovy</groupId>
-                            <artifactId>groovy-eclipse-compiler</artifactId>
-                            <version>${groovy.eclipse.compiler.version}</version>
-                        </dependency>
-						<dependency>
-							<groupId>org.codehaus.groovy</groupId>
-							<artifactId>groovy-eclipse-batch</artifactId>
-							<version>${groovy.eclipse.batch.version}</version>
-						</dependency>
-                </dependencies>
-            </plugin>
+					<!--<fork>true</fork>-->
+				</configuration>
+			</plugin>
 			<!--
 			This plugin is important, because without
 			<extensions>true</extensions> no files will be compiled.
@@ -876,8 +875,8 @@
                 <extensions>true</extensions>
             </plugin>
             -->
-            <!-- make sure our code doesn't have 1.6 dependencies except where we know it see * http://mojo.codehaus.org/animal-sniffer/index.html * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
-            <!--
+			<!-- make sure our code doesn't have 1.6 dependencies except where we know it see * http://mojo.codehaus.org/animal-sniffer/index.html * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -901,30 +900,30 @@
 			</plugin>
 			-->
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skipTests>${maven.test.skip}</skipTests>
-                    <testFailureIgnore>${maven.test.failure.skip}</testFailureIgnore>
-                    <testSourceDirectory>${basedir}/src/test/groovy</testSourceDirectory>
-                    <excludes>
-                        <exclude>**/*ITest*</exclude>
-                        <exclude>**/*STest*</exclude>
-                    </excludes>
-                    <systemPropertyVariables>
-                        <webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
-                        <webdriver.firefox.bin>${webdriver.firefox.bin}</webdriver.firefox.bin>
-                        <webdriver.safari.noinstall>true</webdriver.safari.noinstall>
-                        <!--<arquillian.launch>arq-jbossas-managed</arquillian.launch>-->
-                        <!--<arquillian.launch>arq-weld-ee-embedded</arquillian.launch>-->
-                    </systemPropertyVariables>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>${maven.test.skip}</skipTests>
+					<testFailureIgnore>${maven.test.failure.skip}</testFailureIgnore>
+					<testSourceDirectory>${basedir}/src/test/groovy</testSourceDirectory>
+					<excludes>
+						<exclude>**/*ITest*</exclude>
+						<exclude>**/*STest*</exclude>
+					</excludes>
+					<systemPropertyVariables>
+						<webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
+						<webdriver.firefox.bin>${webdriver.firefox.bin}</webdriver.firefox.bin>
+						<webdriver.safari.noinstall>true</webdriver.safari.noinstall>
+						<!--<arquillian.launch>arq-jbossas-managed</arquillian.launch>-->
+						<!--<arquillian.launch>arq-weld-ee-embedded</arquillian.launch>-->
+					</systemPropertyVariables>
 					<classpathDependencyExcludes>
-                        <classpathDependencyExcludes>org.apache.openjpa:openjpa-all</classpathDependencyExcludes>
-                        <classpathDependencyExcludes>org.ow2.asm:asm-all</classpathDependencyExcludes>
-                    </classpathDependencyExcludes>
-                </configuration>
-                <!-- run with -Prun-its instead
+						<classpathDependencyExcludes>org.apache.openjpa:openjpa-all</classpathDependencyExcludes>
+						<classpathDependencyExcludes>org.ow2.asm:asm-all</classpathDependencyExcludes>
+					</classpathDependencyExcludes>
+				</configuration>
+				<!-- run with -Prun-its instead
                 <executions>
                     <execution>
                         <id>surefire-itest</id>
@@ -944,10 +943,10 @@
                     </execution>
                 </executions>
                 -->
-            </plugin>
-            <!-- Start H2 before integration tests, accepting tcp connections on the
+			</plugin>
+			<!-- Start H2 before integration tests, accepting tcp connections on the
                 randomly selected port -->
-            <!--
+			<!--
             <plugin>
                 <groupId>com.edugility</groupId>
                 <artifactId>h2-maven-plugin</artifactId>
@@ -975,39 +974,81 @@
 				<groupId>com.sinapsi.memtracker</groupId>
 				<artifactId>mem-tracker-maven-plugin</artifactId>
 				<version>${maven.mem.tracker.maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>track</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<host>localhost</host>
 					<port>${cargo.monitoring.jmx.rmi.port}</port>
 				</configuration>
+			</plugin>
+			<!-- for automatic running of integration tests with Jetty -->
+			<!-- mvn org.codehaus.cargo:cargo-maven2-plugin:run -->
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<!--<version>${maven.cargo.maven2.plugin.version}</version>-->
+				<extensions>true</extensions>
 				<executions>
 					<execution>
-						<id>integration-test</id>
+						<id>start-container-overrided</id>
+						<phase>pre-integration-test</phase>
 						<goals>
-							<goal>track</goal>
+							<goal>start</goal>
 						</goals>
-						<phase>integration-test</phase>
+						<configuration>
+							<timeout>240000</timeout>
+							<!--
+							<configuration>
+								<properties>
+									<cargo.start.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.start.jvmargs>
+								</properties>
+							</configuration>
+							-->
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-container-overrided</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+						<configuration>
+							<timeout>60000</timeout>
+							<!--
+						<configuration>
+							<properties>
+								<cargo.jmx.activation></cargo.jmx.activation>
+								<cargo.start.jvmargs></cargo.start.jvmargs>
+								<cargo.jvmargs><![CDATA[]]></cargo.jvmargs>
+							</properties>
+						</configuration>-->
+						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-            <!-- for automatic running of integration tests with Jetty -->
-            <!-- mvn org.codehaus.cargo:cargo-maven2-plugin:run -->
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <!--<version>${maven.cargo.maven2.plugin.version}</version>-->
-                <extensions>true</extensions>
-                <configuration>
-                    <skip>${maven.test.skip}</skip>
-                    <wait>${cargo.wait}</wait>
-                    <container>
-                        <!--<timeout>180000</timeout>--> <!-- 3 minutes -->
-                        <!--<timeout>240000</timeout>--> <!-- 4 minutes -->
-                        <!--<timeout>300000</timeout>--> <!-- 5 minutes -->
-                        <!--<timeout>480000</timeout>--> <!-- 8 minutes -->
-                        <timeout>600000</timeout> <!-- 10 minutes -->
-                        <!--<containerId>${cargo.container}</containerId> -->
-                        <!--<type>${cargo.container.type}</type> -->
-                        <log>${project.build.directory}/cargo.log</log>
+				<configuration>
+					<skip>${maven.test.skip}</skip>
+					<wait>${cargo.wait}</wait>
+					<container>
+						<!--<timeout>180000</timeout>-->
+						<!-- 3 minutes -->
+						<!--<timeout>240000</timeout>-->
+						<!-- 4 minutes -->
+						<!--<timeout>300000</timeout>-->
+						<!-- 5 minutes -->
+						<!--<timeout>480000</timeout>-->
+						<!-- 8 minutes -->
+						<timeout>600000</timeout>
+						<!-- 10 minutes -->
+						<!--<containerId>${cargo.container}</containerId> -->
+						<!--<type>${cargo.container.type}</type> -->
+						<log>${project.build.directory}/cargo.log</log>
 						<logLevel>debug</logLevel>
 						<systemProperties>
 							<log4j.debug>true</log4j.debug>
@@ -1028,21 +1069,21 @@
 							</dependency>
 						</dependencies>
 						-->
-                    </container>
-                    <configuration>
-                        <!--<type>${cargo.configuration.type}</type>-->
-                        <!--<home>${project.build.directory}/cargo/installs/jboss-as-dist-7.1.1.Final/jboss-as-7.1.1.Final/standalone/</home>-->
-                        <properties>
+					</container>
+					<configuration>
+						<!--<type>${cargo.configuration.type}</type>-->
+						<!--<home>${project.build.directory}/cargo/installs/jboss-as-dist-7.1.1.Final/jboss-as-7.1.1.Final/standalone/</home>-->
+						<properties>
 							<!--<cargo.protocol>https</cargo.protocol>-->
-                            <cargo.hostname>${cargo.host}</cargo.hostname>
-                            <cargo.servlet.port>${cargo.port}</cargo.servlet.port>
-                            <!--<cargo.rmi.port>${cargo.rmi.port}</cargo.rmi.port>-->
-                            <cargo.tomcat.ajp.port>${cargo.tomcat.ajp.port}</cargo.tomcat.ajp.port>
-                            <!--<cargo.tomcat.context.reloadable>true</cargo.tomcat.context.reloadable>-->
-                            <!--<cargo.tomcat.shutdown.port>9205</cargo.tomcat.shutdown.port>-->
-                            <cargo.tomcat.manager.url>${deploy.url}</cargo.tomcat.manager.url>
-                            <cargo.remote.username>${cargo.remote.user}</cargo.remote.username>
-                            <cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
+							<cargo.hostname>${cargo.host}</cargo.hostname>
+							<cargo.servlet.port>${cargo.port}</cargo.servlet.port>
+							<!--<cargo.rmi.port>${cargo.rmi.port}</cargo.rmi.port>-->
+							<cargo.tomcat.ajp.port>${cargo.tomcat.ajp.port}</cargo.tomcat.ajp.port>
+							<!--<cargo.tomcat.context.reloadable>true</cargo.tomcat.context.reloadable>-->
+							<!--<cargo.tomcat.shutdown.port>9205</cargo.tomcat.shutdown.port>-->
+							<cargo.tomcat.manager.url>${deploy.url}</cargo.tomcat.manager.url>
+							<cargo.remote.username>${cargo.remote.user}</cargo.remote.username>
+							<cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
 
 							<!--
                             <com.sun.management.jmxremote></com.sun.management.jmxremote>
@@ -1054,21 +1095,22 @@
                             <java.rmi.server.hostname>localhost</java.rmi.server.hostname>
 							-->
 
-                            <cargo.logging>high</cargo.logging>
-                            <!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
-                            <!--<cargo.start.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent} ${jacoco.agent.it.arg} ${newrelic.agent}]]></cargo.start.jvmargs>-->
-                            <cargo.start.jvmargs><![CDATA[${cargo.eclipse.debug} ${jacoco.agent} ${cargo.jmx.activation}]]></cargo.start.jvmargs>
-                            <!--<cargo.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>-->
-                            <!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
+							<cargo.logging>high</cargo.logging>
+							<!-- WARNING with jvmargs, when actifacted tomcat shutdown issue on port 8205 -->
+							<!--<cargo.start.jvmargs><![CDATA[${newrelic.agent} ${jacoco.agent} ${jacoco.agent.it.arg} ${newrelic.agent}]]></cargo.start.jvmargs>-->
+							<cargo.start.jvmargs><![CDATA[${cargo.eclipse.debug} ${jacoco.agent} ${cargo.jmx.activation}]]></cargo.start.jvmargs>
+							<!--<cargo.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.jvmargs>-->
+							<!-- <cargo.jvmargs> -Dnabla.config=${basedir}/src/main/resources
                                 -Dnabla.data=${basedir}/src/test/resources/data -->
-                            <!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
-                            <!--<![CDATA[-Xdebug -Xrunjdwp:transport=dt_socket,address=${cargo.debug.address},server=y,suspend=${cargo.debug.suspend} -noverify ${javaagent}]]>-->
-                            <cargo.jetty.createContextXml>false</cargo.jetty.createContextXml>
-                        </properties>
+							<!-- -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -->
+							<!--<![CDATA[-Xdebug -Xrunjdwp:transport=dt_socket,address=${cargo.debug.address},server=y,suspend=${cargo.debug.suspend} -noverify ${javaagent}]]>-->
+							<cargo.jetty.createContextXml>false</cargo.jetty.createContextXml>
+						</properties>
 						<configfiles>
 							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/etc</file>
-								<todir>etc</todir>	<todir>etc</todir>
+								<todir>etc</todir>
+								<todir>etc</todir>
 							</configfile>
 							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/start.d</file>
@@ -1084,66 +1126,30 @@
 							</configfile>
 						</configfiles>
 						<!-- https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html#Maven2PluginReferenceGuide-file -->
-                        <files>
+						<files>
 							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/keystore</file>
 								<todir>etc</todir>
 								<configfile>false</configfile>
 								<overwrite>true</overwrite>
 							</configfile>
-                        </files>
-                    </configuration>
-                    <deployables>
-                        <deployable>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>${project.artifactId}</artifactId>
-                            <type>war</type>
-                            <properties>
-                                <context>/visma</context>
-                            </properties>
-                            <!--<pingURL>http://${cargo.host}:${cargo.port}/visma/rest/ping</pingURL>-->
-							<pingURL>http://${cargo.host}:${cargo.port}/visma/rest/loan/test</pingURL>
-                            <pingTimeout>60000</pingTimeout> <!-- 1 minute -->
-                        </deployable>
-                    </deployables>
-                </configuration>
-				<executions>
-					<execution>
-						<id>start-container-overrided</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<timeout>240000</timeout>
-							<!--
-							<configuration>
-								<properties>
-									<cargo.start.jvmargs><![CDATA[${jacoco.agent} ${cargo.jmx.activation}]]></cargo.start.jvmargs>
-								</properties>
-							</configuration>
-							-->
-						</configuration>
-					</execution>
-					<execution>
-					  <id>stop-container-overrided</id>
-					  <phase>post-integration-test</phase>
-					  <goals>
-						<goal>stop</goal>
-					  </goals>
-					  <configuration>
-						<timeout>60000</timeout>
-						<!--
-						<configuration>
+						</files>
+					</configuration>
+					<deployables>
+						<deployable>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<type>war</type>
 							<properties>
-								<cargo.jmx.activation></cargo.jmx.activation>
-								<cargo.start.jvmargs></cargo.start.jvmargs>
-								<cargo.jvmargs><![CDATA[]]></cargo.jvmargs>
+								<context>/visma</context>
 							</properties>
-						</configuration>-->
-					  </configuration>
-					</execution>
-				</executions>
+							<!--<pingURL>http://${cargo.host}:${cargo.port}/visma/rest/ping</pingURL>-->
+							<pingURL>http://${cargo.host}:${cargo.port}/visma/rest/loan/test</pingURL>
+							<pingTimeout>60000</pingTimeout>
+							<!-- 1 minute -->
+						</deployable>
+					</deployables>
+				</configuration>
 				<!--
 				<executions>
 					<execution>
@@ -1163,7 +1169,7 @@
 					</execution>
 				</executions>
 				-->
-            </plugin>
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -1188,25 +1194,33 @@
 						</configuration>
 					</execution>
 					<execution>
-                         <id>scripts-sources</id>
-                         <phase>package</phase>
-                         <goals>
-                             <goal>single</goal>
-                         </goals>
-                         <configuration>
-                             <descriptors>
-                                 <descriptor>src/main/assembly/assembly-scripts.xml</descriptor>
-                             </descriptors>
-                             <appendAssemblyId>false</appendAssemblyId>
-                             <finalName>scripts-sources</finalName>
-                         </configuration>
-                     </execution>					
+						<id>scripts-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/assembly/assembly-scripts.xml</descriptor>
+							</descriptors>
+							<appendAssemblyId>false</appendAssemblyId>
+							<finalName>scripts-sources</finalName>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<supportedProjectTypes>
 						<supportedProjectType>war</supportedProjectType>
@@ -1225,14 +1239,6 @@
 						<Bundle-ClassPath>.,WEB-INF/classes</Bundle-ClassPath>
 					</instructions>
 				</configuration>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>manifest</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 
 			<plugin>
@@ -1249,48 +1255,18 @@
 					-->
 				</configuration>
 			</plugin>
-            <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
-            <!-- To use, run: mvn package jboss-as:deploy -->
-            <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <!--<version>${maven.jboss.as.plugin.version}</version>-->
-            </plugin>
+			<!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
+			<!-- To use, run: mvn package jboss-as:deploy -->
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<!--<version>${maven.jboss.as.plugin.version}</version>-->
+			</plugin>
 
-            <plugin>
-            <!-- Allow this web application to be started with the command : 'mvn jetty:run-war -Psample -Dserver=jetty9x -Ddatabase=derby -Djetty.port=9090' -->
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-				<configuration>
-					<!--<scanIntervalSeconds>10</scanIntervalSeconds>-->
-                    <scanIntervalSeconds>0</scanIntervalSeconds> <!-- for jrebel -->
-					<!--TODO<jettyConfig>src/main/etc/jetty.xml</jettyConfig>-->
-					<useTestClasspath>false</useTestClasspath>
-                    <httpConnector>
-                        <!--host>localhost</host-->
-                        <port>${jetty.port}</port>
-                    </httpConnector>
-					<stopPort>${jetty.stop.port}</stopPort>
-					<stopKey>STOP</stopKey>
-					<stopPort>9999</stopPort>
-					<stopWait>10</stopWait>
-                    <!--
-                    <systemProperties>
-                        <systemProperty>
-                            <key>nabla.config</key>
-                            <value>../../config/dev</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <key>nabla.data</key>
-                            <value>${data.dir}</value>
-                        </systemProperty>
-                    </systemProperties>
-                    -->
-                    <webApp>
-                        <contextPath>/visma</contextPath>
-                        <tempDirectory>${project.build.directory}/work</tempDirectory>
-                    </webApp>
-				</configuration>
+			<plugin>
+				<!-- Allow this web application to be started with the command : 'mvn jetty:run-war -Psample -Dserver=jetty9x -Ddatabase=derby -Djetty.port=9090' -->
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
 				<!--
 				<executions>
 					<execution>
@@ -1335,7 +1311,38 @@
 						<version>${jetty9.version}</version>
 					</dependency>
 				</dependencies>
-            </plugin>
+				<configuration>
+					<!--<scanIntervalSeconds>10</scanIntervalSeconds>-->
+					<scanIntervalSeconds>0</scanIntervalSeconds>
+					<!-- for jrebel -->
+					<!--TODO<jettyConfig>src/main/etc/jetty.xml</jettyConfig>-->
+					<useTestClasspath>false</useTestClasspath>
+					<httpConnector>
+						<!--host>localhost</host-->
+						<port>${jetty.port}</port>
+					</httpConnector>
+					<stopPort>${jetty.stop.port}</stopPort>
+					<stopKey>STOP</stopKey>
+					<stopPort>9999</stopPort>
+					<stopWait>10</stopWait>
+					<!--
+                    <systemProperties>
+                        <systemProperty>
+                            <key>nabla.config</key>
+                            <value>../../config/dev</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <key>nabla.data</key>
+                            <value>${data.dir}</value>
+                        </systemProperty>
+                    </systemProperties>
+                    -->
+					<webApp>
+						<contextPath>/visma</contextPath>
+						<tempDirectory>${project.build.directory}/work</tempDirectory>
+					</webApp>
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.zeroturnaround</groupId>
@@ -1343,37 +1350,37 @@
 				<version>${maven.jrebel.plugin.version}</version>
 				<executions>
 					<execution>
-					<id>generate-rebel-xml</id>
-					<phase>process-resources</phase>
-					<goals>
-						<goal>generate</goal>
-					</goals>
+						<id>generate-rebel-xml</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
 
-            <!-- start app using java -jar target/dependency/jetty-runner.jar target/*.war -port 9090 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.mortbay.jetty</groupId>
-                                    <artifactId>jetty-runner</artifactId>
-                                    <version>${jetty.runner.version}</version>
-                                    <destFileName>jetty-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                    <!--
+			<!-- start app using java -jar target/dependency/jetty-runner.jar target/*.war -port 9090 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.mortbay.jetty</groupId>
+									<artifactId>jetty-runner</artifactId>
+									<version>${jetty.runner.version}</version>
+									<destFileName>jetty-runner.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<!--
                     <execution>
                       <id>unpack-zip</id>
                       <phase>package</phase>
@@ -1396,41 +1403,22 @@
                       </configuration>
                     </execution>
                     -->
-                </executions>
-            </plugin>
+				</executions>
+			</plugin>
 
-            <!-- Allow this web application to be started with the command : 'mvn
+			<!-- Allow this web application to be started with the command : 'mvn
                 tomcat7:run' -->
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <!-- http port -->
-                    <port>${tomcat.port}</port>
-                    <path>/visma</path>
-                    <!--<contextFile>${basedir}/src/main/webapp/META-INF/context.xml</contextFile> -->
-                    <addWarDependenciesInClassloader>true</addWarDependenciesInClassloader>
-            <!--
-            <systemProperties>
-                <java.security.auth.login.config>${basedir}/conf/jaas.config</java.security.auth.login.config>
-            </systemProperties>
-            -->
-                    <url>${deploy.url}</url>
-                    <username>${cargo.remote.user}</username>
-                    <password>${cargo.remote.password}</password>
-                    <addContextWarDependencies>true</addContextWarDependencies>
-                    <addWarDependenciesInClassloader>true</addWarDependenciesInClassloader>
-                    <!--<configurationDir>${basedir}</configurationDir>-->
-                    <server>nabla-tomcat</server>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>${project.artifactId}</artifactId>
-                        <version>${project.version}</version>
-                        <type>war</type>
-                    </dependency>
-                    <!--
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>${project.groupId}</groupId>
+						<artifactId>${project.artifactId}</artifactId>
+						<version>${project.version}</version>
+						<type>war</type>
+					</dependency>
+					<!--
                     <dependency>
                         <groupId>${jdbc.groupId}</groupId>
                         <artifactId>${jdbc.client.artifactId}</artifactId>
@@ -1438,15 +1426,34 @@
                         <scope>runtime</scope>
                     </dependency>
                     -->
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>com.atlassian.maven.plugins</groupId>
-                <artifactId>maven-clover2-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
+				</dependencies>
+				<configuration>
+					<!-- http port -->
+					<port>${tomcat.port}</port>
+					<path>/visma</path>
+					<!--<contextFile>${basedir}/src/main/webapp/META-INF/context.xml</contextFile> -->
+					<addWarDependenciesInClassloader>true</addWarDependenciesInClassloader>
+					<!--
+            <systemProperties>
+                <java.security.auth.login.config>${basedir}/conf/jaas.config</java.security.auth.login.config>
+            </systemProperties>
+            -->
+					<url>${deploy.url}</url>
+					<username>${cargo.remote.user}</username>
+					<password>${cargo.remote.password}</password>
+					<addContextWarDependencies>true</addContextWarDependencies>
+					<addWarDependenciesInClassloader>true</addWarDependenciesInClassloader>
+					<!--<configurationDir>${basedir}</configurationDir>-->
+					<server>nabla-tomcat</server>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-clover2-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>com.github.marschall</groupId>
 				<artifactId>jdeps-maven-plugin</artifactId>
@@ -1470,16 +1477,16 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<executions>
-				  <execution>
-					<goals>
-					  <goal>exec</goal>
-					</goals>
-				  </execution>
+					<execution>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
 				</executions>
 				<configuration>
-				  <executable>maven</executable>
-				  <mainClass>com.nabla.project.visma.App</mainClass>
-				  <!-- optional
+					<executable>maven</executable>
+					<mainClass>com.nabla.project.visma.App</mainClass>
+					<!-- optional
 				  <workingDirectory>/tmp</workingDirectory>
 				  <arguments>
 					<argument>-X</argument>
@@ -1487,7 +1494,7 @@
 				  </arguments>
 				   -->
 				</configuration>
-		    </plugin>
+			</plugin>
 
 			<plugin>
 				<groupId>com.sebastian-daschner</groupId>
@@ -1524,67 +1531,68 @@
 			</plugin>
 			-->
 			<plugin>
-                <groupId>com.github.kongchen</groupId>
-                <artifactId>swagger-maven-plugin</artifactId>
-                <version>${maven.swagger.plugin.version}</version>
-                <configuration>
-                    <apiSources>
-                      <apiSource>
-                            <springmvc>false</springmvc>
-                            <!--<locations>com.github.kongchen.swagger.sample.wordnik.resource</locations>-->
-                            <locations>com.nabla.project.visma</locations>
-                            <schemes>http,https</schemes>
-                            <host>localhost:9090</host>
+				<groupId>com.github.kongchen</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>${maven.swagger.plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<apiSources>
+						<apiSource>
+							<springmvc>false</springmvc>
+							<!--<locations>com.github.kongchen.swagger.sample.wordnik.resource</locations>-->
+							<locations>com.nabla.project.visma</locations>
+							<schemes>http,https</schemes>
+							<host>localhost:9090</host>
 							<basePath>/visma</basePath>
-                            <!--
+							<!--
                             <host>petstore.swagger.wordnik.com</host>
                             <basePath>/api</basePath>
                             -->
-                            <info>
-                                <title>Swagger Maven Plugin Sample</title>
-                                <version>v1</version>
-                                <description>This is a sample </description>
-                                <termsOfService>
-                                    http://www.github.com/kongchen/swagger-maven-plugin
-                                </termsOfService>
-                                <contact>
-                                    <email>kongchen@gmail.com</email>
-                                    <name>Kong Chen</name>
-                                    <url>http://kongch.com</url>
-                                </contact>
-                                <license>
-                                    <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-                                    <name>Apache 2.0</name>
-                                </license>
-                            </info>
-                            <!-- Support classpath or file absolute path here.
+							<info>
+								<title>Swagger Maven Plugin Sample</title>
+								<version>v1</version>
+								<description>This is a sample</description>
+								<termsOfService>http://www.github.com/kongchen/swagger-maven-plugin</termsOfService>
+								<contact>
+									<email>kongchen@gmail.com</email>
+									<name>Kong Chen</name>
+									<url>http://kongch.com</url>
+								</contact>
+								<license>
+									<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+									<name>Apache 2.0</name>
+								</license>
+							</info>
+							<!-- Support classpath or file absolute path here.
                             1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
                             2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
                                 "${basedir}/src/main/resources/template/hello.html" -->
-                            <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
-                            <outputPath>${basedir}/build/swagger/document.html</outputPath>
-                            <swaggerDirectory>${basedir}/build/swagger/swagger-ui</swaggerDirectory>
-                        </apiSource>
-                    </apiSources>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+							<templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
+							<outputPath>${basedir}/build/swagger/document.html</outputPath>
+							<swaggerDirectory>${basedir}/build/swagger/swagger-ui</swaggerDirectory>
+						</apiSource>
+					</apiSources>
+				</configuration>
+			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>generate-swagger-docs</id>
-                        <phase>generate-resources</phase>
-                        <configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>generate-swagger-docs</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+						<configuration>
 							<!--
                             <doclet>com.hypnoticocelot.jaxrs.doclet.ServiceDoclet</doclet>
                             <docletArtifact>
@@ -1593,63 +1601,60 @@
                                 <version>${jaxrs.doclet.version}</version>
                             </docletArtifact>
                             -->
-                            <doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
-                            <docletArtifact>
-                                <groupId>com.carma</groupId>
-                                <artifactId>swagger-doclet</artifactId>
-                                <version>${swagger.doclet.version}</version>
-                            </docletArtifact>
-                            <reportOutputDirectory>${project.build.outputDirectory}</reportOutputDirectory>
-                            <useStandardDocletOptions>false</useStandardDocletOptions>
-                            <additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath / -verbose</additionalparam>
-                        </configuration>
-                        <goals>
-                            <goal>javadoc</goal>
-                        </goals>
-                    </execution>
-			        <!-- Extended Wadl Config: javadoc plugin generates resourcedoc.xml during the compilation using doclet.
+							<doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
+							<docletArtifact>
+								<groupId>com.carma</groupId>
+								<artifactId>swagger-doclet</artifactId>
+								<version>${swagger.doclet.version}</version>
+							</docletArtifact>
+							<reportOutputDirectory>${project.build.outputDirectory}</reportOutputDirectory>
+							<useStandardDocletOptions>false</useStandardDocletOptions>
+							<additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath / -verbose</additionalparam>
+						</configuration>
+					</execution>
+					<!-- Extended Wadl Config: javadoc plugin generates resourcedoc.xml during the compilation using doclet.
                      Generated file is then used during runtime to attach javadoc information to wadl. -->
-                    <execution>
-                        <id>generate-jersey-docs</id>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                             <subpackages>com.nabla.project.services</subpackages>
-							 <doclet>org.glassfish.jersey.wadl.doclet.ResourceDoclet</doclet>
-							 <docletPath>${path.separator}${project.build.outputDirectory}</docletPath>
-							 <docletArtifacts>
-								 <!-- jersey doclet generator -->
-								 <docletArtifact>
-									 <groupId>org.glassfish.jersey.ext</groupId>
-									 <artifactId>jersey-wadl-doclet</artifactId>
-									 <version>${jersey.version}</version>
-								 </docletArtifact>
-								 <!--
+					<execution>
+						<id>generate-jersey-docs</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+						<configuration>
+							<subpackages>com.nabla.project.services</subpackages>
+							<doclet>org.glassfish.jersey.wadl.doclet.ResourceDoclet</doclet>
+							<docletPath>${path.separator}${project.build.outputDirectory}</docletPath>
+							<docletArtifacts>
+								<!-- jersey doclet generator -->
+								<docletArtifact>
+									<groupId>org.glassfish.jersey.ext</groupId>
+									<artifactId>jersey-wadl-doclet</artifactId>
+									<version>${jersey.version}</version>
+								</docletArtifact>
+								<!--
 									 Also specify jersey and xerces as doclet artifacts as the ResourceDoclet
 									 uses classes provided by them to generate the resourcedoc.
 								  -->
-								 <docletArtifact>
-									 <groupId>org.glassfish.jersey.core</groupId>
-									 <artifactId>jersey-server</artifactId>
-									 <version>${jersey.version}</version>
-								 </docletArtifact>
-								 <docletArtifact>
-									 <groupId>xerces</groupId>
-									 <artifactId>xercesImpl</artifactId>
+								<docletArtifact>
+									<groupId>org.glassfish.jersey.core</groupId>
+									<artifactId>jersey-server</artifactId>
+									<version>${jersey.version}</version>
+								</docletArtifact>
+								<docletArtifact>
+									<groupId>xerces</groupId>
+									<artifactId>xercesImpl</artifactId>
 									<version>${xerces.version}</version>
-								 </docletArtifact>
-							 </docletArtifacts>
-							 <!-- the following option is required as a work around for
+								</docletArtifact>
+							</docletArtifacts>
+							<!-- the following option is required as a work around for
 								  version 2.5 of the javadoc plugin which will be used
 								  by a maven version > 2.0.9 -->
-							 <useStandardDocletOptions>false</useStandardDocletOptions>
-							 <additionalparam>-output ${project.build.outputDirectory}/resourcedoc.xml</additionalparam>
-                        </configuration>
-                        <goals>
-                            <goal>javadoc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+							<useStandardDocletOptions>false</useStandardDocletOptions>
+							<additionalparam>-output ${project.build.outputDirectory}/resourcedoc.xml</additionalparam>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo.jspc</groupId>
 				<artifactId>jspc-maven-plugin</artifactId>
@@ -1733,35 +1738,35 @@
 				</configuration>
 			</plugin>
 			-->
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 
-  <profiles>
-        <profile>
-            <id>jmeter</id>
-            <activation>
-                    <property>
-                            <name>profile.activation</name>
-                    </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.lazerycode.jmeter</groupId>
-                        <artifactId>jmeter-maven-plugin</artifactId>
-                        <version>${maven.jmeter.plugin.version}</version>
-                        <inherited>true</inherited>
-                        <executions>
-                            <execution>
-                                <id>jmeter-tests</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>jmeter</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!--
+	<profiles>
+		<profile>
+			<id>jmeter</id>
+			<activation>
+				<property>
+					<name>profile.activation</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.lazerycode.jmeter</groupId>
+						<artifactId>jmeter-maven-plugin</artifactId>
+						<version>${maven.jmeter.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>jmeter-tests</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>jmeter</goal>
+								</goals>
+							</execution>
+						</executions>
+						<inherited>true</inherited>
+					</plugin>
+					<!--
                     <plugin>
                         <groupId>com.lazerycode.jmeter</groupId>
                         <artifactId>jmeter-analysis-maven-plugin</artifactId>
@@ -1778,92 +1783,38 @@
                         </executions>
                     </plugin>
                     -->
-                    <plugin>
-                        <groupId>de.codecentric</groupId>
-                        <artifactId>jmeter-graph-maven-plugin</artifactId>
-                        <version>${maven.jmeter.graph.plugin.version}</version>
-                        <inherited>true</inherited>
-                        <executions>
-                                <execution>
-                                    <id>create-graph-threads</id>
-                                    <phase>integration-test</phase>
-                                    <goals>
-                                        <goal>create-graph</goal>
-                                    </goals>
-                                </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>gatling</id>
-            <activation>
-                    <property>
-                            <name>profile.activation</name>
-                    </property>
-            </activation>
-            <dependencies>
-				<!--
-				<dependency>
-					<groupId>com.typesafe</groupId>
-					<artifactId>config</artifactId>
-					<version>1.2.1</version>
-				</dependency>
-				-->
-				<dependency>
-					<groupId>io.gatling</groupId>
-					<artifactId>gatling-charts</artifactId>
-					<scope>test</scope>
-				</dependency>
-                <dependency>
-                    <!--<groupId>com.excilys.ebi.gatling.highcharts</groupId>-->
-                    <groupId>io.gatling.highcharts</groupId>
-                    <artifactId>gatling-charts-highcharts</artifactId>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <!--<groupId>com.excilys.ebi.gatling</groupId>-->
-                    <groupId>io.gatling</groupId>
-                    <artifactId>gatling-app</artifactId>
-                    <scope>test</scope>
-                </dependency>
-                <!--
-                <dependency>
-                    <groupId>com.excilys.ebi.gatling</groupId>
-                    <artifactId>gatling-recorder</artifactId>
-                    <scope>test</scope>
-                </dependency>
-                -->
-                <dependency>
-                    <groupId>org.scala-lang</groupId>
-                    <artifactId>scala-library</artifactId>
-                    <scope>test</scope>
-                </dependency>
-				<dependency>
-					<groupId>org.scala-lang</groupId>
-					<artifactId>scala-reflect</artifactId>
-					<scope>test</scope>
-				</dependency>
-				<dependency>
-					<groupId>io.netty</groupId>
-					<artifactId>netty</artifactId>
-					<version>${netty.version}</version>
-				</dependency>
-				<!--
-				<dependency>
-					<groupId>org.json4s</groupId>
-					<artifactId>json4s-jackson_${scala.short.version}</artifactId>
-				</dependency>
-				-->
-            </dependencies>
+					<plugin>
+						<groupId>de.codecentric</groupId>
+						<artifactId>jmeter-graph-maven-plugin</artifactId>
+						<version>${maven.jmeter.graph.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>create-graph-threads</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>create-graph</goal>
+								</goals>
+							</execution>
+						</executions>
+						<inherited>true</inherited>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>gatling</id>
+			<activation>
+				<property>
+					<name>profile.activation</name>
+				</property>
+			</activation>
 
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>net.alchim31.maven</groupId>
-                        <artifactId>scala-maven-plugin</artifactId>
-                        <version>${maven.scala.plugin.version}</version>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>net.alchim31.maven</groupId>
+						<artifactId>scala-maven-plugin</artifactId>
+						<version>${maven.scala.plugin.version}</version>
 						<executions>
 							<execution>
 								<goals>
@@ -1882,7 +1833,7 @@
 								<jvmArg>-Xmx1024m</jvmArg>
 							</jvmArgs>
 						</configuration>
-                    </plugin>
+					</plugin>
 					<!-- enable scalatest -->
 					<!--
 					<plugin>
@@ -1904,54 +1855,104 @@
 						</executions>
 					</plugin>
 					-->
-                    <plugin>
-                        <!--<groupId>com.excilys.ebi.gatling</groupId>-->
-                        <groupId>io.gatling</groupId>
-                        <artifactId>gatling-maven-plugin</artifactId>
-                        <version>${maven.gatling.plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>execute</goal>
-                                </goals>
-                                <!--
+					<plugin>
+						<!--<groupId>com.excilys.ebi.gatling</groupId>-->
+						<groupId>io.gatling</groupId>
+						<artifactId>gatling-maven-plugin</artifactId>
+						<version>${maven.gatling.plugin.version}</version>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<!--
                                 <configuration>
                                     <includes>
                                         <include>**/RecordedSimulation.scala</include>
                                     </includes>
                                 </configuration>
                                 -->
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!-- Jenkins by default defines a property BUILD_NUMBER which is used to enable the profile. -->
-        <profile>
-            <id>jenkins</id>
-            <activation>
-                <property>
-                    <name>BUILD_NUMBER</name>
-                </property>
-            </activation>
-            <!--
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>io.netty</groupId>
+					<artifactId>netty</artifactId>
+					<version>${netty.version}</version>
+				</dependency>
+				<!--
+				<dependency>
+					<groupId>com.typesafe</groupId>
+					<artifactId>config</artifactId>
+					<version>1.2.1</version>
+				</dependency>
+				-->
+				<dependency>
+					<groupId>io.gatling</groupId>
+					<artifactId>gatling-charts</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<!--<groupId>com.excilys.ebi.gatling.highcharts</groupId>-->
+					<groupId>io.gatling.highcharts</groupId>
+					<artifactId>gatling-charts-highcharts</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<!--<groupId>com.excilys.ebi.gatling</groupId>-->
+					<groupId>io.gatling</groupId>
+					<artifactId>gatling-app</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<!--
+                <dependency>
+                    <groupId>com.excilys.ebi.gatling</groupId>
+                    <artifactId>gatling-recorder</artifactId>
+                    <scope>test</scope>
+                </dependency>
+                -->
+				<dependency>
+					<groupId>org.scala-lang</groupId>
+					<artifactId>scala-library</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.scala-lang</groupId>
+					<artifactId>scala-reflect</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<!--
+				<dependency>
+					<groupId>org.json4s</groupId>
+					<artifactId>json4s-jackson_${scala.short.version}</artifactId>
+				</dependency>
+				-->
+			</dependencies>
+		</profile>
+		<!-- Jenkins by default defines a property BUILD_NUMBER which is used to enable the profile. -->
+		<profile>
+			<id>jenkins</id>
+			<activation>
+				<property>
+					<name>BUILD_NUMBER</name>
+				</property>
+			</activation>
+			<!--
             <properties>
                 <maven.test.failure.skip>false</maven.test.failure.skip>
                 <maven.test.skip>false</maven.test.skip>
             </properties>
             -->
-		   <build>
+			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
 						<version>${maven.dependency.check.plugin.version}</version>
-						<configuration>
-							<!--<failBuildOnCVSS>8</failBuildOnCVSS>-->
-							<format>XML</format>
-						</configuration>
 						<executions>
 							<execution>
 
@@ -1961,6 +1962,10 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<!--<failBuildOnCVSS>8</failBuildOnCVSS>-->
+							<format>XML</format>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.jboss.tattletale</groupId>
@@ -1970,7 +1975,8 @@
 							<execution>
 								<id>run-tattletale-report</id>
 								<!-- it is bound by default to "package" phase, which isn't what we want for reporting -->
-								<phase>verify</phase><!-- needs to run after WAR package has been built -->
+								<phase>verify</phase>
+								<!-- needs to run after WAR package has been built -->
 								<goals>
 									<goal>report</goal>
 								</goals>
@@ -1998,6 +2004,14 @@
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>codenarc-maven-plugin</artifactId>
 						<version>${maven.codenarc.plugin.version}</version>
+						<executions>
+							<execution>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>codenarc</goal>
+								</goals>
+							</execution>
+						</executions>
 						<configuration>
 							<sourceDirectory>${project.basedir}/src/main/groovy</sourceDirectory>
 							<!--
@@ -2006,17 +2020,9 @@
 							<maxPriority3Violations>0</maxPriority3Violations>
 							-->
 						</configuration>
-						<executions>
-							<execution>
-							<phase>prepare-package</phase>
-							<goals>
-								<goal>codenarc</goal>
-							</goals>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
-		   </build>
-        </profile>
-    </profiles>
+			</build>
+		</profile>
+	</profiles>
 </project>
