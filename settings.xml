@@ -15,7 +15,7 @@
     </server>
     -->
   </servers>
-  
+
   <mirrors>
     <!--This sends everything else to /public -->
     <mirror>
@@ -32,17 +32,17 @@
       <url>http://home.nabla.mobi:8081/nexus/content/groups/public/</url>
       <!-- Set to '*,!central' for non dev installations, and to 'nothing' for dev installations -->
       <mirrorOf>*,!central,!thirdparty</mirrorOf>
-    </mirror>    
-    
+    </mirror>
+
     <mirror>
       <id>nexus-thirdparty</id>
       <name>Nexus thirdparty repository - all non-central dependencies</name>
       <url>http://home.nabla.mobi:8081/nexus/content/repositories/thirdparty/</url>
       <!-- Set to '*,!central' for non dev installations, and to 'nothing' for dev installations -->
       <mirrorOf>*,!central</mirrorOf>
-    </mirror>       
-  </mirrors>  
-  
+    </mirror>
+  </mirrors>
+
   <profiles>
       <profile>
             <id>nexus</id>
@@ -73,18 +73,18 @@
                     <url>http://home.nabla.mobi:8081/nexus/content/repositories/server-forge-snapshot</url>
                     <releases><enabled>false</enabled></releases>
                     <snapshots><enabled>true</enabled></snapshots>
-                </pluginRepository>	
+                </pluginRepository>
             </pluginRepositories>
             <!--
 	    <properties>
 	      <maven.clover.licenseLocation>${user.home}/clover.license</maven.clover.licenseLocation>
 	    </properties>
 	    -->
-        </profile>  
-  </profiles>  
+        </profile>
+  </profiles>
 
-  <activeProfiles>    
+  <activeProfiles>
     <activeProfile>nexus</activeProfile>
   </activeProfiles>
-  
+
 </settings>

@@ -867,7 +867,7 @@
 			<extensions>true</extensions> no files will be compiled.
 			See http://groovy.codehaus.org/Groovy-Eclipse+compiler+plugin+for+Maven
 			-->
-			<!-- 
+			<!--
             <plugin>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-eclipse-compiler</artifactId>

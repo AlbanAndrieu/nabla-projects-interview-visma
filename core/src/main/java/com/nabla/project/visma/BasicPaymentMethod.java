@@ -45,7 +45,7 @@ import com.nabla.project.visma.api.IPaymentMethod;
 
 /**
  * DOCUMENT ME!
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -63,7 +63,7 @@ public class BasicPaymentMethod implements IPaymentMethod
 
     /**
      * Creates a new BasicPaymentMethod object.
-     * 
+     *
      * @param aLoan DOCUMENT ME!
      */
     public BasicPaymentMethod(final ILoan aLoan)
@@ -100,7 +100,7 @@ public class BasicPaymentMethod implements IPaymentMethod
 
     /**
      * DOCUMENT ME!
-     * 
+     *
      * @return DOCUMENT ME!
      */
     @Override
@@ -128,7 +128,7 @@ public class BasicPaymentMethod implements IPaymentMethod
 
     /**
      * DOCUMENT ME!
-     * 
+     *
      * @param annualInterestRate DOCUMENT ME!
      * @return DOCUMENT ME!
      */
@@ -141,7 +141,7 @@ public class BasicPaymentMethod implements IPaymentMethod
 
     /**
      * DOCUMENT ME!
-     * 
+     *
      * @param paybackTimeInYear DOCUMENT ME!
      * @return DOCUMENT ME!
      */
@@ -170,7 +170,7 @@ public class BasicPaymentMethod implements IPaymentMethod
 
     /**
      * DOCUMENT ME!
-     * 
+     *
      * @return DOCUMENT ME!
      */
     public BigDecimal getMonthlyPayment()
@@ -198,7 +198,7 @@ public class BasicPaymentMethod implements IPaymentMethod
 
     /**
      * DOCUMENT ME!
-     * 
+     *
      * @return DOCUMENT ME!
      */
     @Override
@@ -226,7 +226,7 @@ public class BasicPaymentMethod implements IPaymentMethod
 
     /**
      * DOCUMENT ME!
-     * 
+     *
      * @param monthlyInterestRate DOCUMENT ME!
      * @param loanAmount DOCUMENT ME!
      * @param numberOfMonths DOCUMENT ME!

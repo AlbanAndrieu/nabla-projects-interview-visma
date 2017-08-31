@@ -23,7 +23,7 @@
             <Set name="URL">jdbc:h2:mem:test</Set>
             <Set name="user">sa</Set>
             <Set name="password">sa</Set>
-         </New>  
+         </New>
       </Arg>
       <Arg type="boolean">true</Arg>
    </New>

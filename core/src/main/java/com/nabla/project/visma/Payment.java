@@ -45,7 +45,7 @@ public class Payment implements IPayment, Comparable<Payment>, Serializable {
    /**
    * The payment loan amount.
    * @serial
-   */	
+   */
 	private final BigDecimal loanAmount;
 
     // TODO add interest member

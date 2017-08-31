@@ -47,7 +47,7 @@ public class NavigationBean implements Serializable
 
     /**
      * Redirect to payment page.
-     * 
+     *
      * @return Payment page name.
      */
     public String redirectToPayment()

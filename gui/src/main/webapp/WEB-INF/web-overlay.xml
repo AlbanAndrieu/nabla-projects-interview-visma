@@ -265,7 +265,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
+
    <!-- allow Favicons -->
    <security-constraint>
         <web-resource-collection>

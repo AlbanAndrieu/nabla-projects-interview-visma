@@ -2,14 +2,14 @@ Feature: Customer Payment's Calculation
        As a customer,
        I want to know my payments
        so that I can send money to my bank
- 
+
 Scenario: Valid Input
        Given the user is on Loan Page
        When he enters "1000000" as loan amount
        And he enters "10" as payback time
        And he Submits request for Payment's Schedule
        Then ensure the payment schedule total is accurate with "Payments total is : 1302315.33552576902309236382167649640" message
- 
+
 Scenario: Invalid Input
        Given the user is on Loan Page
        When he enters "-10" as loan amount
