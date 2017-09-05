@@ -42,7 +42,7 @@ import com.nabla.project.visma.api.IProduct;
 
 /**
  * DOCUMENT ME!
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$

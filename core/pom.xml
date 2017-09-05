@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>	
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
 	<!-- @version $Revision: $ $Date: $ $Author: $ $State: $ -->
-    <!-- @formatter:off -->	
+	<!-- @formatter:off -->
 	<parent>
-		<groupId>com.nabla.project.sample.interview.visma</groupId>
 		<artifactId>visma</artifactId>
+		<groupId>com.nabla.project.sample.interview.visma</groupId>
 		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -22,21 +22,16 @@
 	<!-- DEPENDENCIES -->
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<exclusions>
+				<!-- circular dependency -->
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <exclusions>
-                <!-- circular dependency -->
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-classic</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 		<!-- <dependency> <groupId>org.mockito</groupId> <artifactId>mockito-all</artifactId>
 			<scope>test</scope> </dependency> -->
 		<dependency>
@@ -47,11 +42,17 @@
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
-			<optional>true</optional><!-- needed only for annotations -->
+			<optional>true</optional>
+			<!-- needed only for annotations -->
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<!--
 		<dependency>
@@ -60,11 +61,11 @@
 			<scope>test</scope>
 		</dependency>
 		-->
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -94,25 +95,25 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<executions>
-				  <execution>
-					<goals>
-					  <goal>exec</goal>
-					</goals>
-				  </execution>
+					<execution>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
 				</executions>
 				<configuration>
-				  <executable>maven</executable>
-				  <mainClass>com.nabla.project.visma.Visma</mainClass>
-				  <!-- optional
+					<executable>maven</executable>
+					<mainClass>com.nabla.project.visma.Visma</mainClass>
+					<!-- optional
 				  <workingDirectory>/tmp</workingDirectory>
 				   -->
-				  <arguments>
-					<argument>-XX:+UnlockDiagnosticVMOptions -XX:+TraceClassLoading -XX:+LogCompilation -XX:LogFile=hotspot.log</argument>
-					<!--<argument>myproject:dist</argument> -->
-				  </arguments>
+					<arguments>
+						<argument>-XX:+UnlockDiagnosticVMOptions -XX:+TraceClassLoading -XX:+LogCompilation -XX:LogFile=hotspot.log</argument>
+						<!--<argument>myproject:dist</argument> -->
+					</arguments>
 
 				</configuration>
-		    </plugin>
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.felix</groupId>
@@ -133,6 +134,14 @@
 						</goals>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.proguard</groupId>
+						<artifactId>proguard-base</artifactId>
+						<version>${net.sf.proguard.version}</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
 				<configuration>
 					<!-- Our application is so big that ProGuard had ran out of memory -->
 					<!--<maxMemory>1024m</maxMemory>-->
@@ -187,17 +196,9 @@
 						<lib>${java.secure.socket.extension.classes}</lib>
 					</libs>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>net.sf.proguard</groupId>
-						<artifactId>proguard-base</artifactId>
-						<version>${net.sf.proguard.version}</version>
-						<scope>runtime</scope>
-					</dependency>
-				</dependencies>
 			</plugin>
 
-		<!-- for gridgain
+			<!-- for gridgain
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -211,7 +212,7 @@
 				</configuration>
 			</plugin>
 -->
-		<!-- for gridgain
+			<!-- for gridgain
 			<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>

@@ -6,7 +6,7 @@ Class-Path: jsf-api-1.2_15.jar jstl-1.2.jar el-ri-1.0.jar commons-http
  17.jar commons-lang-2.5.jar gatling-charts-highcharts-1.5.6.jar gatli
  ng-app-1.5.6.jar gatling-http-1.5.6.jar gatling-core-1.5.6.jar scala-
  compiler-2.9.3.jar scala-library-2.9.3.jar akka-actor-2.0.4.jar confi
- g-1.0.2.jar jaxen-1.1.3.jar dom4j-1.6.1.jar jdom-1.0.jar xom-1.0.jar 
+ g-1.0.2.jar jaxen-1.1.3.jar dom4j-1.6.1.jar jdom-1.0.jar xom-1.0.jar
  xmlParserAPIs-2.6.2.jar icu4j-2.6.1.jar joda-time-2.3.jar joda-conver
  t-1.5.jar slf4j-api-1.7.5.jar grizzled-slf4j_2.9.2-0.6.10.jar json-pa
  th-0.9.1.jar json-smart-1.2.jar commons-math3-3.0.jar jodd-lagarto-3.
@@ -18,4 +18,3 @@ Class-Path: jsf-api-1.2_15.jar jstl-1.2.jar el-ri-1.0.jar commons-http
  ler-0.12.3.jar compiler-interface-0.12.3-sources.jar logback-classic-
  1.0.7.jar logback-core-1.0.7.jar gatling-recorder-1.5.6.jar xstream-1
  .4.2.jar
-

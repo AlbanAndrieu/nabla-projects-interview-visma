@@ -141,7 +141,7 @@ public class QueryBean implements Serializable
 
     /**
      * Get scheduled payments.
-     * 
+     *
      * @return URL
      */
     public String getPayments()

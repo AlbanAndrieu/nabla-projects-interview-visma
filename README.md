@@ -21,9 +21,6 @@ Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndri
 [![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma)
 [![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/coverage)
 
-[![OpenCollective](https://opencollective.com/nabla-projects-interview-visma/backers/badge.svg)](#backers)
-[![OpenCollective](https://opencollective.com/nabla-projects-interview-visma/sponsors/badge.svg)](#sponsors)
-
 [![Xing](http://www.xing.com/img/buttons/45_fr_btn.gif)](http://www.xing.com/profile/Alban_Andrieu)
 
 The challenge

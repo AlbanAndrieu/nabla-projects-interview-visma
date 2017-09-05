@@ -42,7 +42,7 @@ import org.openqa.selenium.WebElement;
 
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -71,7 +71,7 @@ public class JQuerySeleniumHelper
 
     /**
      * DOCUMENT ME! albandri.
-     * 
+     *
      * @return
      */
     private static boolean jQueryLoaded(final WebDriver driver)
