@@ -53,6 +53,15 @@ Problem Description
 
 ------------------
 
+### Quality
+
+```
+npm install -g htmllint-cli
+htmllint
+pre-commit autoupdate
+pre-commit run --all-files
+```
+
 ### Result
 
 Please find below output of this sample:
