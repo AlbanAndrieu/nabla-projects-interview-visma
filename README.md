@@ -53,6 +53,23 @@ Problem Description
 
 ------------------
 
+## Quality tools
+
+See [pre-commit](http://pre-commit.com/)
+Run `pre-commit install`
+Run `pre-commit autoupdate`
+
+RUn `pre-commit run --all-files`
+
+## Build & development
+
+Run `mvn clean install -Dserver=jetty9x` for building.
+
+```
+mvn clean install -Dserver=jetty9x
+mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
+```
+
 ### Result
 
 Please find below output of this sample:
