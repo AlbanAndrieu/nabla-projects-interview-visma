@@ -3,25 +3,26 @@
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.1.0 http://maven.apache.org/xsd/decoration-1.1.0.xsd"
   name="Interview">
 
-    <!--
     <skin>
       <groupId>com.nabla.project</groupId>
       <artifactId>skin</artifactId>
-      <version>1.0</version>
+      <version>1.0.1-SNAPSHOT</version>
     </skin>
-    -->
+    
+    <!--
     <skin>
       <groupId>org.apache.maven.skins</groupId>
       <artifactId>maven-fluido-skin</artifactId>
       <version>1.6</version>
     </skin>
+    -->
 
     <custom>
       <fluidoSkin>
         <topBarEnabled>true</topBarEnabled>
-        <!--<sideBarEnabled>false</sideBarEnabled>-->
+        <!--<sideBarEnabled>false</sideBarEnabled>-->        
         <googleSearch>
-          <sitesearch/>
+          <sitesearch/>          
         </googleSearch>
         <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
         <profile>(pre-release|sandbox|retired)</profile>
@@ -43,10 +44,14 @@
       <height>48</height>
       <src>images/home.png</src>
     </bannerRight>
-
+    
+    <googleAdSenseClient/>
+    <googleAdSenseSlot/>
+    <googleAnalyticsAccountId>UA-56011797-1</googleAnalyticsAccountId>
     <!--<publishDate format="dd MMM yyyy hh:mm zzz"/>-->
 
     <body>
+		
         <!--
         <breadcrumbs>
           <item name="Nabla" href="http://www.maven.nabla.mobi" />

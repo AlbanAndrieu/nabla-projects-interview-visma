@@ -53,6 +53,7 @@ Problem Description
 
 ------------------
 
+<<<<<<< HEAD
 ## Quality tools
 
 See [pre-commit](http://pre-commit.com/)
@@ -68,6 +69,15 @@ Run `mvn clean install -Dserver=jetty9x` for building.
 ```
 mvn clean install -Dserver=jetty9x
 mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
+=======
+### Quality
+
+```
+npm install -g htmllint-cli
+htmllint
+pre-commit autoupdate
+pre-commit run --all-files
+>>>>>>> eb90725bf89bc105f629640a5a6f22f224eec2bc
 ```
 
 ### Result
