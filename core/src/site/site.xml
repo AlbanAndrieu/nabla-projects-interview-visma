@@ -6,7 +6,7 @@
     <skin>
       <groupId>com.nabla.project</groupId>
       <artifactId>skin</artifactId>
-      <version>1.0.1-SNAPSHOT</version
+      <version>1.0.1-SNAPSHOT</version>
     </skin>
 
     <custom>
