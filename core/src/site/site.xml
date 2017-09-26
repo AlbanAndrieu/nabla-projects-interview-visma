@@ -3,22 +3,15 @@
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.1.0 http://maven.apache.org/xsd/decoration-1.1.0.xsd"
   name="Test">
 
-  <!--
-  <skin>
-    <groupId>com.nabla.project</groupId>
-    <artifactId>skin</artifactId>
-    <version>1.0</version>
-  </skin>
-  -->
-  <skin>
-    <groupId>org.apache.maven.skins</groupId>
-    <artifactId>maven-fluido-skin</artifactId>
-    <version>1.6</version>
-  </skin>
+    <skin>
+      <groupId>com.nabla.project</groupId>
+      <artifactId>skin</artifactId>
+      <version>1.0.1-SNAPSHOT</version
+    </skin>
 
     <custom>
       <fluidoSkin>
-	       <topBarEnabled>true</topBarEnabled>
+	    <topBarEnabled>true</topBarEnabled>
         <!--<sideBarEnabled>false</sideBarEnabled>-->
         <googleSearch>
           <sitesearch/>
