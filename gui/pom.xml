@@ -1938,11 +1938,14 @@
 		<profile>
 			<id>jenkins</id>
 			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<!--
+			<activation>
 				<property>
 					<name>BUILD_NUMBER</name>
 				</property>
 			</activation>
-			<!--
             <properties>
                 <maven.test.failure.skip>false</maven.test.failure.skip>
                 <maven.test.skip>false</maven.test.skip>
