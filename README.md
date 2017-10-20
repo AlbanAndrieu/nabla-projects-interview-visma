@@ -10,7 +10,7 @@ Java project for an interview request by visma
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma)
 [![Jenkins Build Status](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly)
-[![Quality Gate](http://home.nabla.mobi:9000/api/badges/gate?key=com.nabla.project.sample.interview.visma:visma:master)](http://home.nabla.mobi:9000/dashboard/index/com.nabla.project.sample.interview.visma:visma:master)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
 
 Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
 
@@ -118,7 +118,7 @@ Please find below output of this sample:
 
 - Jenkins : [jenkins](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma/)
 
-- Sonar metrics : [sonar](http://home.nabla.mobi:9000/dashboard/index/2831)
+- Sonar metrics : [sonar](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
 
 TODO : The compiled, source, and Javadoc JAR files will be uploaded as downloads [here](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/downloads).
 
