@@ -33,6 +33,15 @@ services:
    - "2924:2924" #eclipse
   #depends_on:
   # - other
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=test
+    volumes:
+      - "./conf.d:/etc/mysql/conf.d:ro"
  elasticsearch:
    image: elasticsearch:2.3.3
    container_name: elasticsearch
