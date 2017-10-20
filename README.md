@@ -1,5 +1,5 @@
 # nabla-projects-interview-visma
-![nabla-projects-interview-visma](http://home.nabla.mobi/sample/images/mroizo.1f00120c.png)
+![nabla-projects-interview-visma](http://home.nabla.mobi:7075/images/mroizo.1f00120c.png)
 
 [![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/blob/master/LICENSE)
 [![Gitter](https://badges.gitter.im/nabla-projects-interview-visma/Lobby.svg)](https://gitter.im/nabla-projects-interview-visma/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -9,7 +9,7 @@ Java project for an interview request by visma
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma)
-[![Jenkins Build Status](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma-nightly)
+[![Jenkins Build Status](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly)
 [![Quality Gate](http://home.nabla.mobi:9000/api/badges/gate?key=com.nabla.project.sample.interview.visma:visma:master)](http://home.nabla.mobi:9000/dashboard/index/com.nabla.project.sample.interview.visma:visma:master)
 
 Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
@@ -66,6 +66,29 @@ htmllint
 
 Run `pre-commit run --all-files`
 
+## Working with Petclinic in Eclipse/STS
+
+### prerequisites
+The following items should be installed in your system:
+* Maven 3 (http://www.sonatype.com/books/mvnref-book/reference/installation.html)
+* git command line tool (https://help.github.com/articles/set-up-git)
+* Eclipse with the m2e plugin (m2e is installed by default when using the STS (http://www.springsource.org/sts) distribution of Eclipse)
+
+Note: when m2e is available, there is an m2 icon in Help -> About dialog.
+If m2e is not there, just follow the install process here: http://eclipse.org/m2e/download/
+
+
+### Steps:
+
+1) In the command line
+```
+git clone https://github.com/spring-projects/spring-petclinic.git
+```
+2) Inside Eclipse
+```
+File -> Import -> Maven -> Existing Maven project
+```
+
 ## Build & development
 
 Run `mvn clean install -Dserver=jetty9x` for building.
@@ -75,13 +98,25 @@ mvn clean install -Dserver=jetty9x
 mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
 ```
 
+## Running nabla locally
+```
+	git clone https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git
+	cd nabla-projects-interview-visma
+#	./mvnw spring-boot:run
+    ./mvnw org.codehaus.cargo:cargo-maven2-plugin:run
+```
+
+You can then access petclinic here: http://localhost:9090/
+
+<img width="1042" alt="petclinic-screenshot" src="http://home.nabla.mobi:7072/website_under_construction_1895x685.png">
+
 ### Result
 
 Please find below output of this sample:
 
 - Source code repository : [github](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 
-- Jenkins : [jenkins](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma/)
+- Jenkins : [jenkins](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma/)
 
 - Sonar metrics : [sonar](http://home.nabla.mobi:9000/dashboard/index/2831)
 
@@ -89,8 +124,8 @@ TODO : The compiled, source, and Javadoc JAR files will be uploaded as downloads
 
 The generated site will be committed to the [gh-pages branch](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/tree/gh-pages) and visible [here](http://albanandrieu.github.io/nabla-projects-interview-visma/).
 
-Remarks : visma installer is produced during the jenkins build , especially [here](http://home.nabla.mobi:7072/jenkins/job/nabla-installer-visma/).
-In order to install, double click on the [VISMAInstaller.jar](http://home.nabla.mobi:7072/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/VISMAInstaller.jar)
+Remarks : visma installer is produced during the jenkins build , especially [here](http://home.nabla.mobi:8381/job/nabla-installer-visma/).
+In order to install, double click on the [VISMAInstaller.jar](http://home.nabla.mobi:8381/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/VISMAInstaller.jar)
 
 On unix, please make sure you can execute the installer :
 
@@ -116,6 +151,18 @@ Enjoy!!!
 
 [WhiteSource](www.whitesourcesoftware.com) is providing free open source analysis solution to this project, as part of its on-going support to the open source community
 
+## Database configuration
+
+In its default configuration, Nabla uses an in-memory database (HSQLDB) which
+gets populated at startup with data. A similar setup is provided for MySql in case a persistent database configuration is needed.
+Note that whenever the database type is changed, the data-access.properties file needs to be updated and the mysql-connector-java artifact from the pom.xml needs to be uncommented.
+
+You could start a MySql database with docker:
+
+```
+docker run -e MYSQL_ROOT_PASSWORD=nabla -e MYSQL_DATABASE=nabla -p 3306:3306 mysql:5.7.8
+```
+
 ------------------
 
 ### Swagger REST
@@ -131,6 +178,10 @@ http://online.swagger.io/
 
 http://editor.swagger.io/#/
 
+### TODO
+
+Use [spring-petclinic](https://github.com/spring-projects/spring-petclinic/)
+
 ### My resources
 
 Other resources can be found on my [googlecode](https://code.google.com/p/alban/w/list) wiki:
@@ -141,7 +192,7 @@ Below resources are available from outside my network :
 
 - Set up your build environment : [servers](https://github.com/AlbanAndrieu/ansible-nabla)
 
-- Nexus : [nexus](http://home.nabla.mobi:8081/nexus/index.html#welcome)
+- Nexus : [nexus](http://home.nabla.mobi:8085/nexus/index.html#welcome)
 
 - Phpmyadmin : [phpmyadmin](http://home.nabla.mobi:7070/phpmyadmin)
 
@@ -195,23 +246,24 @@ I am now using this project more because it generates a lot of code and it is re
 This project is using JBoss, Seam, Hibernate, Spring,GWT, JSF, Arquillian, ... So it was quite hard to get Jacoco with mutation testing to work with it.
 In this repo there's also some sample projects used as ProofOfConcept
 
- - Database best pratices [nabla-databases-integration](http://home.nabla.mobi:7072/jenkins/job/nabla-databases-integration/)
+ - Database best pratices [nabla-databases-integration](http://home.nabla.mobi:8381/job/nabla-databases-integration/)
 
- - Server integration best pratices [nabla-uml-integration](http://home.nabla.mobi:7072/jenkins/job/nabla-servers-integration/)
+ - Server integration best pratices [nabla-uml-integration](http://home.nabla.mobi:8381/job/nabla-servers-integration/)
 
- - UML best pratices [nabla-uml-integration](http://home.nabla.mobi:7072/jenkins/job/nabla-uml-integration/)
+ - UML best pratices [nabla-uml-integration](http://home.nabla.mobi:8381/job/nabla-uml-integration/)
 
-The goal is mostly to ensure that any of my code will be able to work with any [database](http://home.nabla.mobi:7072/jenkins/job/nabla-databases-matrix/) on any [servers/browsers](http://home.nabla.mobi:7072/jenkins/job/nabla-browsers-matrix/) using [selenium](http://home.nabla.mobi:7072/jenkins/job/nabla-servers-jsf-simple-selenium/).
+The goal is mostly to ensure that any of my code will be able to work with any [database](http://home.nabla.mobi:8381/job/nabla-databases-matrix/) on any [servers/browsers](http://home.nabla.mobi:8381/job/nabla-browsers-matrix/) using [selenium](http://home.nabla.mobi:8381/job/nabla-servers-jsf-simple-selenium/).
 
 ------------------
 
 ### VISMA : An opensource project to showcase best pratices
 
 You're invited to have a quick look at the project below (it has some of the quality metrics that I am using at work, like unit tests, integration tests, mutation tests, performance tests, load tests, end2end tests, functional tests)
- - [Jenkins](http://home.nabla.mobi:7072/jenkins/job/nabla-projects-interview-visma/)
- - [Sonar](http://home.nabla.mobi:9000/dashboard/index/418)
+ - [Jenkins](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma/)
+ - [Sonar old](http://home.nabla.mobi:9000/dashboard/index/418)
+ - [Sonar sonarcloud](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
 
-Visma is a very basic code done for an interview that you can easily install using [IZPack](http://izpack.org/) at [installer](http://home.nabla.mobi:7072/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/)
+Visma is a very basic code done for an interview that you can easily install using [IZPack](http://izpack.org/) at [installer](http://home.nabla.mobi:8381/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/)
 The goal is to provide an easy Maven starter with basic integration and metrics for any code interview working.
 The goal is also to have as many testing tools ready to work altogether (like junit, mock, selenium, cucumber).
 because there is always some form of incompatiblity between them...
@@ -223,6 +275,12 @@ It takes 1 hour to build for 1000 lines of code on an old laptop...
 Writing code is just one step among many others: building, testing, documenting, releasing, packaging, deploying, monitoring
 
 Thanks for reading!
+
+# Contributing
+
+The [issue tracker](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/issues) is the preferred channel for bug reports, features requests and submitting pull requests.
+
+For pull requests, editor preferences are available in the [editor config](.editorconfig) for easy use in common text editors. Read more and download plugins at <http://editorconfig.org>.
 
 License
 -------
