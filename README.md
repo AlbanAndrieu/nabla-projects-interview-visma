@@ -12,9 +12,8 @@ Java project for an interview request by visma
 [![Jenkins Build Status](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly)
 [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
 
-Dependency Status using [versioneye](https://www.versioneye.com/users/AlbanAndrieu)
+Dependency Status using
 
-[![Versioneye Status](https://www.versioneye.com/user/projects/55e70677a65c8c000e00a65a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55e70677a65c8c000e00a65a)
 [![Dependency Status](https://img.shields.io/david/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-projects-interview-visma)
 [![devDependency Status](https://img.shields.io/david/dev/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-projects-interview-visma#info=devDependencies)
 
@@ -66,7 +65,7 @@ htmllint
 
 Run `pre-commit run --all-files`
 
-## Working with Petclinic in Eclipse/STS
+## Working with Nabla in Eclipse/STS
 
 ### prerequisites
 The following items should be installed in your system:
@@ -82,7 +81,7 @@ If m2e is not there, just follow the install process here: http://eclipse.org/m2
 
 1) In the command line
 ```
-git clone https://github.com/spring-projects/spring-petclinic.git
+git clone https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git
 ```
 2) Inside Eclipse
 ```
@@ -106,9 +105,9 @@ mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
     ./mvnw org.codehaus.cargo:cargo-maven2-plugin:run
 ```
 
-You can then access petclinic here: http://localhost:9090/
+You can then access nabla here: http://localhost:9090/
 
-<img width="1042" alt="petclinic-screenshot" src="http://home.nabla.mobi:7072/website_under_construction_1895x685.png">
+<img width="1042" alt="nabla-screenshot" src="http://home.nabla.mobi:7072/website_under_construction_1895x685.png">
 
 ### Result
 

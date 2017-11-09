@@ -263,7 +263,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
             // driver = new FirefoxDriver(new FirefoxProfile());
 
             //ChromeOptions options = new ChromeOptions();
-        	//options.addArguments("no-sandbox");
+        	//options.addArguments("--start-maximized", "no-sandbox", "--headless", "--disable-gpu");
 
         	//CAPABILITIES = DesiredCapabilities.chrome();
         	//CAPABILITIES.setCapability(ChromeOptions.CAPABILITY, options);
