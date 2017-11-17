@@ -6,21 +6,48 @@
 
 Java project for an interview request by visma
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
+## Build
+
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma)
 [![Jenkins Build Status](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly)
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
+[![Jenkins tests](https://img.shields.io/jenkins/t/https/jenkins.qa.ubuntu.com/view/Precise/view/All%20Precise/job/precise-desktop-amd64_default.svg)]()
 
-Dependency Status using
+## Quality
+
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
+[![SonarQube Coverage](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/coverage.svg)]()
+[![SonarQube Tech Debt](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/tech_debt.svg)]()
+
 
 [![Dependency Status](https://img.shields.io/david/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-projects-interview-visma)
 [![devDependency Status](https://img.shields.io/david/dev/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-projects-interview-visma#info=devDependencies)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 
 [![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma)
 [![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/coverage)
 
+## Info
+
+[![Minimal java version](https://img.shields.io/badge/java-1.8-yellow.svg)](https://img.shields.io/badge/java-1.8-yellow.svg)
+[![Node version](https://img.shields.io/node/v/[NPM-MODULE-NAME].svg?style=flat)](http://nodejs.org/download/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
+
+[![Branch](http://img.shields.io/github/tag/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/tree/master)
+[![Platforms](http://img.shields.io/badge/platforms-ubuntu-lightgrey.svg?style=flat)](#)
+
+[![Last deployed](https://img.shields.io/github/last-commit/AlbanAndrieu/nabla-projects-interview-visma/gh-pages.svg?label=last%20deployed)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/commits/gh-pages)
+
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/issues) [![Requirements](https://requires.io/github/pycontribs/jira/requirements.svg?branch=master)](https://requires.io/github/nabla-projects-interview-visma/jira/requirements/?branch=master) [![Donate](https://img.shields.io/gratipay/AlbanAndrieu.svg?style=flat)](https://www.gratipay.com/~AlbanAndrieu) [![bounties](https://img.shields.io/bountysource/team/pycontribs/activity.svg)](https://www.bountysource.com/teams/nabla-projects-interview-visma/issues?tracker_ids=3650997)
+
+[![GitHub issues by-label](https://img.shields.io/github/issues/AlbanAndrieu/nabla-projects-interview-visma/good%20first%20issue.svg)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+[![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-projects-interview-visma/good%20first%20issue.svg)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/pulls?q=is%3Apr+is%3Aopen+label%3A%22good+first+issue%22)
+
+## Why? [![start with why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
+
+<!--
 [![Xing](http://www.xing.com/img/buttons/45_fr_btn.gif)](http://www.xing.com/profile/Alban_Andrieu)
+-->
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=nabla)](http://alban-andrieu.com)
 
 The challenge
 ================
@@ -288,6 +315,4 @@ License
 
 ***
 
-Alban Andrieu
-
-[linkedin](fr.linkedin.com/in/nabla/)
+Alban Andrieu [linkedin](fr.linkedin.com/in/nabla/)
