@@ -33,7 +33,10 @@ Java project for an interview request by visma
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
 
 [![Branch](http://img.shields.io/github/tag/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/tree/master)
-[![Platforms](http://img.shields.io/badge/platforms-ubuntu-lightgrey.svg?style=flat)](#)
+[![Platform](http://img.shields.io/badge/platform-centos-932279.svg?style=flat)](#)
+[![Platform](http://img.shields.io/badge/platform-debian-a80030.svg?style=flat)](#)
+[![Platform](http://img.shields.io/badge/platform-redhat-cc0000.svg?style=flat)](#)
+[![Platform](http://img.shields.io/badge/platform-ubuntu-dd4814.svg?style=flat)](#)
 
 [![Last deployed](https://img.shields.io/github/last-commit/AlbanAndrieu/nabla-projects-interview-visma/gh-pages.svg?label=last%20deployed)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/commits/gh-pages)
 
