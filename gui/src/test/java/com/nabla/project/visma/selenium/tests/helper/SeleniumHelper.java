@@ -165,7 +165,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     public static void setUp() throws InterruptedException
     {
 
-        WindowsUtils.tryToKillByName("firefox.exe");
+        //WindowsUtils.tryToKillByName("firefox.exe");
 
         SeleniumHelper.BASE_URL = System.getProperty("webdriver.base.url");
 
