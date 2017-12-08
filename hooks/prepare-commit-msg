@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# import os
 import re
 import sys
 from subprocess import check_output
@@ -28,15 +27,19 @@ if re.match(regex, branch):
     issue = re.search(pattern, branch).group(0)  # Extract issue code
 
     # from jira import JIRA
-    # options = {'server': 'https://nabla/jira'}
+    # options = {'server': 'https://home.nabla.mobi/jira'}
     # jira = JIRA(options, basic_auth=('test', 'TODO'))
     # issue_to_check = jira.issue(issue)
     # print issue_to_check.fields.project.key             # 'JRA'
     # print issue_to_check.fields.issuetype.name          # 'New Feature'
     # print issue_to_check.fields.reporter.displayName    # 'Mike Cannon-Brookes [Atlassian]'
 
-    # required_message = "%s : %s by %s" % (issue_to_check,issue_to_check.fields.issuetype.name, issue_to_check.fields.reporter.displayName)
-    required_message = issue
+    # required_message = "%s : %s by %s" % (
+    #     issue_to_check, issue_to_check.fields.issuetype.name, issue_to_check.fields.reporter.displayName)
+
+    result = re.match('feature/NABLA-(.*)', branch)
+    issue_number = result.group(1)
+    required_message = 'NABLA-%s' % issue_number
 
     with open(commit_msg_filepath, 'r+') as f:
         content = f.read()

@@ -95,6 +95,8 @@ htmllint
 
 Run `pre-commit run --all-files`
 
+Commit `git commit -am 'TEST' --no-verify`
+
 ## Working with Nabla in Eclipse/STS
 
 ### prerequisites
