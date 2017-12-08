@@ -66,7 +66,6 @@
 		<org.jboss.shrinkwrap.resolver.bom.version>${version.shrinkwrap_resolver}</org.jboss.shrinkwrap.resolver.bom.version>
 		<selenium.version>3.7.1</selenium.version>
 		<slf4j.version>1.7.21</slf4j.version>
-		<testng.version>6.9.12</testng.version>
 		<tomcat.version>6.0.45</tomcat.version>
 		<version.shrinkwrap_descriptors>2.0.0-alpha-9</version.shrinkwrap_descriptors>
 		<version.shrinkwrap_resolver>2.1.1</version.shrinkwrap_resolver>
