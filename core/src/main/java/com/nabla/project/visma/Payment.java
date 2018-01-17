@@ -39,58 +39,50 @@ import java.math.BigDecimal;
 import com.nabla.project.visma.api.IPayment;
 
 public class Payment implements IPayment, Comparable<Payment>, Serializable {
+  private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-
-   /**
+  /**
    * The payment loan amount.
    * @serial
    */
-	private final BigDecimal loanAmount;
+  private final BigDecimal loanAmount;
 
-    // TODO add interest member
+  // TODO add interest member
 
-    public Payment(final BigDecimal aLoanAmount)
-    {
-        this.loanAmount = aLoanAmount;
+  public Payment(final BigDecimal aLoanAmount) {
+    this.loanAmount = aLoanAmount;
 
-        if (null == this.loanAmount)
-        {
-            throw new IllegalArgumentException("Loan amount cannot be null");
-        }
+    if (null == this.loanAmount) {
+      throw new IllegalArgumentException("Loan amount cannot be null");
+    }
+  }
+
+  public BigDecimal getLoanAmount() {
+    return this.loanAmount;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder str = new StringBuilder();
+
+    str.append("loanAmount:").append(this.getLoanAmount());
+
+    return str.toString();
+  }
+
+  @Override
+  public int compareTo(Payment aPayment) {
+    if (this == aPayment) {
+      return 0;
     }
 
-    public BigDecimal getLoanAmount()
+    // the object fields are never null
+    final int comparison = this.loanAmount.compareTo(aPayment.loanAmount);
+    if (comparison != 0) // NOPMD
     {
-        return this.loanAmount;
+      return comparison;
     }
 
-    @Override
-    public String toString()
-    {
-
-        final StringBuilder str = new StringBuilder();
-
-        str.append("loanAmount:").append(this.getLoanAmount());
-
-        return str.toString();
-
-    }
-
-	@Override
-	public int compareTo(Payment aPayment) {
-		if (this == aPayment) {
-			return 0;
-		}
-
-		// the object fields are never null
-		final int comparison = this.loanAmount.compareTo(aPayment.loanAmount);
-		if (comparison != 0) // NOPMD
-		{
-			return comparison;
-		}
-
-		return 0;
-	}
-
+    return 0;
+  }
 }

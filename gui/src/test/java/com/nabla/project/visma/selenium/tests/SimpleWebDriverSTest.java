@@ -50,104 +50,106 @@ import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
 import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
 
 @net.jcip.annotations.NotThreadSafe
-public class SimpleWebDriverSTest
-{
+public class SimpleWebDriverSTest {
+  private static final transient Logger LOGGER =
+      LoggerFactory.getLogger(SimpleWebDriverSTest.class);
 
-    private static final transient Logger LOGGER = LoggerFactory.getLogger(SimpleWebDriverSTest.class);
+  @BeforeClass
+  public static void setUp() throws Exception {
+    SeleniumHelper.setUp();
+  }
 
-    @BeforeClass
-    public static void setUp() throws Exception
-    {
-        SeleniumHelper.setUp();
-    }
+  @AfterClass
+  public static void tearDown() throws Exception {
+    SeleniumHelper.tearDown();
+  }
 
-    @AfterClass
-    public static void tearDown() throws Exception
-    {
-        SeleniumHelper.tearDown();
-    }
+  @Test
+  @InSequence(1)
+  public void testWithGoodInputS() throws Exception {
+    // Get the Start Time
+    final long startTime = System.currentTimeMillis();
 
-    @Test
-    @InSequence(1)
-    public void testWithGoodInputS() throws Exception
-    {
-        // Get the Start Time
-        final long startTime = System.currentTimeMillis();
+    // Create an instance of Loan Page class
+    // and provide the driver
+    final LoanPage loanPage = new LoanPage();
 
-        // Create an instance of Loan Page class
-        // and provide the driver
-        final LoanPage loanPage = new LoanPage();
+    // Open the Loan Calculator Page
+    loanPage.get();
 
-        // Open the Loan Calculator Page
-        loanPage.get();
+    loanPage.calculatePayments("1000000", "10");
 
-        loanPage.calculatePayments("1000000", "10");
+    Assert.assertEquals("Housing Loan Cost Calculator (Results)",
+        SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
+    loanPage.Ensure_the_fund_transfer_is_complete(
+        "Payments total is : 1302315.33552576902309236382167649640");
+    final WebElement simpleTable = SeleniumHelper.getDriver().findElement(By.id("payments"));
+    SeleniumHelper.testWebTable(simpleTable, 121);
+    Assert.assertEquals("10852.62779604807519243636518063747",
+        SeleniumHelper.getDriver().findElement(By.xpath("//td[2]")).getText());
 
-        Assert.assertEquals("Housing Loan Cost Calculator (Results)", SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
-        loanPage.Ensure_the_fund_transfer_is_complete("Payments total is : 1302315.33552576902309236382167649640");
-        final WebElement simpleTable = SeleniumHelper.getDriver().findElement(By.id("payments"));
-        SeleniumHelper.testWebTable(simpleTable, 121);
-        Assert.assertEquals("10852.62779604807519243636518063747", SeleniumHelper.getDriver().findElement(By.xpath("//td[2]")).getText());
+    // Get the End Time
+    final long endTime = System.currentTimeMillis();
 
-        // Get the End Time
-        final long endTime = System.currentTimeMillis();
+    // Measure total time
+    final long totalTime = endTime - startTime;
+    LOGGER.info("Total Page Load Time: {} milliseconds", totalTime);
 
-        // Measure total time
-        final long totalTime = endTime - startTime;
-        LOGGER.info("Total Page Load Time: {} milliseconds", totalTime);
+    SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
+    // Thread.sleep(1000);
 
-        SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
-        // Thread.sleep(1000);
+    SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
+    SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
-        SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
-        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+    Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
 
-        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
+    // loanPage.close();
+  }
 
-        // loanPage.close();
-    }
+  @Test
+  @InSequence(2)
+  public void testWithWrongInputS() throws Exception {
+    // Get the StopWatch Object and start the StopWatch
+    final StopWatch pageLoad = new StopWatch();
+    pageLoad.start();
 
-    @Test
-    @InSequence(2)
-    public void testWithWrongInputS() throws Exception
-    {
-        // Get the StopWatch Object and start the StopWatch
-        final StopWatch pageLoad = new StopWatch();
-        pageLoad.start();
+    // Create an instance of Loan Page class
+    // and provide the driver
+    final LoanPage loanPage = new LoanPage(/* SeleniumHelper.getDriver() */);
 
-        // Create an instance of Loan Page class
-        // and provide the driver
-        final LoanPage loanPage = new LoanPage(/* SeleniumHelper.getDriver() */);
+    // Open the Loan Calculator Page
+    loanPage.get();
 
-        // Open the Loan Calculator Page
-        loanPage.get();
+    loanPage.He_enters_loan_amount("-10");
+    loanPage.He_enters_payback_time("0");
 
-        loanPage.He_enters_loan_amount("-10");
-        loanPage.He_enters_payback_time("0");
+    loanPage.calculatePayments("-10", "0");
 
-        loanPage.calculatePayments("-10", "0");
+    // loanPage.Ensure_a_transaction_failure_message(2, "Please enter the amount of your loan. Ex.
+    // 200000: Validation Error: Specified attribute is not between the expected values of 1 and
+    // 1,000,000,000.");
+    loanPage.Ensure_loan_amount_failure_message(
+        "Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000.");
+    // loanPage.Ensure_a_transaction_failure_message(3,
+    // "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error:
+    // Specified attribute is not between the expected values of 1 and 120.");
+    loanPage.Ensure_payback_time_failure_message(
+        "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120.");
 
-        // loanPage.Ensure_a_transaction_failure_message(2, "Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000.");
-        loanPage.Ensure_loan_amount_failure_message("Please enter the amount of your loan. Ex. 200000: Validation Error: Specified attribute is not between the expected values of 1 and 1,000,000,000.");
-        // loanPage.Ensure_a_transaction_failure_message(3,
-        // "Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120.");
-        loanPage.Ensure_payback_time_failure_message("Please enter the number of years you have to pay back your loan. Ex. 30: Validation Error: Specified attribute is not between the expected values of 1 and 120.");
+    pageLoad.stop();
 
-        pageLoad.stop();
+    LOGGER.info("Total Page Load Time : {} milliseconds", pageLoad);
 
-        LOGGER.info("Total Page Load Time : {} milliseconds", pageLoad);
+    SeleniumHelper.testTakesScreenshot("testWithWrongInputS.png", SeleniumHelper.getDriver());
+    // Thread.sleep(1000);
 
-        SeleniumHelper.testTakesScreenshot("testWithWrongInputS.png", SeleniumHelper.getDriver());
-        // Thread.sleep(1000);
+    SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
+    SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
-        SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
-        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        // SeleniumHelper.getDriver().wait(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+    Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
 
-        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
-
-        // loanPage.close();
-    }
-
+    // loanPage.close();
+  }
 }

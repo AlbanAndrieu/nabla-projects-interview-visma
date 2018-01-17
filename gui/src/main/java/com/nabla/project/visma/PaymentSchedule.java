@@ -49,112 +49,92 @@ import org.slf4j.LoggerFactory;
 
 import com.nabla.project.visma.api.IPayment;
 
-public class PaymentSchedule implements Serializable
-{
+public class PaymentSchedule implements Serializable {
+  private static final long serialVersionUID = 1L;
 
-    private static final long             serialVersionUID  = 1L;
+  private static final transient Logger LOGGER = LoggerFactory.getLogger(PaymentSchedule.class);
 
-    private static final transient Logger LOGGER            = LoggerFactory.getLogger(PaymentSchedule.class);
+  private DataModel<IPayment> paymentsDataModel = null;
 
-    private DataModel<IPayment>            paymentsDataModel = null;
+  @SuppressWarnings("unused")
+  private PaymentSchedule(final DataModel<IPayment> paymentsDataModel) {
+    this.paymentsDataModel = paymentsDataModel;
 
-    @SuppressWarnings("unused")
-    private PaymentSchedule(final DataModel<IPayment> paymentsDataModel)
-    {
-        this.paymentsDataModel = paymentsDataModel;
+    if (null == this.paymentsDataModel) {
+      throw new IllegalArgumentException("Payments data model cannot be null");
+    }
+  }
 
-        if (null == this.paymentsDataModel)
-        {
-            throw new IllegalArgumentException("Payments data model cannot be null");
-        }
+  public PaymentSchedule(final Map<Integer, List<BigDecimal>> aPayments) {
+    this.setPayments(aPayments);
+  }
+
+  public PaymentSchedule(final IPayment[] aPayments) {
+    this.setPayments(aPayments);
+  }
+
+  private void setPayments(final IPayment[] aPayments) {
+    if (aPayments == null) {
+      this.paymentsDataModel = new ArrayDataModel<IPayment>(new Payment[0]);
+    } else {
+      this.paymentsDataModel =
+          new ArrayDataModel<IPayment>(Arrays.copyOf(aPayments, aPayments.length));
     }
 
-    public PaymentSchedule(final Map<Integer, List<BigDecimal>> aPayments)
-    {
-        this.setPayments(aPayments);
+    if ((null == this.paymentsDataModel) || (this.paymentsDataModel.getRowCount() <= 0)) {
+      throw new IllegalArgumentException("Schedule cannot be null");
+    }
+  }
+
+  private void setPayments(final Map<Integer, List<BigDecimal>> aPayments) {
+    if (null == aPayments) {
+      throw new IllegalArgumentException("Payments schedule cannot be null");
     }
 
-    public PaymentSchedule(final IPayment[] aPayments)
-    {
-        this.setPayments(aPayments);
+    final IPayment[] targetPayments = new Payment[aPayments.size()];
+
+    aPayments.size();
+    final Iterator < Entry < Integer, List<BigDecimal>>> it = aPayments.entrySet().iterator();
+    while (it.hasNext()) {
+      final Entry<Integer, List<BigDecimal>> pairs = it.next();
+      final Integer month = pairs.getKey();
+
+      PaymentSchedule.LOGGER.debug("Data is : {} = {}", month, pairs.getValue());
+
+      final List<BigDecimal> data = pairs.getValue();
+
+      PaymentSchedule.LOGGER.debug("Data size : {}", data.size());
+
+      for (final BigDecimal bigDecimal : data) {
+        final BigDecimal amount = bigDecimal;
+        final IPayment payment = new Payment(amount);
+        targetPayments[month] = payment;
+      }
+
+      it.remove(); // avoids a ConcurrentModificationException
     }
 
-    private void setPayments(final IPayment[] aPayments)
-    {
-        if (aPayments == null)
-        {
-            this.paymentsDataModel = new ArrayDataModel<IPayment>(new Payment[0]);
-        } else
-        {
-            this.paymentsDataModel = new ArrayDataModel<IPayment>(Arrays.copyOf(aPayments, aPayments.length));
-        }
+    this.setPayments(targetPayments);
+  }
 
-        if ((null == this.paymentsDataModel) || (this.paymentsDataModel.getRowCount() <= 0))
-        {
-            throw new IllegalArgumentException("Schedule cannot be null");
-        }
-    }
+  public DataModel<IPayment> getPayments() {
+    return this.paymentsDataModel;
+  }
 
-    private void setPayments(final Map<Integer, List<BigDecimal>> aPayments)
-    {
+  public int getRowIndex() {
+    return this.paymentsDataModel.getRowIndex();
+  }
 
-        if (null == aPayments)
-        {
-            throw new IllegalArgumentException("Payments schedule cannot be null");
-        }
+  public int size() {
+    return this.getPayments().getRowCount();
+  }
 
-        final IPayment[] targetPayments = new Payment[aPayments.size()];
+  @Override
+  public String toString() {
+    final StringBuilder str = new StringBuilder();
 
-        aPayments.size();
-        final Iterator<Entry<Integer, List<BigDecimal>>> it = aPayments.entrySet().iterator();
-        while (it.hasNext())
-        {
-            final Entry<Integer, List<BigDecimal>> pairs = it.next();
-            final Integer month = pairs.getKey();
+    str.append("paymentsDataModel:").append(this.getPayments().toString());
 
-            PaymentSchedule.LOGGER.debug("Data is : {} = {}", month, pairs.getValue());
-
-            final List<BigDecimal> data = pairs.getValue();
-
-            PaymentSchedule.LOGGER.debug("Data size : {}", data.size());
-
-            for (final BigDecimal bigDecimal : data)
-            {
-                final BigDecimal amount = bigDecimal;
-                final IPayment payment = new Payment(amount);
-                targetPayments[month] = payment;
-            }
-
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-
-        this.setPayments(targetPayments);
-    }
-
-    public DataModel<IPayment> getPayments()
-    {
-        return this.paymentsDataModel;
-    }
-
-    public int getRowIndex()
-    {
-        return this.paymentsDataModel.getRowIndex();
-    }
-
-    public int size()
-    {
-        return this.getPayments().getRowCount();
-    }
-
-    @Override
-    public String toString()
-    {
-
-        final StringBuilder str = new StringBuilder();
-
-        str.append("paymentsDataModel:").append(this.getPayments().toString());
-
-        return str.toString();
-
-    }
+    return str.toString();
+  }
 }

@@ -51,120 +51,101 @@ import com.nabla.project.visma.api.ILoanService;
 
 @ManagedBean(name = "input", eager = true)
 @SessionScoped
-public class QueryBean implements Serializable
-{
+public class QueryBean implements Serializable {
+  private static final long serialVersionUID = 1L;
 
-    private static final long             serialVersionUID = 1L;
+  private static final transient Logger LOGGER = LoggerFactory.getLogger(QueryBean.class);
 
-    private static final transient Logger LOGGER           = LoggerFactory.getLogger(QueryBean.class);
+  public QueryBean() {
+    QueryBean.LOGGER.debug("QueryBean started!");
+  }
 
-    public QueryBean()
-    {
-        QueryBean.LOGGER.debug("QueryBean started!");
-    }
+  private BigDecimal loanAmount = new BigDecimal(200_000);
 
-    private BigDecimal      loanAmount   = new BigDecimal(200_000);
+  private int paybackTime = 30;
 
-    private int             paybackTime  = 30;
+  private int interestType = 1;
 
-    private int             interestType = 1;
+  private BigDecimal totalPayment = BigDecimal.ZERO;
 
-    private BigDecimal      totalPayment = BigDecimal.ZERO;
+  @ManagedProperty(value = "#{navigationBean}") private NavigationBean navigationBean;
 
-    @ManagedProperty(value = "#{navigationBean}")
-    private NavigationBean  navigationBean;
+  private PaymentSchedule paymentSchedule;
 
-    private PaymentSchedule paymentSchedule;
+  // @Inject
+  ILoanService service;
 
-    // @Inject
-    ILoanService            service;
+  public BigDecimal getLoanAmount() {
+    return this.loanAmount;
+  }
 
-    public BigDecimal getLoanAmount()
-    {
-        return this.loanAmount;
-    }
+  public void setLoanAmount(final BigDecimal loanAmount) {
+    this.loanAmount = loanAmount;
+  }
 
-    public void setLoanAmount(final BigDecimal loanAmount)
-    {
-        this.loanAmount = loanAmount;
-    }
+  public int getPaybackTime() {
+    return this.paybackTime;
+  }
 
-    public int getPaybackTime()
-    {
-        return this.paybackTime;
-    }
+  public int getInterestType() {
+    return this.interestType;
+  }
 
-    public int getInterestType()
-    {
-        return this.interestType;
-    }
+  public void setInterestType(final int aInterestType) {
+    this.interestType = aInterestType;
+  }
 
-    public void setInterestType(final int aInterestType)
-    {
-        this.interestType = aInterestType;
-    }
+  public void setPaybackTime(final int paybackTime) {
+    this.paybackTime = paybackTime;
+  }
 
-    public void setPaybackTime(final int paybackTime)
-    {
-        this.paybackTime = paybackTime;
-    }
+  public BigDecimal getTotalPayment() {
+    return this.totalPayment;
+  }
 
-    public BigDecimal getTotalPayment()
-    {
-        return this.totalPayment;
-    }
+  public void setTotalPayment(final BigDecimal totalPayment) {
+    this.totalPayment = totalPayment;
+  }
 
-    public void setTotalPayment(final BigDecimal totalPayment)
-    {
-        this.totalPayment = totalPayment;
-    }
+  public int getScheduledPaymentNumber() {
+    return this.paymentSchedule.size();
+  }
 
-    public int getScheduledPaymentNumber()
-    {
-        return this.paymentSchedule.size();
-    }
+  public void setNavigationBean(final NavigationBean navigationBean) {
+    this.navigationBean = navigationBean;
+  }
 
-    public void setNavigationBean(final NavigationBean navigationBean)
-    {
-        this.navigationBean = navigationBean;
-    }
+  public PaymentSchedule getPaymentSchedule() {
+    return this.paymentSchedule;
+  }
 
-    public PaymentSchedule getPaymentSchedule()
-    {
-        return this.paymentSchedule;
-    }
+  public void setPaymentSchedule(final PaymentSchedule paymentSchedule) {
+    this.paymentSchedule = paymentSchedule;
+  }
 
-    public void setPaymentSchedule(final PaymentSchedule paymentSchedule)
-    {
-        this.paymentSchedule = paymentSchedule;
-    }
+  /**
+   * Get scheduled payments.
+   *
+   * @return URL
+   */
+  public String getPayments() {
+    service = new LoanService(this.getLoanAmount(), this.getPaybackTime());
 
-    /**
-     * Get scheduled payments.
-     *
-     * @return URL
-     */
-    public String getPayments()
-    {
+    // Get payments from service
+    final Map<Integer, List<BigDecimal>> myPaymentSchedule = this.service.calcMonthlyPayment();
 
-        service = new LoanService(this.getLoanAmount(), this.getPaybackTime());
+    // System.out.println("PaymentSchedule is : " + myPaymentSchedule.toString());
+    QueryBean.LOGGER.debug("PaymentSchedule is : {}", myPaymentSchedule.toString());
 
-        // Get payments from service
-        final Map<Integer, List<BigDecimal>> myPaymentSchedule = this.service.calcMonthlyPayment();
+    this.setPaymentSchedule(new PaymentSchedule(myPaymentSchedule));
+    this.setTotalPayment(this.service.getTotalPayment());
 
-        // System.out.println("PaymentSchedule is : " + myPaymentSchedule.toString());
-        QueryBean.LOGGER.debug("PaymentSchedule is : {}", myPaymentSchedule.toString());
+    // Set computation ERROR
+    final FacesMessage msg = new FacesMessage("Something went wrong!", "Please check your input");
+    msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+    FacesContext.getCurrentInstance().addMessage("loan", msg);
 
-        this.setPaymentSchedule(new PaymentSchedule(myPaymentSchedule));
-        this.setTotalPayment(this.service.getTotalPayment());
-
-        // Set computation ERROR
-        final FacesMessage msg = new FacesMessage("Something went wrong!", "Please check your input");
-        msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-        FacesContext.getCurrentInstance().addMessage("loan", msg);
-
-        // Go to payment page
-        return this.navigationBean.redirectToPayment();
-
-    }
+    // Go to payment page
+    return this.navigationBean.redirectToPayment();
+  }
 }

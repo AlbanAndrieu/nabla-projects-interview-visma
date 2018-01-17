@@ -37,19 +37,16 @@ import java.math.BigDecimal;
 
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
  */
-public interface IPayment
-{
-
-    /**
-     * Give the loan or amount of the payment in NOK.
-     * 
-     * @return the loan or amount of the payment
-     */
-    BigDecimal getLoanAmount();
-
+public interface IPayment {
+  /**
+   * Give the loan or amount of the payment in NOK.
+   *
+   * @return the loan or amount of the payment
+   */
+  BigDecimal getLoanAmount();
 }

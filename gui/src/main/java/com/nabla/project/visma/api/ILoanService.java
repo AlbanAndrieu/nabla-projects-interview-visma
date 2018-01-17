@@ -37,20 +37,18 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-public interface ILoanService
-{
+public interface ILoanService {
+  /**
+   * Give monthly payback plan based on the product, interest and payback time
+   *
+   * @return a date with their corresponding amount and interest
+   */
+  Map<Integer, List<BigDecimal>> calcMonthlyPayment();
 
-    /**
-     * Give monthly payback plan based on the product, interest and payback time
-     *
-     * @return a date with their corresponding amount and interest
-     */
-    Map<Integer, List<BigDecimal>> calcMonthlyPayment();
-
-    /**
-     * Get the total of all scheduled payment
-     *
-     * @return sum of payments
-     */
-    BigDecimal getTotalPayment();
+  /**
+   * Get the total of all scheduled payment
+   *
+   * @return sum of payments
+   */
+  BigDecimal getTotalPayment();
 }

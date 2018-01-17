@@ -63,372 +63,348 @@ import org.slf4j.LoggerFactory;
  */
 public class SeleniumHelper /* extends EventFiringWebDriver */
 {
+  private static final transient Logger LOGGER = LoggerFactory.getLogger(SeleniumHelper.class);
 
-    private static final transient Logger LOGGER               = LoggerFactory.getLogger(SeleniumHelper.class);
+  private static WebDriver REAL_DRIVER;
 
-    private static WebDriver              REAL_DRIVER;
+  // private final StringBuffer verificationErrors = new StringBuffer();
+  // private static DefaultSelenium SELENIUM;
 
-    // private final StringBuffer verificationErrors = new StringBuffer();
-    // private static DefaultSelenium SELENIUM;
+  // private static final String DEFAULT_CHROMEDRIVER = "C:\\chromedriver\\chromedriver.exe"; //
+  // "/var/lib/chromedriver" private static final String DEFAULT_FIREFOXBIN = "C:\\Program
+  // Files\\Mozilla Firefox\\firefox.exe"; // "/usr/lib/firefox/firefox"
+  public static final String DEFAULT_CHROMEDRIVER =
+      "/var/lib/chromedriver"; // "C:\\chromedriver\\chromedriver.exe"
+  public static final String DEFAULT_FIREFOXBIN =
+      "/usr/lib/firefox/firefox"; // "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+  public static final long PAGE_TO_LOAD_TIMEOUT = 30000;
 
-    // private static final String DEFAULT_CHROMEDRIVER = "C:\\chromedriver\\chromedriver.exe"; // "/var/lib/chromedriver"
-    // private static final String DEFAULT_FIREFOXBIN = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; // "/usr/lib/firefox/firefox"
-    public static final String            DEFAULT_CHROMEDRIVER = "/var/lib/chromedriver";                      // "C:\\chromedriver\\chromedriver.exe"
-    public static final String            DEFAULT_FIREFOXBIN   = "/usr/lib/firefox/firefox";                   // "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-    public static final long              PAGE_TO_LOAD_TIMEOUT = 30000;
+  private final static int MAIN_PORT = 9090;
 
-    private final static int              MAIN_PORT            = 9090;
+  public static final String DEFAULT_URL = "http://localhost:" + MAIN_PORT;
 
-    public static final String            DEFAULT_URL          = "http://localhost:" + MAIN_PORT;
+  public static String BASE_URL = SeleniumHelper.DEFAULT_URL;
+  private static String CHROMEDRIVER = SeleniumHelper.DEFAULT_CHROMEDRIVER;
+  private static String FIREFOXBIN = SeleniumHelper.DEFAULT_FIREFOXBIN;
 
-    public static String                  BASE_URL             = SeleniumHelper.DEFAULT_URL;
-    private static String                 CHROMEDRIVER         = SeleniumHelper.DEFAULT_CHROMEDRIVER;
-    private static String                 FIREFOXBIN           = SeleniumHelper.DEFAULT_FIREFOXBIN;
+  private static final Thread CLOSE_THREAD = new Thread() {
+    @Override
+    public void run() {
+      if (null != SeleniumHelper.REAL_DRIVER) {
+        REAL_DRIVER.close();
+        SeleniumHelper.LOGGER.info("closing the browser");
+      }
+    }
+  };
 
-    private static final Thread           CLOSE_THREAD         = new Thread()
-                                                               {
-                                                                   @Override
-                                                                   public void run()
-                                                                   {
-                                                                       if (null != SeleniumHelper.REAL_DRIVER)
-                                                                       {
-                                                                           REAL_DRIVER.close();
-                                                                           SeleniumHelper.LOGGER.info("closing the browser");
-                                                                       }
-                                                                   }
-                                                               };
+  static {
+    Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
+  }
 
-    static
-    {
-        Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
+  public SeleniumHelper() {
+    // super(REAL_DRIVER);
+    try {
+      setUp();
+    } catch (InterruptedException e) {
+      SeleniumHelper.LOGGER.error("Failed to initialize selenium ", e);
+    }
+  }
+
+  // @Override
+  public static void close() {
+    if (Thread.currentThread() != CLOSE_THREAD) {
+      throw new UnsupportedOperationException(
+          "You shouldn't close this WebDriver. It's shared and will close when the JVM exits.");
+    }
+    // super.close();
+  }
+
+  /*
+   * public static void close()
+   * {
+   * try
+   * {
+   * if (null != SeleniumHelper.driver)
+   * {
+   * SeleniumHelper.driver.quit();
+   * }
+   * SeleniumHelper.driver = null;
+   * SeleniumHelper.LOGGER.info("closing the browser");
+   * } catch (final UnreachableBrowserException e)
+   * {
+   * SeleniumHelper.LOGGER.info("cannot close browser: unreachable browser");
+   * }
+   * }
+   */
+
+  /*
+   * private static class BrowserCleanup implements Runnable {
+   * @Override public void run() { if (LOGGER.isDebugEnabled()) {
+   * SeleniumHelper.LOGGER.debug("Closing the browser"); } SeleniumHelper.close(); } }
+   */
+
+  public static void deleteAllCookies() {
+    getDriver().manage().deleteAllCookies();
+  }
+
+  /**
+   * DOCUMENT ME! albandri.
+   *
+   * @param driver
+   * @param SELENIUM
+   * @throws InterruptedException
+   */
+  @BeforeClass
+  public static void setUp() throws InterruptedException {
+    // WindowsUtils.tryToKillByName("firefox.exe");
+
+    SeleniumHelper.BASE_URL = System.getProperty("webdriver.base.url");
+
+    if (null == SeleniumHelper.BASE_URL) {
+      SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
+      SeleniumHelper.BASE_URL = SeleniumHelper.DEFAULT_URL;
+      System.setProperty("webdriver.base.url", SeleniumHelper.BASE_URL);
     }
 
-    public SeleniumHelper()
-    {
-        // super(REAL_DRIVER);
-        try
-        {
-            setUp();
-        } catch (InterruptedException e)
-        {
-            SeleniumHelper.LOGGER.error("Failed to initialize selenium ", e);
-        }
+    SeleniumHelper.LOGGER.debug("webdriver.base.url is : {}", SeleniumHelper.BASE_URL);
+
+    SeleniumHelper.CHROMEDRIVER = System.getProperty("webdriver.chrome.driver");
+    if (null == SeleniumHelper.CHROMEDRIVER) {
+      SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
+
+      SeleniumHelper.CHROMEDRIVER = SeleniumHelper.DEFAULT_CHROMEDRIVER;
     }
 
-    // @Override
-    public static void close()
-    {
-        if (Thread.currentThread() != CLOSE_THREAD)
-        {
-            throw new UnsupportedOperationException("You shouldn't close this WebDriver. It's shared and will close when the JVM exits.");
-        }
-        // super.close();
+    System.setProperty("webdriver.chrome.driver", SeleniumHelper.CHROMEDRIVER);
+    SeleniumHelper.LOGGER.debug("webdriver.chrome.driver is : {}", SeleniumHelper.CHROMEDRIVER);
+
+    SeleniumHelper.FIREFOXBIN = System.getProperty("webdriver.firefox.bin");
+    if (null == SeleniumHelper.FIREFOXBIN) {
+      SeleniumHelper.LOGGER.debug("Use default webdriver.firefox.bin");
+
+      SeleniumHelper.FIREFOXBIN = SeleniumHelper.DEFAULT_FIREFOXBIN;
     }
 
-    /*
-     * public static void close()
-     * {
-     * try
-     * {
-     * if (null != SeleniumHelper.driver)
-     * {
-     * SeleniumHelper.driver.quit();
-     * }
-     * SeleniumHelper.driver = null;
-     * SeleniumHelper.LOGGER.info("closing the browser");
-     * } catch (final UnreachableBrowserException e)
-     * {
-     * SeleniumHelper.LOGGER.info("cannot close browser: unreachable browser");
-     * }
-     * }
-     */
+    System.setProperty("webdriver.firefox.bin", SeleniumHelper.FIREFOXBIN);
+    SeleniumHelper.LOGGER.debug("webdriver.firefox.bin is : {}", SeleniumHelper.FIREFOXBIN);
 
-    /*
-     * private static class BrowserCleanup implements Runnable {
-     * @Override public void run() { if (LOGGER.isDebugEnabled()) {
-     * SeleniumHelper.LOGGER.debug("Closing the browser"); } SeleniumHelper.close(); } }
-     */
+    // ProfilesIni allProfiles = new ProfilesIni();
+    // FirefoxProfile profile = allProfiles.getProfile("Selenium");
+    // FirefoxProfile profile = new FirefoxProfile();
+    // FirefoxBinary binary = new FirefoxBinary(new File(firefoxBin));
+    // driver = new FirefoxDriver(binary, profile);
 
-    public static void deleteAllCookies()
-    {
-        getDriver().manage().deleteAllCookies();
+    SeleniumHelper.REAL_DRIVER = SeleniumHelper.getCurrentDriver();
+    // driver = new FirefoxDriver(profile);
+    // driver = new HtmlUnitDriver(true);
+
+    deleteAllCookies();
+
+    // RemoteWebDriver does not implement the TakesScreenshot class
+    // if the driver does have the Capabilities to take a screenshot
+    // then Augmenter will add the TakesScreenshot methods to the instance
+    // WebDriver augmentedDriver = new Augmenter().augment(driver);
+    // File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+
+    SeleniumHelper.REAL_DRIVER.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    // driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+    SeleniumHelper.REAL_DRIVER.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
+    // driver.manage().window().setSize(new Dimension(1920, 1080));
+
+    SeleniumHelper.REAL_DRIVER.manage().window().maximize();
+    // this.driver.manage().deleteAllCookies();
+    // this.driver.get(propertyKeysLoader("login.base.url"));
+
+    // SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER,
+    // SeleniumHelper.BASE_URL);
+    // SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+
+    Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
+  }
+
+  @AfterClass
+  public static void tearDown() {
+    // SeleniumHelper.close();
+  }
+
+  public static WebDriver getDriver() {
+    return SeleniumHelper.getCurrentDriver();
+  }
+
+  /*
+   * public static DefaultSelenium getSelenium()
+   * {
+   * return SeleniumHelper.SELENIUM;
+   * }
+   */
+
+  private synchronized static WebDriver getCurrentDriver() {
+    if (SeleniumHelper.REAL_DRIVER == null) {
+      // try
+      // {
+      // driver = new FirefoxDriver(new FirefoxProfile());
+
+      // ChromeOptions options = new ChromeOptions();
+      // options.addArguments("--start-maximized", "no-sandbox", "--headless", "--disable-gpu");
+
+      // CAPABILITIES = DesiredCapabilities.chrome();
+      // CAPABILITIES.setCapability(ChromeOptions.CAPABILITY, options);
+
+      // CAPABILITIES.setJavascriptEnabled(true);
+
+      // SimpleWebDriverSTest.REAL_DRIVER = new ChromeDriver(CAPABILITIES);
+
+      SeleniumHelper.REAL_DRIVER = new ChromeDriver();
+      // } finally
+      // {
+      // Runtime.getRuntime().addShutdownHook(new Thread(new BrowserCleanup()));
+      // }
     }
+    return SeleniumHelper.REAL_DRIVER;
+  }
 
-    /**
-     * DOCUMENT ME! albandri.
-     *
-     * @param driver
-     * @param SELENIUM
-     * @throws InterruptedException
-     */
-    @BeforeClass
-    public static void setUp() throws InterruptedException
-    {
+  public static void testDragDrop(final String draggable, final String droppable,
+      String expectedResult, final WebDriver driver, final StringBuffer verificationErrors) {
+    final WebElement source = driver.findElement(By.id(draggable));
+    final WebElement target = driver.findElement(By.id(droppable));
 
-        //WindowsUtils.tryToKillByName("firefox.exe");
-
-        SeleniumHelper.BASE_URL = System.getProperty("webdriver.base.url");
-
-        if (null == SeleniumHelper.BASE_URL)
-        {
-            SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
-            SeleniumHelper.BASE_URL = SeleniumHelper.DEFAULT_URL;
-            System.setProperty("webdriver.base.url", SeleniumHelper.BASE_URL);
-        }
-
-        SeleniumHelper.LOGGER.debug("webdriver.base.url is : {}", SeleniumHelper.BASE_URL);
-
-        SeleniumHelper.CHROMEDRIVER = System.getProperty("webdriver.chrome.driver");
-        if (null == SeleniumHelper.CHROMEDRIVER)
-        {
-
-            SeleniumHelper.LOGGER.debug("Use default webdriver.base.url");
-
-            SeleniumHelper.CHROMEDRIVER = SeleniumHelper.DEFAULT_CHROMEDRIVER;
-        }
-
-        System.setProperty("webdriver.chrome.driver", SeleniumHelper.CHROMEDRIVER);
-        SeleniumHelper.LOGGER.debug("webdriver.chrome.driver is : {}", SeleniumHelper.CHROMEDRIVER);
-
-        SeleniumHelper.FIREFOXBIN = System.getProperty("webdriver.firefox.bin");
-        if (null == SeleniumHelper.FIREFOXBIN)
-        {
-
-            SeleniumHelper.LOGGER.debug("Use default webdriver.firefox.bin");
-
-            SeleniumHelper.FIREFOXBIN = SeleniumHelper.DEFAULT_FIREFOXBIN;
-        }
-
-        System.setProperty("webdriver.firefox.bin", SeleniumHelper.FIREFOXBIN);
-        SeleniumHelper.LOGGER.debug("webdriver.firefox.bin is : {}", SeleniumHelper.FIREFOXBIN);
-
-        // ProfilesIni allProfiles = new ProfilesIni();
-        // FirefoxProfile profile = allProfiles.getProfile("Selenium");
-        // FirefoxProfile profile = new FirefoxProfile();
-        // FirefoxBinary binary = new FirefoxBinary(new File(firefoxBin));
-        // driver = new FirefoxDriver(binary, profile);
-
-        SeleniumHelper.REAL_DRIVER = SeleniumHelper.getCurrentDriver();
-        // driver = new FirefoxDriver(profile);
-        // driver = new HtmlUnitDriver(true);
-
-        deleteAllCookies();
-
-        // RemoteWebDriver does not implement the TakesScreenshot class
-        // if the driver does have the Capabilities to take a screenshot
-        // then Augmenter will add the TakesScreenshot methods to the instance
-        // WebDriver augmentedDriver = new Augmenter().augment(driver);
-        // File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
-
-        SeleniumHelper.REAL_DRIVER.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        // driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-        SeleniumHelper.REAL_DRIVER.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
-        // driver.manage().window().setSize(new Dimension(1920, 1080));
-
-        SeleniumHelper.REAL_DRIVER.manage().window().maximize();
-        // this.driver.manage().deleteAllCookies();
-        // this.driver.get(propertyKeysLoader("login.base.url"));
-
-        // SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
-        // SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
-
-        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
+    final Actions builder = new Actions(driver);
+    builder.dragAndDrop(source, target).perform();
+    try {
+      if (null == expectedResult) {
+        expectedResult = "Dropped!";
+      }
+      Assert.assertEquals(expectedResult, target.getText());
+    } catch (final Error e) {
+      verificationErrors.append(e.toString());
     }
+  }
 
-    @AfterClass
-    public static void tearDown()
-    {
+  public static void testElementText(
+      final String id, final String expectedResult, final WebDriver driver) {
+    // Get the message Element
+    final WebElement message = driver.findElement(By.id(id));
 
-        // SeleniumHelper.close();
+    // Get the message elements text
+    final String messageText = message.getText();
+
+    // Verify message element's text displays "Click on me and my color will change"
+    Assert.assertEquals(expectedResult, messageText);
+  }
+
+  public static void testElementAttribute(
+      final String id, String expectedResult, final WebDriver driver) {
+    final WebElement message = driver.findElement(By.id(id));
+    if (null == expectedResult) {
+      expectedResult = "justify";
     }
+    Assert.assertEquals(expectedResult, message.getAttribute("align"));
+  }
 
-    public static WebDriver getDriver()
-    {
-        return SeleniumHelper.getCurrentDriver();
+  public static void testElementStyle(
+      final String id, String expectedResult, final WebDriver driver) {
+    final WebElement message = driver.findElement(By.id(id));
+    final String width = message.getCssValue("width");
+    if (null == expectedResult) {
+      expectedResult = "150px";
     }
+    Assert.assertEquals(expectedResult, width);
+  }
 
-    /*
-     * public static DefaultSelenium getSelenium()
-     * {
-     * return SeleniumHelper.SELENIUM;
-     * }
-     */
+  public static void testDocumentTitle(final String expectedResult, final WebDriver driver) {
+    final JavascriptExecutor js = (JavascriptExecutor) driver;
 
-    private synchronized static WebDriver getCurrentDriver()
-    {
-        if (SeleniumHelper.REAL_DRIVER == null)
-        {
-            // try
-            // {
-            // driver = new FirefoxDriver(new FirefoxProfile());
+    final String title = (String) js.executeScript("return document.title");
+    Assert.assertEquals(expectedResult, title);
+  }
 
-            //ChromeOptions options = new ChromeOptions();
-        	//options.addArguments("--start-maximized", "no-sandbox", "--headless", "--disable-gpu");
+  /*
+   * public static void remoteDriverScreenShot(final String filePath, WebDriver driver) throws
+   * Exception
+   * {
+   * Thread.sleep(1000);
+   * driver = new Augmenter().augment(driver);
+   * final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+   * FileUtils.copyFile(scrFile, new File(filePath));
+   * }
+   */
 
-        	//CAPABILITIES = DesiredCapabilities.chrome();
-        	//CAPABILITIES.setCapability(ChromeOptions.CAPABILITY, options);
-
-        	//CAPABILITIES.setJavascriptEnabled(true);
-
-        	//SimpleWebDriverSTest.REAL_DRIVER = new ChromeDriver(CAPABILITIES);
-
-            SeleniumHelper.REAL_DRIVER = new ChromeDriver();
-            // } finally
-            // {
-            // Runtime.getRuntime().addShutdownHook(new Thread(new BrowserCleanup()));
-            // }
-        }
-        return SeleniumHelper.REAL_DRIVER;
+  public static void testTakesScreenshot(final String filePath, final WebDriver driver) {
+    try {
+      final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+      FileUtils.copyFile(scrFile, new File(filePath));
+    } catch (final Exception e) {
+      e.printStackTrace();
     }
+  }
 
-    public static void testDragDrop(final String draggable, final String droppable, String expectedResult, final WebDriver driver, final StringBuffer verificationErrors)
-    {
-
-        final WebElement source = driver.findElement(By.id(draggable));
-        final WebElement target = driver.findElement(By.id(droppable));
-
-        final Actions builder = new Actions(driver);
-        builder.dragAndDrop(source, target).perform();
-        try
-        {
-            if (null == expectedResult)
-            {
-                expectedResult = "Dropped!";
-            }
-            Assert.assertEquals(expectedResult, target.getText());
-        } catch (final Error e)
-        {
-            verificationErrors.append(e.toString());
-        }
+  public static void testElementScreenshot(
+      final String filePath, final WebElement element, final WebDriver driver) {
+    try {
+      FileUtils.copyFile(WebElementExtender.captureElementBitmap(element), new File(filePath));
+    } catch (final Exception e) {
+      e.printStackTrace();
     }
+  }
 
-    public static void testElementText(final String id, final String expectedResult, final WebDriver driver)
-    {
-        // Get the message Element
-        final WebElement message = driver.findElement(By.id(id));
+  public static void testWebTable(final WebElement simpleTable, final int expectedRows) {
+    // Get all rows
+    final List<WebElement> rows = simpleTable.findElements(By.tagName("tr"));
+    Assert.assertEquals(expectedRows, rows.size());
 
-        // Get the message elements text
-        final String messageText = message.getText();
-
-        // Verify message element's text displays "Click on me and my color will change"
-        Assert.assertEquals(expectedResult, messageText);
+    // Print data from each row
+    for (final WebElement row : rows) {
+      final List<WebElement> cols = row.findElements(By.tagName("td"));
+      for (final WebElement col : cols) {
+        System.out.print(col.getText() + "\t");
+      }
+      System.out.println();
     }
+  }
 
-    public static void testElementAttribute(final String id, String expectedResult, final WebDriver driver)
-    {
-        final WebElement message = driver.findElement(By.id(id));
-        if (null == expectedResult)
-        {
-            expectedResult = "justify";
-        }
-        Assert.assertEquals(expectedResult, message.getAttribute("align"));
-    }
+  public static void testRowSelectionUsingControlKey(final List<WebElement> tableRowsInput,
+      final List<WebElement> tableRowsOutput, final long expectedRows, final WebDriver driver) {
+    // List<WebElement> tableRowsInput =
+    // driver.findElements(By.xpath("//table[@class='myDataTbl']/tbody/tr")); Selected Row Table
+    // shows two rows selected List<WebElement> tableRowsOutput =
+    // driver.findElements(By.xpath("//div[@class='icePnlGrp
+    // exampleBox']/table[@class='myDataTbl']/tbody/tr"));
 
-    public static void testElementStyle(final String id, String expectedResult, final WebDriver driver)
-    {
-        final WebElement message = driver.findElement(By.id(id));
-        final String width = message.getCssValue("width");
-        if (null == expectedResult)
-        {
-            expectedResult = "150px";
-        }
-        Assert.assertEquals(expectedResult, width);
-    }
+    // Select second and fourth row from Table using Control Key.
+    // Row Index start at 0
+    final Actions builder = new Actions(driver);
+    builder.click(tableRowsInput.get(1))
+        .keyDown(Keys.CONTROL)
+        .click(tableRowsInput.get(3))
+        .keyUp(Keys.CONTROL)
+        .build()
+        .perform();
 
-    public static void testDocumentTitle(final String expectedResult, final WebDriver driver)
-    {
+    // Verify Selected Row Table shows X rows selected
+    Assert.assertEquals(expectedRows, tableRowsOutput.size());
+  }
 
-        final JavascriptExecutor js = (JavascriptExecutor) driver;
+  public static void testRowSelectionUsingShiftKey(final List<WebElement> tableRowsInput,
+      final List<WebElement> tableRowsOutput, final long expectedRows, final WebDriver driver) {
+    // List<WebElement> tableRowsInput =
+    // driver.findElements(By.xpath("//table[@class='myDataTbl']/tbody/tr")); Selected Row Table
+    // shows two rows selected List<WebElement> tableRowsOutput =
+    // driver.findElements(By.xpath("//div[@class='icePnlGrp
+    // exampleBox']/table[@class='myDataTbl']/tbody/tr"));
 
-        final String title = (String) js.executeScript("return document.title");
-        Assert.assertEquals(expectedResult, title);
+    // Select first row to fourth row from Table using Shift Key
+    // Row Index start at 0
+    final Actions builder = new Actions(driver);
+    builder.click(tableRowsInput.get(0))
+        .keyDown(Keys.SHIFT)
+        .click(tableRowsInput.get(1))
+        .click(tableRowsInput.get(2))
+        .click(tableRowsInput.get(3))
+        .keyUp(Keys.SHIFT)
+        .build()
+        .perform();
 
-    }
-
-    /*
-     * public static void remoteDriverScreenShot(final String filePath, WebDriver driver) throws Exception
-     * {
-     * Thread.sleep(1000);
-     * driver = new Augmenter().augment(driver);
-     * final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-     * FileUtils.copyFile(scrFile, new File(filePath));
-     * }
-     */
-
-    public static void testTakesScreenshot(final String filePath, final WebDriver driver)
-    {
-        try
-        {
-            final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File(filePath));
-        } catch (final Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public static void testElementScreenshot(final String filePath, final WebElement element, final WebDriver driver)
-    {
-
-        try
-        {
-            FileUtils.copyFile(WebElementExtender.captureElementBitmap(element), new File(filePath));
-        } catch (final Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public static void testWebTable(final WebElement simpleTable, final int expectedRows)
-    {
-
-        // Get all rows
-        final List<WebElement> rows = simpleTable.findElements(By.tagName("tr"));
-        Assert.assertEquals(expectedRows, rows.size());
-
-        // Print data from each row
-        for (final WebElement row : rows)
-        {
-            final List<WebElement> cols = row.findElements(By.tagName("td"));
-            for (final WebElement col : cols)
-            {
-                System.out.print(col.getText() + "\t");
-            }
-            System.out.println();
-        }
-    }
-
-    public static void testRowSelectionUsingControlKey(final List<WebElement> tableRowsInput, final List<WebElement> tableRowsOutput, final long expectedRows, final WebDriver driver)
-    {
-
-        // List<WebElement> tableRowsInput = driver.findElements(By.xpath("//table[@class='myDataTbl']/tbody/tr"));
-        // Selected Row Table shows two rows selected
-        // List<WebElement> tableRowsOutput = driver.findElements(By.xpath("//div[@class='icePnlGrp exampleBox']/table[@class='myDataTbl']/tbody/tr"));
-
-        // Select second and fourth row from Table using Control Key.
-        // Row Index start at 0
-        final Actions builder = new Actions(driver);
-        builder.click(tableRowsInput.get(1)).keyDown(Keys.CONTROL).click(tableRowsInput.get(3)).keyUp(Keys.CONTROL).build().perform();
-
-        // Verify Selected Row Table shows X rows selected
-        Assert.assertEquals(expectedRows, tableRowsOutput.size());
-
-    }
-
-    public static void testRowSelectionUsingShiftKey(final List<WebElement> tableRowsInput, final List<WebElement> tableRowsOutput, final long expectedRows, final WebDriver driver)
-    {
-
-        // List<WebElement> tableRowsInput = driver.findElements(By.xpath("//table[@class='myDataTbl']/tbody/tr"));
-        // Selected Row Table shows two rows selected
-        // List<WebElement> tableRowsOutput = driver.findElements(By.xpath("//div[@class='icePnlGrp exampleBox']/table[@class='myDataTbl']/tbody/tr"));
-
-        // Select first row to fourth row from Table using Shift Key
-        // Row Index start at 0
-        final Actions builder = new Actions(driver);
-        builder.click(tableRowsInput.get(0)).keyDown(Keys.SHIFT).click(tableRowsInput.get(1)).click(tableRowsInput.get(2)).click(tableRowsInput.get(3)).keyUp(Keys.SHIFT).build().perform();
-
-        // Verify Selected Row Table shows X rows selected
-        Assert.assertEquals(expectedRows, tableRowsOutput.size());
-    }
-
+    // Verify Selected Row Table shows X rows selected
+    Assert.assertEquals(expectedRows, tableRowsOutput.size());
+  }
 }

@@ -11,27 +11,20 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 @XmlRootElement
 @JsonAutoDetect
-public class ManageFieldsResponse
-{
+public class ManageFieldsResponse {
+  @JsonProperty private final List<String> errors = newLinkedList();
 
-    @JsonProperty
-    private final List<String> errors = newLinkedList();
+  @JsonProperty private String fields = "";
 
-    @JsonProperty
-    private String             fields = "";
+  public void setErrors(List<String> errors) {
+    this.errors.addAll(errors);
+  }
 
-    public void setErrors(List<String> errors)
-    {
-        this.errors.addAll(errors);
-    }
+  public List<String> getErrors() {
+    return errors;
+  }
 
-    public List<String> getErrors()
-    {
-        return errors;
-    }
-
-    public void setFields(String fields)
-    {
-        this.fields = fields;
-    }
+  public void setFields(String fields) {
+    this.fields = fields;
+  }
 }
