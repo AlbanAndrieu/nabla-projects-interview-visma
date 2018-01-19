@@ -12,8 +12,14 @@ repos:
     -   id: check-json
     -   id: check-xml
     -   id: check-yaml
+    -   id: check-symlinks
     -   id: debug-statements
     -   id: detect-private-key
+        exclude: >
+                  (?x)^(
+                      roles/jenkins-master/defaults/main.yml|
+                      roles/jenkins-master/README.md
+                  )$
     -   id: double-quote-string-fixer
     -   id: name-tests-test
     -   id: end-of-file-fixer
