@@ -54,35 +54,37 @@ import org.openqa.selenium.internal.WrapsDriver;
  * @version $Revision$
  * @since $Date$
  */
-public class WebElementExtender {
-  public static void highlightElement(final WebElement element) {
-    for (int i = 0; i < 5; i++) {
-      final WrapsDriver wrappedElement = (WrapsDriver) element;
-      final JavascriptExecutor driver = (JavascriptExecutor) wrappedElement.getWrappedDriver();
-      driver.executeScript(
-          "arguments[0].setAttribute('style',  arguments[1])", element, "visibility:hidden;");
-      // driver.executeScript("arguments[0].setAttribute('style',  arguments[1]);", element, "");
+public class WebElementExtender
+{
+    public static void highlightElement(final WebElement element)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            final WrapsDriver wrappedElement = (WrapsDriver) element;
+            final JavascriptExecutor driver = (JavascriptExecutor) wrappedElement.getWrappedDriver();
+            driver.executeScript("arguments[0].setAttribute('style',  arguments[1])", element, "visibility:hidden;");
+            // driver.executeScript("arguments[0].setAttribute('style',  arguments[1]);", element, "");
+        }
     }
-  }
 
-  public static File captureElementBitmap(final WebElement element) throws IOException {
-    final WrapsDriver wrapsDriver = (WrapsDriver) element;
+    public static File captureElementBitmap(final WebElement element) throws IOException
+    {
+        final WrapsDriver wrapsDriver = (WrapsDriver) element;
 
-    final File screen =
-        ((TakesScreenshot) wrapsDriver.getWrappedDriver()).getScreenshotAs(OutputType.FILE);
+        final File screen = ((TakesScreenshot) wrapsDriver.getWrappedDriver()).getScreenshotAs(OutputType.FILE);
 
-    final BufferedImage img = ImageIO.read(screen);
+        final BufferedImage img = ImageIO.read(screen);
 
-    final int width = element.getSize().getWidth();
-    final int height = element.getSize().getHeight();
+        final int width = element.getSize().getWidth();
+        final int height = element.getSize().getHeight();
 
-    final Rectangle rect = new Rectangle(width, height);
+        final Rectangle rect = new Rectangle(width, height);
 
-    final Point p = element.getLocation();
+        final Point p = element.getLocation();
 
-    final BufferedImage dest = img.getSubimage(p.getX(), p.getY(), rect.width, rect.height);
+        final BufferedImage dest = img.getSubimage(p.getX(), p.getY(), rect.width, rect.height);
 
-    ImageIO.write(dest, "png", screen);
-    return screen;
-  }
+        ImageIO.write(dest, "png", screen);
+        return screen;
+    }
 }
