@@ -38,24 +38,25 @@ import org.openqa.selenium.os.WindowsUtils;
 
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$
  */
-public class WindowsRegistry
-{
+public class WindowsRegistry {
     // @Test
     // public void testReadRegistry()
     // {
-    // final String osname = WindowsUtils.readStringRegistryValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProductName");
-    // System.out.println(osname);
+    // final String osname =
+    // WindowsUtils.readStringRegistryValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows
+    // NT\\CurrentVersion\\ProductName"); System.out.println(osname);
     // }
     //
     // @Test
     // public void testWriteRegistry()
     // {
-    // WindowsUtils.writeStringRegistryValue("HKEY_CURRENT_USER\\SOFTWARE\\Selenium\\SeleniumVersion", "2.24");
-    // Assert.assertEquals("2.24", WindowsUtils.readStringRegistryValue("HKEY_CURRENT_USER\\SOFTWARE\\Selenium\\SeleniumVersion"));
+    // WindowsUtils.writeStringRegistryValue("HKEY_CURRENT_USER\\SOFTWARE\\Selenium\\SeleniumVersion",
+    // "2.24"); Assert.assertEquals("2.24",
+    // WindowsUtils.readStringRegistryValue("HKEY_CURRENT_USER\\SOFTWARE\\Selenium\\SeleniumVersion"));
     // }
 }

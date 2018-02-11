@@ -32,172 +32,166 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DeploymentITest {
+  private static final transient Logger LOGGER = LoggerFactory.getLogger(DeploymentITest.class);
 
-	private static final transient Logger LOGGER = LoggerFactory.getLogger(DeploymentITest.class);
+  private static final int MAIN_PORT = 9090;
+  private static final String DEFAULT_SERVER_CONTEXT = "/visma";
 
-	private static final int MAIN_PORT = 9090;
-	private static final String DEFAULT_SERVER_CONTEXT = "/visma";
+  private static String SERVER_CONTEXT = DEFAULT_SERVER_CONTEXT;
 
-    private static String SERVER_CONTEXT = DEFAULT_SERVER_CONTEXT;
+  private static final String DEFAULT_URL = "http://localhost:" + MAIN_PORT;
 
-	private static final String DEFAULT_URL = "http://localhost:" + MAIN_PORT;
+  private static String BASE_URL = DeploymentITest.DEFAULT_URL;
 
-	private static String BASE_URL = DeploymentITest.DEFAULT_URL;
+  private static String VISMA_URL = DeploymentITest.BASE_URL + DeploymentITest.SERVER_CONTEXT;
 
-	private static String VISMA_URL = DeploymentITest.BASE_URL + DeploymentITest.SERVER_CONTEXT;
+  private static long DEPLOY_WAIT = 10;
 
-	private static long DEPLOY_WAIT = 10;
+  /*
+   * fix for Exception in thread "main" javax.net.ssl.SSLHandshakeException:
+   * sun.security.validator.ValidatorException: PKIX path building failed:
+   * sun.security.provider.certpath.SunCertPathBuilderException: unable to
+   * find valid certification path to requested target
+   */
+  static TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager(){
+      public X509Certificate[] getAcceptedIssuers(){return new X509Certificate[0];
+}
 
-	/*
-	 * fix for Exception in thread "main" javax.net.ssl.SSLHandshakeException:
-	 * sun.security.validator.ValidatorException: PKIX path building failed:
-	 * sun.security.provider.certpath.SunCertPathBuilderException: unable to
-	 * find valid certification path to requested target
-	 */
-	static TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-		public X509Certificate[] getAcceptedIssuers() {
-			return new X509Certificate[0];
-		}
+public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
 
-		public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-		}
+public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
+}
+}
+;
 
-		public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-		}
+public static Client getUnsecureClient() throws Exception {
+  SSLContext sslcontext = SSLContext.getInstance("TLS");
+  sslcontext.init(null, trustAllCerts, new java.security.SecureRandom());
 
-	} };
+  HostnameVerifier allowAll = new HostnameVerifier() {
+    @Override
+    public boolean verify(String hostname, SSLSession session) {
+      return true;
+    }
+  };
 
-	public static Client getUnsecureClient() throws Exception {
-		SSLContext sslcontext = SSLContext.getInstance("TLS");
-		sslcontext.init(null, trustAllCerts, new java.security.SecureRandom());
+  return ClientBuilder.newBuilder().sslContext(sslcontext).hostnameVerifier(allowAll).build();
+}
 
-		HostnameVerifier allowAll = new HostnameVerifier() {
-			@Override
-			public boolean verify(String hostname, SSLSession session) {
-				return true;
-			}
-		};
+@BeforeClass
+public static void setUp()
+    throws InterruptedException, NoSuchAlgorithmException, KeyManagementException {
+  System.out.println("SERVER_CONTEXT = " + System.getenv("SERVER_CONTEXT"));
+  DeploymentITest.SERVER_CONTEXT = System.getenv("SERVER_CONTEXT");
+  if (null == DeploymentITest.SERVER_CONTEXT) {
+    System.out.println("Use default SERVER_CONTEXT");
+    DeploymentITest.SERVER_CONTEXT = DeploymentITest.DEFAULT_SERVER_CONTEXT;
+  }
 
-		return ClientBuilder.newBuilder().sslContext(sslcontext).hostnameVerifier(allowAll).build();
-	}
+  System.out.println("SERVER_URL = " + System.getenv("SERVER_URL"));
+  DeploymentITest.BASE_URL = System.getProperty("webdriver.base.url");
 
-	@BeforeClass
-	public static void setUp() throws InterruptedException, NoSuchAlgorithmException, KeyManagementException {
+  if (null == DeploymentITest.BASE_URL) {
+    System.out.println("Use default webdriver.base.url");
+    DeploymentITest.BASE_URL = DeploymentITest.DEFAULT_URL;
+    System.setProperty("webdriver.base.url", DeploymentITest.BASE_URL);
+  }
+  System.out.println("webdriver.base.url is : " + DeploymentITest.BASE_URL + "\n");
 
-        System.out.println("SERVER_CONTEXT = " + System.getenv("SERVER_CONTEXT"));
-        DeploymentITest.SERVER_CONTEXT = System.getenv("SERVER_CONTEXT");
-        if (null == DeploymentITest.SERVER_CONTEXT) {
-            System.out.println("Use default SERVER_CONTEXT");
-            DeploymentITest.SERVER_CONTEXT = DeploymentITest.DEFAULT_SERVER_CONTEXT;
-        }
+  VISMA_URL = DeploymentITest.BASE_URL + DeploymentITest.SERVER_CONTEXT;
 
-    	System.out.println("SERVER_URL = " + System.getenv("SERVER_URL"));
-    	DeploymentITest.BASE_URL = System.getProperty("webdriver.base.url");
+  System.out.println("URL updated to : " + DeploymentITest.VISMA_URL + "\n");
 
-		if (null == DeploymentITest.BASE_URL) {
-			System.out.println("Use default webdriver.base.url");
-			DeploymentITest.BASE_URL = DeploymentITest.DEFAULT_URL;
-			System.setProperty("webdriver.base.url", DeploymentITest.BASE_URL);
-		}
-		System.out.println("webdriver.base.url is : " + DeploymentITest.BASE_URL + "\n");
+  DeploymentITest.LOGGER.info(
+      "Wainting for deploy to be finished before starting test (in seconds) : {}", DEPLOY_WAIT);
+  TimeUnit.SECONDS.sleep(DEPLOY_WAIT);
 
-		VISMA_URL = DeploymentITest.BASE_URL + DeploymentITest.SERVER_CONTEXT;
+  SSLContext sc = SSLContext.getInstance("SSL");
 
-		System.out.println("URL updated to : " + DeploymentITest.VISMA_URL + "\n");
+  sc.init(null, trustAllCerts, new java.security.SecureRandom());
+  HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-		DeploymentITest.LOGGER.info("Wainting for deploy to be finished before starting test (in seconds) : {}",
-				DEPLOY_WAIT);
-		TimeUnit.SECONDS.sleep(DEPLOY_WAIT);
+  // Create all-trusting host name verifier
+  HostnameVerifier allHostsValid = new HostnameVerifier() {
+    @Override
+    public boolean verify(String hostname, SSLSession session) {
+      return true;
+    }
+  };
+  // Install the all-trusting host verifier
+  HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+}
 
-		SSLContext sc = SSLContext.getInstance("SSL");
+public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
+  URL u = new URL(urlString);
+  HttpURLConnection.setFollowRedirects(false);
+  HttpURLConnection huc = (HttpURLConnection) u.openConnection();
+  huc.setRequestMethod("GET");
+  // huc.setRequestMethod("HEAD");
+  huc.setRequestProperty("User-Agent",
+      "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+  huc.connect();
+  return huc.getResponseCode();
+}
 
-		sc.init(null, trustAllCerts, new java.security.SecureRandom());
-		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+@Test
+public void testBaseUrl() throws Exception {
+  DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.VISMA_URL);
 
-		// Create all-trusting host name verifier
-		HostnameVerifier allHostsValid = new HostnameVerifier() {
-			@Override
-			public boolean verify(String hostname, SSLSession session) {
-				return true;
-			}
-		};
-		// Install the all-trusting host verifier
-		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-	}
+  int service_response = getResponseCode(DeploymentITest.VISMA_URL);
 
-	public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
-		URL u = new URL(urlString);
-		HttpURLConnection.setFollowRedirects(false);
-		HttpURLConnection huc = (HttpURLConnection) u.openConnection();
-		huc.setRequestMethod("GET");
-		// huc.setRequestMethod("HEAD");
-		huc.setRequestProperty("User-Agent",
-				"Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
-		huc.connect();
-		return huc.getResponseCode();
-	}
+  assertEquals(format("Error getting main screen for %s at address %s",
+                   DeploymentITest.SERVER_CONTEXT, DeploymentITest.VISMA_URL),
+      HttpURLConnection.HTTP_MOVED_TEMP, service_response);
 
-	@Test
-	public void testBaseUrl() throws Exception {
+  int good_service_response = getResponseCode(DeploymentITest.VISMA_URL + "/loan.xhtml");
 
-		DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.VISMA_URL);
+  assertEquals(format("Error getting main screen for %s at address %s",
+                   DeploymentITest.SERVER_CONTEXT, DeploymentITest.VISMA_URL + "/loan.xhtml"),
+      HttpURLConnection.HTTP_OK /* HTTP_FORBIDDEN */, good_service_response);
+}
 
-		int service_response = getResponseCode(DeploymentITest.VISMA_URL);
+@Test
+public void testBaseRest() throws Exception {
+  DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.VISMA_URL);
 
-		assertEquals(format("Error getting main screen for %s at address %s", DeploymentITest.SERVER_CONTEXT,
-				DeploymentITest.VISMA_URL), HttpURLConnection.HTTP_MOVED_TEMP, service_response);
+  // Client client = ClientBuilder.newClient();
+  Client client = getUnsecureClient();
 
-		int good_service_response = getResponseCode(DeploymentITest.VISMA_URL + "/loan.xhtml");
+  WebTarget webTarget = client.target(DeploymentITest.VISMA_URL + "/");
+  // webTarget.register(FilterForExampleCom.class);
+  WebTarget resourceWebTarget = webTarget.path("rest");
+  WebTarget booksTarget = resourceWebTarget.path("loan");
+  WebTarget booksTestTarget = booksTarget.path("test");
 
-		assertEquals(
-				format("Error getting main screen for %s at address %s", DeploymentITest.SERVER_CONTEXT,
-						DeploymentITest.VISMA_URL + "/loan.xhtml"),
-				HttpURLConnection.HTTP_OK/* HTTP_FORBIDDEN */, good_service_response);
-	}
+  // WebTarget target =
+  // client.target(DeploymentITest.BASE_URL).path("rest/{param}");
+  // String result = target.queryParam("param",
+  // "value").get(String.class);
+  // WebTarget booksTestTarget = client.target(DeploymentITest.BASE_URL +
+  // "/rest/books/test");
+  // Response responseTest = booksTestTarget.request("text/plain").get();
 
-	@Test
-	public void testBaseRest() throws Exception {
+  // System.out.println("Status : " + responseTest.getStatus());
+  // assertEquals(responseTest.getStatus(), 200);
+  // System.out.println("Response : " +
+  // responseTest.readEntity(String.class));
 
-		DeploymentITest.LOGGER.info("Testing URL : {}", DeploymentITest.VISMA_URL);
+  // WebTarget helloworldWebTargetWithQueryParam =
+  // booksTarget.queryParam("test", "10");
 
-		//Client client = ClientBuilder.newClient();
-		Client client = getUnsecureClient();
+  Invocation.Builder invocationBuilder = booksTestTarget.request(MediaType.TEXT_PLAIN_TYPE);
+  invocationBuilder.header("some-header", "true");
 
-		WebTarget webTarget = client.target(DeploymentITest.VISMA_URL + "/");
-		// webTarget.register(FilterForExampleCom.class);
-		WebTarget resourceWebTarget = webTarget.path("rest");
-		WebTarget booksTarget = resourceWebTarget.path("loan");
-		WebTarget booksTestTarget = booksTarget.path("test");
+  Response responseFull = invocationBuilder.get();
+  System.out.println("Status : " + responseFull.getStatus());
+  String resultTest = responseFull.readEntity(String.class);
+  System.out.println("Response : " + resultTest);
 
-		// WebTarget target =
-		// client.target(DeploymentITest.BASE_URL).path("rest/{param}");
-		// String result = target.queryParam("param",
-		// "value").get(String.class);
-		// WebTarget booksTestTarget = client.target(DeploymentITest.BASE_URL +
-		// "/rest/books/test");
-		// Response responseTest = booksTestTarget.request("text/plain").get();
+  assertEquals(format("Error getting login screen for %s at address %s", SERVER_CONTEXT,
+                   DeploymentITest.BASE_URL),
+      HttpURLConnection.HTTP_OK, responseFull.getStatus());
 
-		// System.out.println("Status : " + responseTest.getStatus());
-		// assertEquals(responseTest.getStatus(), 200);
-		// System.out.println("Response : " +
-		// responseTest.readEntity(String.class));
-
-		// WebTarget helloworldWebTargetWithQueryParam =
-		// booksTarget.queryParam("test", "10");
-
-		Invocation.Builder invocationBuilder = booksTestTarget.request(MediaType.TEXT_PLAIN_TYPE);
-		invocationBuilder.header("some-header", "true");
-
-		Response responseFull = invocationBuilder.get();
-		System.out.println("Status : " + responseFull.getStatus());
-		String resultTest = responseFull.readEntity(String.class);
-		System.out.println("Response : " + resultTest);
-
-		assertEquals(
-				format("Error getting login screen for %s at address %s", SERVER_CONTEXT, DeploymentITest.BASE_URL),
-				HttpURLConnection.HTTP_OK, responseFull.getStatus());
-
-		assertEquals(resultTest, "Test");
-	}
-
+  assertEquals(resultTest, "Test");
+}
 }

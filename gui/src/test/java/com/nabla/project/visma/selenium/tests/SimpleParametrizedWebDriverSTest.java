@@ -56,93 +56,88 @@ import com.nabla.project.visma.selenium.tests.pageobjects.LoanPage;
 
 @RunWith(value = Parameterized.class)
 @net.jcip.annotations.NotThreadSafe
-public class SimpleParametrizedWebDriverSTest
-{
+public class SimpleParametrizedWebDriverSTest {
+  private static final transient Logger LOGGER =
+      LoggerFactory.getLogger(SimpleParametrizedWebDriverSTest.class);
 
-    private static final transient Logger LOGGER = LoggerFactory.getLogger(SimpleParametrizedWebDriverSTest.class);
+  private final String loanAmount;
+  private final String paybackTime;
 
-    private final String                  loanAmount;
-    private final String                  paybackTime;
+  private final String totalPayments;
+  private final String firstPayment;
+  private final int expectedPayments;
 
-    private final String                  totalPayments;
-    private final String                  firstPayment;
-    private final int                     expectedPayments;
+  public SimpleParametrizedWebDriverSTest(final String aLoanAmount, final String aPaybackTime,
+      final String aTotalPayments, final String aFirstPayment, final int aExpectedPayments) {
+    this.loanAmount = aLoanAmount;
+    this.paybackTime = aPaybackTime;
+    this.totalPayments = aTotalPayments;
+    this.firstPayment = aFirstPayment;
+    this.expectedPayments = aExpectedPayments;
+  }
 
-    public SimpleParametrizedWebDriverSTest(final String aLoanAmount, final String aPaybackTime, final String aTotalPayments, final String aFirstPayment, final int aExpectedPayments)
-    {
-        this.loanAmount = aLoanAmount;
-        this.paybackTime = aPaybackTime;
-        this.totalPayments = aTotalPayments;
-        this.firstPayment = aFirstPayment;
-        this.expectedPayments = aExpectedPayments;
-    }
+  @Parameters
+  public static Collection<Object[]> testData() {
+    return Arrays.asList(new Object[][] {{"1000000", "10", "1302315.33552576902309236382167649640",
+                                             "10852.62779604807519243636518063747", 121},
+        {"200000", "30", "408808.080969842113801990388563829760",
+            "1135.578002694005871672195523788416", 361}});
+  }
 
-    @Parameters
-    public static Collection<Object[]> testData()
-    {
-        return Arrays.asList(new Object[][]
-        {
-        { "1000000", "10", "1302315.33552576902309236382167649640", "10852.62779604807519243636518063747", 121 },
-        { "200000", "30", "408808.080969842113801990388563829760", "1135.578002694005871672195523788416", 361 } });
-    }
+  @BeforeClass
+  public static void setUp() throws Exception {
+    SeleniumHelper.setUp();
+  }
 
-    @BeforeClass
-    public static void setUp() throws Exception
-    {
+  @AfterClass
+  public static void tearDown() throws Exception {
+    SeleniumHelper.tearDown();
+  }
 
-        SeleniumHelper.setUp();
-    }
+  /*
+   * @Before
+   * public void homePageRefresh() throws IOException
+   * {
+   * driver.manage().deleteAllCookies();
+   * // driver.get(propertyKeysLoader("login.base.url"));
+   * }
+   */
 
-    @AfterClass
-    public static void tearDown() throws Exception
-    {
-        SeleniumHelper.tearDown();
-    }
+  @Test
+  @InSequence(1)
+  public void testWithGoodInputS() throws Exception {
+    // Get the StopWatch Object and start the StopWatch
+    final StopWatch pageLoad = new StopWatch();
+    pageLoad.start();
 
-    /*
-     * @Before
-     * public void homePageRefresh() throws IOException
-     * {
-     * driver.manage().deleteAllCookies();
-     * // driver.get(propertyKeysLoader("login.base.url"));
-     * }
-     */
+    // Create an instance of Loan Page class
+    // and provide the driver
+    final LoanPage loanPage = new LoanPage();
 
-    @Test
-    @InSequence(1)
-    public void testWithGoodInputS() throws Exception
-    {
-        // Get the StopWatch Object and start the StopWatch
-        final StopWatch pageLoad = new StopWatch();
-        pageLoad.start();
+    // Open the Loan Calculator Page
+    loanPage.get();
 
-        // Create an instance of Loan Page class
-        // and provide the driver
-        final LoanPage loanPage = new LoanPage();
+    loanPage.calculatePayments(this.loanAmount, this.paybackTime);
 
-        // Open the Loan Calculator Page
-        loanPage.get();
+    Assert.assertEquals("Housing Loan Cost Calculator (Results)",
+        SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
+    loanPage.Ensure_the_fund_transfer_is_complete("Payments total is : " + this.totalPayments);
+    final WebElement simpleTable = SeleniumHelper.getDriver().findElement(By.id("payments"));
+    SeleniumHelper.testWebTable(simpleTable, this.expectedPayments);
+    Assert.assertEquals(
+        this.firstPayment, SeleniumHelper.getDriver().findElement(By.xpath("//td[2]")).getText());
 
-        loanPage.calculatePayments(this.loanAmount, this.paybackTime);
+    pageLoad.stop();
 
-        Assert.assertEquals("Housing Loan Cost Calculator (Results)", SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
-        loanPage.Ensure_the_fund_transfer_is_complete("Payments total is : " + this.totalPayments);
-        final WebElement simpleTable = SeleniumHelper.getDriver().findElement(By.id("payments"));
-        SeleniumHelper.testWebTable(simpleTable, this.expectedPayments);
-        Assert.assertEquals(this.firstPayment, SeleniumHelper.getDriver().findElement(By.xpath("//td[2]")).getText());
+    LOGGER.info("Total Page Load Time: {} milliseconds", pageLoad);
 
-        pageLoad.stop();
+    // SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
+    // Thread.sleep(1000);
 
-        LOGGER.info("Total Page Load Time: {} milliseconds", pageLoad);
+    SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
+    SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    // SeleniumHelper.getDriver().waitForPageToLoad("1500");
 
-        // SeleniumHelper.testTakesScreenshot("testWithGoodInputS.png", SeleniumHelper.getDriver());
-        // Thread.sleep(1000);
-
-        SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + "/visma/");
-        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        // SeleniumHelper.getDriver().waitForPageToLoad("1500");
-
-        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
-    }
-
+    Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
+  }
 }

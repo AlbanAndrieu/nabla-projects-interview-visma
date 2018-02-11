@@ -52,58 +52,52 @@ import com.nabla.project.visma.selenium.tests.helper.SeleniumHelper;
  * @version $Revision$
  * @since $Date$
  */
-public class GoogleSearchSTest
-{
+public class GoogleSearchSTest {
+  @BeforeClass
+  public static void setUp() throws Exception {
+    // ProfilesIni allProfiles = new ProfilesIni();
+    // FirefoxProfile profile =
+    // allProfiles.getProfile("/workspace/users/albandri10/.mozilla/firefox/xhvt8rwp.selenium/");
+    // FirefoxProfile profile = new FirefoxProfile();
+    // FirefoxBinary binary = new FirefoxBinary(new File(firefoxBin));
+    // driver = new FirefoxDriver(binary, profile);
+    // this.driver = new FirefoxDriver(profile);
+    // this.driver = new FirefoxDriver();
 
-    @BeforeClass
-    public static void setUp() throws Exception
-    {
-        // ProfilesIni allProfiles = new ProfilesIni();
-        // FirefoxProfile profile = allProfiles.getProfile("/workspace/users/albandri10/.mozilla/firefox/xhvt8rwp.selenium/");
-        // FirefoxProfile profile = new FirefoxProfile();
-        // FirefoxBinary binary = new FirefoxBinary(new File(firefoxBin));
-        // driver = new FirefoxDriver(binary, profile);
-        // this.driver = new FirefoxDriver(profile);
-        // this.driver = new FirefoxDriver();
+    SeleniumHelper.setUp();
+  }
 
-        SeleniumHelper.setUp();
+  @AfterClass
+  public static void tearDown() throws Exception {
+    SeleniumHelper.tearDown();
+  }
 
-    }
+  @Test
+  public void testGoogleSearch() {
+    SeleniumHelper.getDriver().get("http://www.google.com");
 
-    @AfterClass
-    public static void tearDown() throws Exception {
-        SeleniumHelper.tearDown();
-    }
+    // Find the text input element by its name
+    final WebElement element = SeleniumHelper.getDriver().findElement(By.name("q"));
 
-    @Test
-    public void testGoogleSearch()
-    {
-        SeleniumHelper.getDriver().get("http://www.google.com");
+    // Enter something to search for
+    element.sendKeys("Selenium testing tools cookbook");
 
-        // Find the text input element by its name
-        final WebElement element = SeleniumHelper.getDriver().findElement(By.name("q"));
+    // Now submit the form. WebDriver will find the form for us from the element
+    element.submit();
 
-        // Enter something to search for
-        element.sendKeys("Selenium testing tools cookbook");
+    // Google's search is rendered dynamically with JavaScript.
+    // Wait for the page to load, timeout after 10 seconds
+    (new WebDriverWait(SeleniumHelper.getDriver(), 10)).until(new ExpectedCondition<Boolean>() {
+      @Override
+      public Boolean apply(final WebDriver d) {
+        return d.getTitle().toLowerCase().startsWith("selenium testing tools cookbook");
+      }
+    });
 
-        // Now submit the form. WebDriver will find the form for us from the element
-        element.submit();
-
-        // Google's search is rendered dynamically with JavaScript.
-        // Wait for the page to load, timeout after 10 seconds
-        (new WebDriverWait(SeleniumHelper.getDriver(), 10)).until(new ExpectedCondition<Boolean>()
-        {
-            @Override
-            public Boolean apply(final WebDriver d)
-            {
-                return d.getTitle().toLowerCase().startsWith("selenium testing tools cookbook");
-            }
-        });
-
-        // Should see: selenium testing tools cookbook - Google Search
-        // Assert.assertEquals("Selenium testing tools cookbook - Google Search", this.driver.getTitle());
-        Assert.assertEquals("Selenium testing tools cookbook - Recherche Google", SeleniumHelper
-                .getDriver().getTitle());
-
-    }
+    // Should see: selenium testing tools cookbook - Google Search
+    // Assert.assertEquals("Selenium testing tools cookbook - Google Search",
+    // this.driver.getTitle());
+    Assert.assertEquals("Selenium testing tools cookbook - Recherche Google",
+        SeleniumHelper.getDriver().getTitle());
+  }
 }

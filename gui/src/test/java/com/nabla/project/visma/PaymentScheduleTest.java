@@ -44,62 +44,47 @@ import org.junit.Test;
 
 import com.nabla.project.visma.api.IPayment;
 
-public class PaymentScheduleTest
-{
+public class PaymentScheduleTest {
+  final IPayment[] payments = new Payment[] {new Payment(new BigDecimal(100)),
+      new Payment(new BigDecimal(1_000)), new Payment(new BigDecimal(10_000))};
 
-    final IPayment[]       payments        = new Payment[]
-                                          { new Payment(new BigDecimal(100)), new Payment(new BigDecimal(1_000)), new Payment(new BigDecimal(10_000)) };
+  final PaymentSchedule paymentSchedule = new PaymentSchedule(this.payments);
 
+  @Before
+  public void setUp() throws Exception {}
+
+  @After
+  public void tearDown() throws Exception {}
+
+  @Test(expected = IllegalArgumentException.class)
+  public final void testConstructorNull() {
+    final Map<Integer, List<BigDecimal>> nullPaymentSchedule = null;
+    final PaymentSchedule paymentSchedule = new PaymentSchedule(nullPaymentSchedule);
+    Assert.assertNotNull(paymentSchedule.getPayments());
+  }
+
+  @Test
+  public void testSetPaymentsPaymentArray() {
     final PaymentSchedule paymentSchedule = new PaymentSchedule(this.payments);
+    Assert.assertNotNull(paymentSchedule.getPayments());
+    Assert.assertEquals(3, paymentSchedule.getPayments().getRowCount());
+    Assert.assertEquals("loanAmount:100", paymentSchedule.getPayments().getRowData().toString());
+  }
 
-    @Before
-    public void setUp() throws Exception
-    {
-    }
+  // @Test
+  public void testSetPaymentsMapOfIntegerListOfBigDecimal() {
+    Assert.fail("Not yet implemented");
+  }
 
-    @After
-    public void tearDown() throws Exception
-    {
-    }
+  // @Test
+  public void testGetPayments() {
+    Assert.fail("Not yet implemented");
+  }
 
-    @Test(expected = IllegalArgumentException.class)
-    public final void testConstructorNull()
-    {
-
-        final Map<Integer, List<BigDecimal>> nullPaymentSchedule = null;
-        final PaymentSchedule paymentSchedule = new PaymentSchedule(nullPaymentSchedule);
-        Assert.assertNotNull(paymentSchedule.getPayments());
-
-    }
-
-    @Test
-    public void testSetPaymentsPaymentArray()
-    {
-        final PaymentSchedule paymentSchedule = new PaymentSchedule(this.payments);
-        Assert.assertNotNull(paymentSchedule.getPayments());
-        Assert.assertEquals(3, paymentSchedule.getPayments().getRowCount());
-        Assert.assertEquals("loanAmount:100", paymentSchedule.getPayments().getRowData().toString());
-    }
-
-    // @Test
-    public void testSetPaymentsMapOfIntegerListOfBigDecimal()
-    {
-        Assert.fail("Not yet implemented");
-    }
-
-    // @Test
-    public void testGetPayments()
-    {
-        Assert.fail("Not yet implemented");
-    }
-
-    // @Test
-    public final void testToString()
-    {
-
-        Assert.fail("Not yet implemented");
-        // Assert.assertEquals("paymentsDataModel:", this.paymentSchedule.toString());
-        // Assert.assertFalse(this.paymentSchedule.equals("paymentsDataModel:"));
-
-    }
+  // @Test
+  public final void testToString() {
+    Assert.fail("Not yet implemented");
+    // Assert.assertEquals("paymentsDataModel:", this.paymentSchedule.toString());
+    // Assert.assertFalse(this.paymentSchedule.equals("paymentsDataModel:"));
+  }
 }

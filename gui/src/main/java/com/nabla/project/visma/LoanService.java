@@ -55,108 +55,98 @@ import com.nabla.project.visma.api.ILoan;
 import com.nabla.project.visma.api.ILoanService;
 import com.nabla.project.visma.api.IProduct;
 
-//The @Stateless annotation eliminates the need for manual transaction
+// The @Stateless annotation eliminates the need for manual transaction
 @Path("/loan")
 // @Stateless
 // @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON)
-public class LoanService implements ILoanService
-{
+public class LoanService implements ILoanService {
+  // TODO @Inject
+  private static final transient Logger LOGGER = LoggerFactory.getLogger(LoanService.class);
 
-    // TODO @Inject
-    private static final transient Logger LOGGER = LoggerFactory.getLogger(LoanService.class);
+  private BigDecimal loanAmount;
 
-    private BigDecimal                    loanAmount;
+  private int numberOfYears;
 
-    private int                           numberOfYears;
+  // IProduct product;
 
-    // IProduct product;
+  // @Inject
+  ILoan loan;
 
-    // @Inject
-    ILoan                                 loan;
+  public LoanService() {
+    // throw new AssertionError();
+  }
 
-    public LoanService()
-    {
-        //throw new AssertionError();
+  public LoanService(@Nonnull @Nonnegative final BigDecimal loanAmount, final int numberOfYears) {
+    super();
+    this.loanAmount = loanAmount;
+    this.numberOfYears = numberOfYears;
+
+    IProduct product = new House(this.loanAmount);
+    this.loan = new HouseLoan(product, this.numberOfYears);
+  }
+
+  @Override
+  @GET
+  // @Produces({ MediaType.APPLICATION_ATOM_XML, MediaType.APPLICATION_JSON })
+  public Map<Integer, List<BigDecimal>> calcMonthlyPayment() {
+    if (null == this.loan) {
+      throw new IllegalArgumentException("Service cannot be null");
     }
 
-    public LoanService(@Nonnull @Nonnegative final BigDecimal loanAmount, final int numberOfYears)
-    {
-        super();
-        this.loanAmount = loanAmount;
-        this.numberOfYears = numberOfYears;
+    LoanService.LOGGER.debug(
+        "Start calculateMonthlyPayment for loan amount: {} and number of years : {}",
+        loan.getProduct().getPrice(), loan.getPaybackTime());
 
-        IProduct product = new House(this.loanAmount);
-        this.loan = new HouseLoan(product, this.numberOfYears);
+    return loan.calcMonthlyPayment();
+  }
+
+  @Override
+  // @GET
+  // @Produces({ MediaType.APPLICATION_ATOM_XML, MediaType.APPLICATION_JSON })
+  public BigDecimal getTotalPayment() {
+    if (null == this.loan) {
+      throw new IllegalArgumentException("Service cannot be null");
     }
 
-    @Override
-    @GET
-    // @Produces({ MediaType.APPLICATION_ATOM_XML, MediaType.APPLICATION_JSON })
-    public Map<Integer, List<BigDecimal>> calcMonthlyPayment()
-    {
+    LoanService.LOGGER.debug("Start getTotalPayment for loan amount: {} and number of years : {}",
+        loan.getProduct().getPrice(), loan.getPaybackTime());
 
-        if (null == this.loan)
-        {
-            throw new IllegalArgumentException("Service cannot be null");
-        }
+    return loan.getTotalPayment();
+  }
 
-        LoanService.LOGGER.debug("Start calculateMonthlyPayment for loan amount: {} and number of years : {}", loan.getProduct().getPrice(), loan.getPaybackTime());
+  @GET
+  // @ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid value") })
+  public Response getTotalPayment(
+      @DefaultValue("100000") @QueryParam("loanAmount") @Nonnull @Nonnegative int loanAmount,
+      @DefaultValue("10") @QueryParam("numberOfYears") int numberOfYears) {
+    IProduct product = new House(this.loanAmount);
+    this.loan = new HouseLoan(product, this.numberOfYears);
 
-        return loan.calcMonthlyPayment();
+    LoanService.LOGGER.debug("Start getTotalPayment for loan amount: {} and number of years : {}",
+        loan.getProduct().getPrice(), loan.getPaybackTime());
 
-    }
+    return Response.ok("TotalPayment: " + loan.getTotalPayment()).build();
+  }
 
-    @Override
-    // @GET
-    // @Produces({ MediaType.APPLICATION_ATOM_XML, MediaType.APPLICATION_JSON })
-    public BigDecimal getTotalPayment()
-    {
+  /*
+   * @GET public Collection<Book> list() { return books; }
+   */
+  /*
+   * curl -XGET http://localhost:8090/rest/orders/2004-12-24 Year: 2004, month: 12, day: 24%
+   */
+  @GET
+  @Path("/orders/{year:\\d{4}}-{month:\\d{2}}-{day:\\d{2}}")
+  //@Produces(MediaType.TEXT_PLAIN)
+  public Response getOrders(@PathParam("year") final int year, @PathParam("month") final int month,
+      @PathParam("day") final int day) {
+    return Response.ok("Year: " + year + ", month: " + month + ", day: " + day).build();
+  }
 
-        if (null == this.loan)
-        {
-            throw new IllegalArgumentException("Service cannot be null");
-        }
-
-        LoanService.LOGGER.debug("Start getTotalPayment for loan amount: {} and number of years : {}", loan.getProduct().getPrice(), loan.getPaybackTime());
-
-        return loan.getTotalPayment();
-    }
-
-    @GET
-    // @ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid value") })
-    public Response getTotalPayment(
-            @DefaultValue("100000") @QueryParam("loanAmount") @Nonnull @Nonnegative int loanAmount,
-            @DefaultValue("10") @QueryParam("numberOfYears") int numberOfYears) {
-
-        IProduct product = new House(this.loanAmount);
-        this.loan = new HouseLoan(product, this.numberOfYears);
-
-        LoanService.LOGGER.debug(
-                "Start getTotalPayment for loan amount: {} and number of years : {}", loan
-                        .getProduct().getPrice(), loan.getPaybackTime());
-
-        return Response.ok("TotalPayment: " + loan.getTotalPayment()).build();
-    }
-
-    /*
-     * @GET public Collection<Book> list() { return books; }
-     */
-    /*
-     * curl -XGET http://localhost:8090/rest/orders/2004-12-24 Year: 2004, month: 12, day: 24%
-     */
-    @GET
-    @Path("/orders/{year:\\d{4}}-{month:\\d{2}}-{day:\\d{2}}")
-    //@Produces(MediaType.TEXT_PLAIN)
-    public Response getOrders(@PathParam("year") final int year,
-            @PathParam("month") final int month, @PathParam("day") final int day) {
-        return Response.ok("Year: " + year + ", month: " + month + ", day: " + day).build();
-    }
-
-    @GET
-    @Path("test")
-    //@Produces(MediaType.TEXT_PLAIN)
-    public String test() {
-        return "Test";
-    }
+  @GET
+  @Path("test")
+  //@Produces(MediaType.TEXT_PLAIN)
+  public String test() {
+    return "Test";
+  }
 }

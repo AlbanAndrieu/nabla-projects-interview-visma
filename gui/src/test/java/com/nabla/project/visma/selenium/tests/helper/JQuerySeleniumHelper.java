@@ -47,58 +47,51 @@ import org.openqa.selenium.WebElement;
  * @version $Revision$
  * @since $Date$
  */
-public class JQuerySeleniumHelper
-{
-
-    public static void injectjQueryIfNeeded(final WebDriver driver)
-    {
-        if (!JQuerySeleniumHelper.jQueryLoaded(driver))
-        {
-            JQuerySeleniumHelper.injectjQuery(driver);
-        }
+public class JQuerySeleniumHelper {
+  public static void injectjQueryIfNeeded(final WebDriver driver) {
+    if (!JQuerySeleniumHelper.jQueryLoaded(driver)) {
+      JQuerySeleniumHelper.injectjQuery(driver);
     }
+  }
 
-    /**
-     * DOCUMENT ME! albandri.
-     */
-    private static void injectjQuery(final WebDriver driver)
-    {
-        final JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript(" var headID = document.getElementsByTagName(\"head\")[0];);" + "var newScript = document.createElement('script');" + "newScript.type = 'text/javascript';"
-                + "newScript.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js';" + "headID.appendChild(newScript);");
+  /**
+   * DOCUMENT ME! albandri.
+   */
+  private static void injectjQuery(final WebDriver driver) {
+    final JavascriptExecutor js = (JavascriptExecutor) driver;
+    js.executeScript(" var headID = document.getElementsByTagName(\"head\")[0];);"
+        + "var newScript = document.createElement('script');"
+        + "newScript.type = 'text/javascript';"
+        + "newScript.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js';"
+        + "headID.appendChild(newScript);");
+  }
 
+  /**
+   * DOCUMENT ME! albandri.
+   *
+   * @return
+   */
+  private static boolean jQueryLoaded(final WebDriver driver) {
+    Boolean loaded;
+    try {
+      final JavascriptExecutor js = (JavascriptExecutor) driver;
+      loaded = (Boolean) js.executeScript("return jQuery()!=null");
+    } catch (final WebDriverException e) {
+      loaded = false;
     }
+    return loaded;
+  }
 
-    /**
-     * DOCUMENT ME! albandri.
-     *
-     * @return
-     */
-    private static boolean jQueryLoaded(final WebDriver driver)
-    {
-        Boolean loaded;
-        try
-        {
-            final JavascriptExecutor js = (JavascriptExecutor) driver;
-            loaded = (Boolean) js.executeScript("return jQuery()!=null");
-        } catch (final WebDriverException e)
-        {
-            loaded = false;
-        }
-        return loaded;
-    }
+  @SuppressWarnings("unchecked")
+  public List<WebElement> getSelectedCheckbox(final WebDriver driver) {
+    // Create an instance of JavaScript Executor from driver
+    final JavascriptExecutor js = (JavascriptExecutor) driver;
 
-    @SuppressWarnings("unchecked")
-    public List<WebElement> getSelectedCheckbox(final WebDriver driver)
-    {
+    // Locate all the Checkbox which are checked by calling jQuery find() method.
+    // find() method returns elements in array
+    final List<WebElement> elements =
+        (List<WebElement>) js.executeScript("return jQuery.find(':checked')");
 
-        // Create an instance of JavaScript Executor from driver
-        final JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        // Locate all the Checkbox which are checked by calling jQuery find() method.
-        // find() method returns elements in array
-        final List<WebElement> elements = (List<WebElement>) js.executeScript("return jQuery.find(':checked')");
-
-        return elements;
-    }
+    return elements;
+  }
 }

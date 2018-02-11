@@ -40,19 +40,15 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-public class NavigationBean implements Serializable
-{
+public class NavigationBean implements Serializable {
+  private static final long serialVersionUID = -1074473345848765304L;
 
-    private static final long serialVersionUID = -1074473345848765304L;
-
-    /**
-     * Redirect to payment page.
-     *
-     * @return Payment page name.
-     */
-    public String redirectToPayment()
-    {
-        return "payment?faces-redirect=true";
-    }
-
+  /**
+   * Redirect to payment page.
+   *
+   * @return Payment page name.
+   */
+  public String redirectToPayment() {
+    return "payment?faces-redirect=true";
+  }
 }

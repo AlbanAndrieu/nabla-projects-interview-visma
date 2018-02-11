@@ -13,94 +13,85 @@ import org.junit.Test;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-public class InputTest
-{
+public class InputTest {
+  private static final String PROTOCOL = "http";
+  private static final String PASSWORD_TEST = "passwordTest";
+  private static final String USERNAME_TEST = "usernameTest";
 
-    private static final String PROTOCOL      = "http";
-    private static final String PASSWORD_TEST = "passwordTest";
-    private static final String USERNAME_TEST = "usernameTest";
+  @Test
+  public void testGoogleFinance() throws Exception {
+    URL url = new URL("https://finance.google.com/finance?q=NASDAQ%3AMSFT");
+    String urlContent = Resources.toString(url, Charsets.UTF_8);
+    System.out.println(urlContent);
+  }
 
-    @Test
-    public void testGoogleFinance() throws Exception
-    {
-        URL url = new URL("https://finance.google.com/finance?q=NASDAQ%3AMSFT");
-        String urlContent = Resources.toString(url, Charsets.UTF_8);
-        System.out.println(urlContent);
+  @Test
+  public void testPasswordAuthentication() throws UnknownHostException {
+    InetAddress addr = InetAddress.getLocalHost();
+    PasswordAuthentication pa =
+        Authenticator.requestPasswordAuthentication(addr, 8080, PROTOCOL, "prompt", "HTTP");
+    Assert.assertNull(pa);
+    MockAuthenticator mock = new MockAuthenticator();
+    Authenticator.setDefault(mock);
+    addr = InetAddress.getLocalHost();
+    pa = Authenticator.requestPasswordAuthentication(addr, 80, PROTOCOL, "prompt", "HTTP");
+    Assert.assertNotNull(pa);
+    Assert.assertEquals(USERNAME_TEST, pa.getUserName());
+    Assert.assertEquals(PASSWORD_TEST, String.valueOf(pa.getPassword()));
+    Authenticator.setDefault(null);
+  }
+
+  class MockAuthenticator extends Authenticator {
+    @Override
+    public URL getRequestingURL() {
+      return super.getRequestingURL();
     }
 
-    @Test
-    public void testPasswordAuthentication() throws UnknownHostException
-    {
-        InetAddress addr = InetAddress.getLocalHost();
-        PasswordAuthentication pa = Authenticator.requestPasswordAuthentication(addr, 8080, PROTOCOL, "prompt", "HTTP");
-        Assert.assertNull(pa);
-        MockAuthenticator mock = new MockAuthenticator();
-        Authenticator.setDefault(mock);
-        addr = InetAddress.getLocalHost();
-        pa = Authenticator.requestPasswordAuthentication(addr, 80, PROTOCOL, "prompt", "HTTP");
-        Assert.assertNotNull(pa);
-        Assert.assertEquals(USERNAME_TEST, pa.getUserName());
-        Assert.assertEquals(PASSWORD_TEST, String.valueOf(pa.getPassword()));
-        Authenticator.setDefault(null);
+    @Override
+    public Authenticator.RequestorType getRequestorType() {
+      return super.getRequestorType();
     }
 
-    class MockAuthenticator extends Authenticator
-    {
-        @Override
-        public URL getRequestingURL()
-        {
-            return super.getRequestingURL();
-        }
+    @Override
+    public PasswordAuthentication getPasswordAuthentication() {
+      // Get information about the request
+      String prompt = getRequestingPrompt();
 
-        @Override
-        public Authenticator.RequestorType getRequestorType()
-        {
-            return super.getRequestorType();
-        }
+      System.out.println("Prompt : " + prompt);
 
-        @Override
-        public PasswordAuthentication getPasswordAuthentication()
-        {
-            // Get information about the request
-            String prompt = getRequestingPrompt();
+      InetAddress addr = getRequestingSite();
 
-            System.out.println("Prompt : " + prompt);
+      // String hostname = getRequestingHost();
+      String hostname = addr.getHostName();
 
-            InetAddress addr = getRequestingSite();
+      System.out.println("Hostname : " + hostname);
 
-            // String hostname = getRequestingHost();
-            String hostname = addr.getHostName();
+      InetAddress ipaddr = getRequestingSite();
 
-            System.out.println("Hostname : " + hostname);
+      System.out.println("IP address : " + ipaddr);
 
-            InetAddress ipaddr = getRequestingSite();
+      int port = getRequestingPort();
 
-            System.out.println("IP address : " + ipaddr);
+      System.out.println("Port : " + port);
 
-            int port = getRequestingPort();
+      try {
+        URL tracker_url = new URL(PROTOCOL + "://" + hostname + ":" + port + "/");
 
-            System.out.println("Port : " + port);
+        System.out.println("URL : " + tracker_url);
 
-            try
-            {
-                URL tracker_url = new URL(PROTOCOL + "://" + hostname + ":" + port + "/");
+      } catch (MalformedURLException e) {
+        System.out.println("Error" + e);
+      }
 
-                System.out.println("URL : " + tracker_url);
+      String username = USERNAME_TEST;
 
-            } catch (MalformedURLException e)
-            {
-                System.out.println("Error" + e);
-            }
+      String password = PASSWORD_TEST;
 
-            String username = USERNAME_TEST;
+      // Return the information (a data holder that is used by Authenticator)
 
-            String password = PASSWORD_TEST;
+      return new PasswordAuthentication(username, password.toCharArray());
 
-            // Return the information (a data holder that is used by Authenticator)
-
-            return new PasswordAuthentication(username, password.toCharArray());
-
-            // return super.getPasswordAuthentication();
-        }
+      // return super.getPasswordAuthentication();
     }
+  }
 }

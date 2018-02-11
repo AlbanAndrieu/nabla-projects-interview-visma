@@ -63,168 +63,152 @@ import cucumber.api.java.en.When;
  * @version $Revision$
  * @since $Date$
  */
-public class LoanPage extends LoadableComponent<LoanPage>
-{
+public class LoanPage extends LoadableComponent<LoanPage> {
+  private static final Logger LOGGER = LoggerFactory.getLogger(LoanPage.class);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoanPage.class);
+  private final String url = "/visma/loan.xhtml";
+  // private final String title = "JSF 2.0 Visma Loan test";
 
-    private final String        url    = "/visma/loan.xhtml";
-    // private final String title = "JSF 2.0 Visma Loan test";
+  @FindBy(name = "loan_form:loanAmount") private WebElement loanAmount;
+  @FindBy(name = "loan_form:paybackTime") private WebElement paybackTime;
 
-    @FindBy(name = "loan_form:loanAmount")
-    private WebElement          loanAmount;
-    @FindBy(name = "loan_form:paybackTime")
-    private WebElement          paybackTime;
+  @FindBy(name = "loan_form:payment") private WebElement calculate;
 
-    @FindBy(name = "loan_form:payment")
-    private WebElement          calculate;
+  private final WebDriver webDriver;
 
-    private final WebDriver     webDriver;
+  public LoanPage(SharedDriver webDriver) {
+    this.webDriver = webDriver;
+    // SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER,
+    // SeleniumHelper.BASE_URL);
+    // SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
-    public LoanPage(SharedDriver webDriver)
-    {
-        this.webDriver = webDriver;
-        // SeleniumHelper.SELENIUM = new WebDriverBackedSelenium(SeleniumHelper.REAL_DRIVER, SeleniumHelper.BASE_URL);
-        // SeleniumHelper.SELENIUM.waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+    PageFactory.initElements(this.webDriver, this);
+  }
 
-        PageFactory.initElements(this.webDriver, this);
-    }
+  public LoanPage() throws InterruptedException {
+    SeleniumHelper.setUp();
+    this.webDriver = SeleniumHelper.getDriver();
+    PageFactory.initElements(this.webDriver, this);
+  }
 
-    public LoanPage() throws InterruptedException
-    {
-        SeleniumHelper.setUp();
-        this.webDriver = SeleniumHelper.getDriver();
-        PageFactory.initElements(this.webDriver, this);
-    }
+  @Override
+  protected void load() {
+    this.The_user_is_on_loan_page();
+  }
 
-    @Override
-    protected void load()
-    {
-        this.The_user_is_on_loan_page();
-    }
+  @Override
+  protected void isLoaded() {
+    final String url = SeleniumHelper.getDriver().getCurrentUrl();
+    Assert.assertTrue("Not on the issue entry page: " + url, url.endsWith("/loan.xhtml"));
+    // Assert.assertTrue(this.driver.getTitle().equals(this.title));
+  }
 
-    @Override
-    protected void isLoaded()
-    {
-        final String url = SeleniumHelper.getDriver().getCurrentUrl();
-        Assert.assertTrue("Not on the issue entry page: " + url, url.endsWith("/loan.xhtml"));
-        // Assert.assertTrue(this.driver.getTitle().equals(this.title));
-    }
+  public void close() {
+    SeleniumHelper.close();
+  }
 
-    public void close()
-    {
-        SeleniumHelper.close();
-    }
+  @Given("the user is on Loan Page")
+  public void The_user_is_on_loan_page() {
+    SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + this.url);
 
-    @Given("the user is on Loan Page")
-    public void The_user_is_on_loan_page()
-    {
+    final JavascriptExecutor js = (JavascriptExecutor) SeleniumHelper.getDriver();
 
-        SeleniumHelper.getDriver().get(SeleniumHelper.BASE_URL + this.url);
+    // Get the Load Event End
+    final long loadEventEnd =
+        (Long) js.executeScript("return window.performance.timing.loadEventEnd;");
 
-        final JavascriptExecutor js = (JavascriptExecutor) SeleniumHelper.getDriver();
+    // Get the Navigation Event Start
+    final long navigationStart =
+        (Long) js.executeScript("return window.performance.timing.navigationStart;");
 
-        // Get the Load Event End
-        final long loadEventEnd = (Long) js.executeScript("return window.performance.timing.loadEventEnd;");
+    // Difference between Load Event End and Navigation Event Start is Page Load Time
+    LOGGER.info("Page Load Time is {} seconds.", ((loadEventEnd - navigationStart) / 1000));
 
-        // Get the Navigation Event Start
-        final long navigationStart = (Long) js.executeScript("return window.performance.timing.navigationStart;");
+    // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
 
-        // Difference between Load Event End and Navigation Event Start is Page Load Time
-        LOGGER.info("Page Load Time is {} seconds.", ((loadEventEnd - navigationStart) / 1000));
+    // Wait for the Calculate Button
+    new WebDriverWait(SeleniumHelper.getDriver(), 10)
+        .until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form:payment")));
 
-        // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+    // WebElement myDynamicElement = (new WebDriverWait(driver,
+    // 20)).until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form")));
+    Assert.assertEquals("Housing Loan Cost Calculator",
+        SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
+  }
 
-        // Wait for the Calculate Button
-        new WebDriverWait(SeleniumHelper.getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form:payment")));
+  @When("he enters \"([^\"]*)\" as loan amount")
+  public void He_enters_loan_amount(final String aLoanAmount) {
+    this.loanAmount.clear();
+    this.loanAmount.sendKeys(aLoanAmount);
+  }
 
-        // WebElement myDynamicElement = (new WebDriverWait(driver, 20)).until(ExpectedConditions.presenceOfElementLocated(By.id("loan_form")));
-        Assert.assertEquals("Housing Loan Cost Calculator", SeleniumHelper.getDriver().findElement(By.cssSelector("h3")).getText());
+  @And("he enters \"([^\"]*)\" as payback time")
+  public void He_enters_payback_time(final String aPaybackTime) {
+    this.paybackTime.clear();
+    this.paybackTime.sendKeys(aPaybackTime);
+  }
 
-    }
+  @And("he Submits request for Payment's Schedule")
+  public void He_submits_request_for_fund_transfer() throws InterruptedException {
+    final WebDriverWait wait = new WebDriverWait(SeleniumHelper.getDriver(), 10);
+    wait.until(ExpectedConditions.elementToBeClickable(By.name("loan_form:payment")));
+    SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    this.calculate.click();
 
-    @When("he enters \"([^\"]*)\" as loan amount")
-    public void He_enters_loan_amount(final String aLoanAmount)
-    {
-        this.loanAmount.clear();
-        this.loanAmount.sendKeys(aLoanAmount);
-    }
+    // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
+    // SeleniumHelper.getDriver().findElement(By.name("loan_form:payment")).click();
+    // SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
+  }
 
-    @And("he enters \"([^\"]*)\" as payback time")
-    public void He_enters_payback_time(final String aPaybackTime)
-    {
-        this.paybackTime.clear();
-        this.paybackTime.sendKeys(aPaybackTime);
-    }
+  @Then("ensure the payment schedule total is accurate with \"([^\"]*)\" message")
+  public void Ensure_the_fund_transfer_is_complete(final String msg) {
+    final WebElement message = SeleniumHelper.getDriver().findElement(By.cssSelector("h4"));
+    Assert.assertEquals(message.getText(), msg);
+  }
 
-    @And("he Submits request for Payment's Schedule")
-    public void He_submits_request_for_fund_transfer() throws InterruptedException
-    {
-        final WebDriverWait wait = new WebDriverWait(SeleniumHelper.getDriver(), 10);
-        wait.until(ExpectedConditions.elementToBeClickable(By.name("loan_form:payment")));
-        SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        this.calculate.click();
+  public void Ensure_a_transaction_failure_message(final int i, final String msg) {
+    final WebElement message = SeleniumHelper.getDriver().findElement(
+        By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
+    Assert.assertEquals(message.getText(), msg);
+  }
 
-        // SeleniumHelper.getSelenium().waitForPageToLoad(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT);
-        // SeleniumHelper.getDriver().findElement(By.name("loan_form:payment")).click();
-        // SeleniumHelper.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        Thread.sleep(SeleniumHelper.PAGE_TO_LOAD_TIMEOUT); // 30 s
-    }
+  @Then("ensure loan amount failure message \"([^\"]*)\" is displayed")
+  public void Ensure_loan_amount_failure_message(final String msg) {
+    int i = 2;
+    final WebElement message = SeleniumHelper.getDriver().findElement(
+        By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
+    Assert.assertEquals(message.getText(), msg);
+  }
 
-    @Then("ensure the payment schedule total is accurate with \"([^\"]*)\" message")
-    public void Ensure_the_fund_transfer_is_complete(final String msg)
-    {
-        final WebElement message = SeleniumHelper.getDriver().findElement(By.cssSelector("h4"));
-        Assert.assertEquals(message.getText(), msg);
-    }
+  @Then("ensure payback time failure message \"([^\"]*)\" is displayed")
+  public void Ensure_payback_time_failure_message(final String msg) {
+    int i = 3;
+    final WebElement message = SeleniumHelper.getDriver().findElement(
+        By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
+    Assert.assertEquals(message.getText(), msg);
+  }
 
-    public void Ensure_a_transaction_failure_message(final int i, final String msg)
-    {
-        final WebElement message = SeleniumHelper.getDriver().findElement(By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
-        Assert.assertEquals(message.getText(), msg);
+  public void calculatePayments(final String loanAmount, final String paybackTime)
+      throws InterruptedException {
+    this.He_enters_loan_amount(loanAmount);
+    this.He_enters_payback_time(paybackTime);
 
-    }
+    // wait for the application to get fully loaded
+    /*
+     * final WebElement findOwnerLink = (new WebDriverWait(this.driver, 5)).until(new
+     * ExpectedCondition<WebElement>()
+     * {
+     * @Override
+     * public WebElement apply(final WebDriver d)
+     * {
+     * // d.get(baseUrl);
+     * return calculate);
+     * }
+     * });
+     * findOwnerLink.click();
+     */
 
-    @Then("ensure loan amount failure message \"([^\"]*)\" is displayed")
-    public void Ensure_loan_amount_failure_message(final String msg)
-    {
-        int i = 2;
-        final WebElement message = SeleniumHelper.getDriver().findElement(By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
-        Assert.assertEquals(message.getText(), msg);
-
-    }
-
-    @Then("ensure payback time failure message \"([^\"]*)\" is displayed")
-    public void Ensure_payback_time_failure_message(final String msg)
-    {
-        int i = 3;
-        final WebElement message = SeleniumHelper.getDriver().findElement(By.xpath("//table[@id='loan_form:panel']/tbody/tr[" + i + "]/td[3]/span"));
-        Assert.assertEquals(message.getText(), msg);
-
-    }
-
-    public void calculatePayments(final String loanAmount, final String paybackTime) throws InterruptedException
-    {
-
-        this.He_enters_loan_amount(loanAmount);
-        this.He_enters_payback_time(paybackTime);
-
-        // wait for the application to get fully loaded
-        /*
-         * final WebElement findOwnerLink = (new WebDriverWait(this.driver, 5)).until(new ExpectedCondition<WebElement>()
-         * {
-         * @Override
-         * public WebElement apply(final WebDriver d)
-         * {
-         * // d.get(baseUrl);
-         * return calculate);
-         * }
-         * });
-         * findOwnerLink.click();
-         */
-
-        this.He_submits_request_for_fund_transfer();
-
-    }
-
+    this.He_submits_request_for_fund_transfer();
+  }
 }

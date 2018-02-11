@@ -36,7 +36,7 @@ package com.nabla.selenium.tests;
 import java.math.BigDecimal;
 
 import org.jboss.arquillian.container.test.api.Deployment;
-//import org.jboss.arquillian.container.test.api.RunAsClient;
+// import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.Archive;
@@ -57,48 +57,44 @@ import com.nabla.project.visma.api.ILoanService;
 
 @RunWith(Arquillian.class)
 //@RunAsClient
-public class LoanServiceITest
-{
+public class LoanServiceITest {
+  private static final Logger LOGGER = LoggerFactory.getLogger(LoanServiceITest.class);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoanServiceITest.class);
+  @Deployment
+  // @org.jboss.arquillian.container.test.api.TargetsContainer("arq-jetty-embedded")
+  public static Archive<?> createTestArchive() {
+    return ShrinkWrap.create(WebArchive.class, "visma.war")
+        .addClasses(ILoanService.class, LoanService.class, QueryBean.class, Payment.class,
+            PaymentSchedule.class, NavigationBean.class);
+    // .setWebXML("WEB-INF/web.xml");
 
-    @Deployment
-    // @org.jboss.arquillian.container.test.api.TargetsContainer("arq-jetty-embedded")
-    public static Archive<?> createTestArchive()
-    {
-        return ShrinkWrap.create(WebArchive.class, "visma.war").addClasses(ILoanService.class, LoanService.class, QueryBean.class, Payment.class, PaymentSchedule.class, NavigationBean.class);
-        // .setWebXML("WEB-INF/web.xml");
+    // .addAsResource("loan.xhtml", "loan.xhtml").addAsResource("payment.xhtml", "payment.xhtml")
+    // .addAsWebResource("faces-config.xml")
+    // .addAsWebResource(EmptyAsset.INSTANCE, "beans.xml")
+    // .addPackage(Package.getPackage("org.jboss.jsfunit.example.hellojsf"))
+    // .setWebXML("jsf-web.xml");
+    // add sample data
+    // .addAsResource("import.sql")
+    // enable CDI
+    // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+  }
 
-        // .addAsResource("loan.xhtml", "loan.xhtml").addAsResource("payment.xhtml", "payment.xhtml")
-        // .addAsWebResource("faces-config.xml")
-        // .addAsWebResource(EmptyAsset.INSTANCE, "beans.xml")
-        // .addPackage(Package.getPackage("org.jboss.jsfunit.example.hellojsf"))
-        // .setWebXML("jsf-web.xml");
-        // add sample data
-        // .addAsResource("import.sql")
-        // enable CDI
-        // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-    }
+  // @Inject
+  ILoanService service;
 
-    // @Inject
-    ILoanService service;
+  // @Inject
+  // private static transient Logger LOGGER = Logger.getLogger(LoanServiceITest.class);
 
-    // @Inject
-    // private static transient Logger LOGGER = Logger.getLogger(LoanServiceITest.class);
+  @Test
+  @InSequence(1)
+  public void testRegister() throws Exception {
+    LoanServiceITest.LOGGER.info("this will go to the console if the level is set correctly");
 
-    @Test
-    @InSequence(1)
-    public void testRegister() throws Exception
-    {
+    service = new LoanService(new BigDecimal(200_000), 30);
+    final BigDecimal total = this.service.getTotalPayment();
 
-        LoanServiceITest.LOGGER.info("this will go to the console if the level is set correctly");
-
-        service = new LoanService(new BigDecimal(200_000), 30);
-        final BigDecimal total = this.service.getTotalPayment();
-
-        Assert.assertNotNull(total);
-        Assert.assertEquals("408808.080969842113801990388563829760", total.toString());
-        ;
-    }
-
+    Assert.assertNotNull(total);
+    Assert.assertEquals("408808.080969842113801990388563829760", total.toString());
+    ;
+  }
 }
