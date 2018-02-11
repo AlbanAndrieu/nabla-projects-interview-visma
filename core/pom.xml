@@ -45,27 +45,36 @@
 			<optional>true</optional>
 			<!-- needed only for annotations -->
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.jboss.spec.javax.xml.bind</groupId>
+			<artifactId>jboss-jaxb-api_2.2_spec</artifactId>
+			<!--<version>1.0.3.Final</version>-->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>stax</groupId>
+			<artifactId>stax-api</artifactId>
+			<!--<version>1.0.1</version>-->
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.gridgain</groupId>
-			<artifactId>gridgain</artifactId>
-			<scope>test</scope>
-		</dependency>
-		-->
+		<!--		
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 			<scope>test</scope>
 		</dependency>
+		-->
 	</dependencies>
 
 	<build>

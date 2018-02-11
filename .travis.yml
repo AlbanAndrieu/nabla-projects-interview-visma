@@ -1,20 +1,39 @@
+# Copyright Alban Andrieu 2013-2017
+# Distributed under the GPL-3.0
+# (See accompanying file LICENSE.md)
+
 language: java
+sudo: required
+dist: trusty
+
 jdk: oraclejdk8
-#before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
+
+cache:
+  pip: true
+  directories:
+    - $HOME/.sonar/cache
+    - $HOME/.cache
+    - $HOME/.m2
+    - node_modules   
+
 install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y rpm
-  - mvn compile -DskipTests=true -Dmaven.javadoc.skip=true -Dcobertura.skip=true --settings settings.xml -B -V
-#script: ./travis-script.sh
+- sudo apt-get update -qq
+- sudo apt-get install -y rpm
+- mvn compile -DskipTests=true -Dmaven.javadoc.skip=true -Dcobertura.skip=true --settings
+  settings.xml -B -V
 after_success:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && mvn site --settings settings.xml -B -V
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && mvn site
+  --settings settings.xml -B -V
 branches:
   except:
-    - gh-pages
+  - gh-pages
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/47b10b81867bd0063cf5
-    on_success: change  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: false     # default: false
+    - https://webhooks.gitter.im/e/47b10b81867bd0063cf5
+    on_success: change
+    on_failure: always
+    on_start: false
+env:
+  global:
+    secure: J8fLxR1z2z/Q/ece3nLUIG049qzj10r0x1ibUW23WN0SL3sjQM+hAyFmLDNhMHXAChlowev6Lzmt3a5C4jTrxAKj2D7Xz1aHTxWRISsuNCAPD3oNpAwdvQRb/TcK8rxPiNh9W46RK8dRjkVM0Shzzyo0BlSgEqh3E+tToexil1Y=
