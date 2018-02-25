@@ -45,7 +45,7 @@
 			<optional>true</optional>
 			<!-- needed only for annotations -->
 		</dependency>
-		<!--
+		<!-- 
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>

@@ -38,12 +38,13 @@ import org.openqa.selenium.os.WindowsUtils;
 
 /**
  * DOCUMENT ME! albandri.
- *
+ * 
  * @author $Author$
  * @version $Revision$
  * @since $Date$
  */
-public class WindowsRegistry {
+public class WindowsRegistry
+{
     // @Test
     // public void testReadRegistry()
     // {
