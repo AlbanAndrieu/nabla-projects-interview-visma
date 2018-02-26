@@ -43,7 +43,8 @@ import org.openqa.selenium.os.WindowsUtils;
  * @version $Revision$
  * @since $Date$
  */
-public class WindowsRegistry {
+public class WindowsRegistry
+{
     // @Test
     // public void testReadRegistry()
     // {

@@ -42,7 +42,8 @@ import java.math.BigDecimal;
  * @version $Revision$
  * @since $Date$
  */
-public interface IProduct {
+public interface IProduct
+{
     /**
      * Give the price or amount of the product in NOK.
      *
