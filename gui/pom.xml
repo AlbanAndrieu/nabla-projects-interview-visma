@@ -49,7 +49,7 @@
 
 		<!--<cargo.monitoring.jmx.rmi.port>1099</cargo.monitoring.jmx.rmi.port>-->
 		<cargo.monitoring.jmx.rmi.port>10088</cargo.monitoring.jmx.rmi.port>
-		<gatling.version>2.2.2</gatling.version>
+		<gatling.version>2.3.0</gatling.version>
 		<httpclient.version>4.5.2</httpclient.version>
 
 		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
@@ -57,7 +57,7 @@
 
 		<jetty.jmxremote.rmihost>localhost</jetty.jmxremote.rmihost>
 		<jetty.jmxremote.rmiport>3099</jetty.jmxremote.rmiport>
-		<lombok.version>1.16.8</lombok.version>
+		<!--<lombok.version>1.16.20</lombok.version>-->
 
 		<!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->
 		<maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
@@ -315,6 +315,27 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>${javax.annotation.api}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+		</dependency>
 
 		<!-- First declare the APIs we depend on and need for compilation. All
             of them are provided by JBoss AS 7 -->
@@ -419,6 +440,11 @@
 			<version>${javax.servlet.api.version}</version>
 			<scope>provided</scope>
 			<!-- javax.servlet-api-3.0.1.jar Offending class javax/servlet/Servlet.class  in Tomcat -->
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec.javax.xml.bind</groupId>
+			<artifactId>jboss-jaxb-api_2.2_spec</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -669,6 +695,33 @@
 					<groupId>asm</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.shrinkwrap</groupId>
+			<artifactId>shrinkwrap-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-container-test-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!--
@@ -1612,7 +1665,7 @@
 							</docletArtifact>
 							<reportOutputDirectory>${project.build.outputDirectory}</reportOutputDirectory>
 							<useStandardDocletOptions>false</useStandardDocletOptions>
-							<additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath / -verbose</additionalparam>
+							<additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath / -verbose -Xdoclint:none</additionalparam>
 						</configuration>
 					</execution>
 					<!-- Extended Wadl Config: javadoc plugin generates resourcedoc.xml during the compilation using doclet.

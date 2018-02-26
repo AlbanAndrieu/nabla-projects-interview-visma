@@ -77,7 +77,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
       "/var/lib/chromedriver"; // "C:\\chromedriver\\chromedriver.exe"
   public static final String DEFAULT_FIREFOXBIN =
       "/usr/lib/firefox/firefox"; // "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-  public static final long PAGE_TO_LOAD_TIMEOUT = 30000;
+  public static final long PAGE_TO_LOAD_TIMEOUT = 3000;
 
   private final static int MAIN_PORT = 9090;
 
@@ -211,7 +211,7 @@ public class SeleniumHelper /* extends EventFiringWebDriver */
     SeleniumHelper.REAL_DRIVER.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
     // driver.manage().window().setSize(new Dimension(1920, 1080));
 
-    SeleniumHelper.REAL_DRIVER.manage().window().maximize();
+    //SeleniumHelper.REAL_DRIVER.manage().window().maximize();
     // this.driver.manage().deleteAllCookies();
     // this.driver.get(propertyKeysLoader("login.base.url"));
 
