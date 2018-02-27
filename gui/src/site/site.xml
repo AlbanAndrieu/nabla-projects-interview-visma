@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/DECORATION/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.1.0 http://maven.apache.org/xsd/decoration-1.1.0.xsd"
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd"
   name="Interview">
 
     <skin>
@@ -37,6 +37,9 @@
       <src>images/home.png</src>
     </bannerRight>
 
+    <googleAdSenseClient/>
+    <googleAdSenseSlot/>
+    <googleAnalyticsAccountId>UA-56011797-1</googleAnalyticsAccountId>
     <!--<publishDate format="dd MMM yyyy hh:mm zzz"/>-->
 
     <body>
