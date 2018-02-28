@@ -63,7 +63,7 @@
 	<container qualifier="arq-jetty-embedded" default="true">
 		<!--<protocol type="Servlet 3.0" /> -->
 		<configuration>
-			<property name="bindHttpPort">9990</property>
+			<property name="bindHttpPort">9091</property>
 			<property name="javaVmArguments">-agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=y</property>
 		</configuration>
 	</container>

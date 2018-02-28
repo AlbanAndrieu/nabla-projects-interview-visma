@@ -104,7 +104,7 @@ public class LoanServiceITest {
   // private static transient Logger LOGGER = Logger.getLogger(LoanServiceITest.class);
 
   @Test
-  @InSequence(1)
+  @InSequence(2)
   public void testRegister() throws Exception {
     LoanServiceITest.LOGGER.info("this will go to the console if the level is set correctly");
 
