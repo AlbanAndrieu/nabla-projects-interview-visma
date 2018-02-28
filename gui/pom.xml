@@ -73,10 +73,10 @@
 
 	<dependencyManagement>
 		<dependencies>
-			
+
 			<!-- Override dependency resolver with latest version.
              This must go *BEFORE* the Arquillian BOM. -->
-			<!--  ShrinkWrap  
+			<!--  ShrinkWrap
 			<dependency>
 				<groupId>org.jboss.shrinkwrap</groupId>
 				<artifactId>shrinkwrap-bom</artifactId>
@@ -100,7 +100,7 @@
 			</dependency>
 			-->
 
-			<!-- Arquillian : http://arquillian.org/guides/getting_started_fr -->			
+			<!-- Arquillian : http://arquillian.org/guides/getting_started_fr -->
 			<dependency>
 				<groupId>org.jboss.arquillian</groupId>
 				<artifactId>arquillian-bom</artifactId>
@@ -136,7 +136,7 @@
 		  <scope>test</scope>
 		  <type>pom</type>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -233,7 +233,6 @@
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-moxy</artifactId>
 		</dependency>
-
 		<!--  Jersey Client required for test *and runtime* due to Jersey bug : https://java.net/jira/browse/JERSEY-2104 -->
 		<!--  This dependency can be scoped to test when Jersey is upgraded to >=2.4 -->
 		<dependency>
@@ -537,7 +536,7 @@
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-core</artifactId>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>
 
 		<!-- ClassNotFoundException: org.w3c.dom.ElementTraversal for arquillian -->
 		<dependency>
@@ -1064,7 +1063,7 @@
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
-				<!--<version>${maven.cargo.maven2.plugin.version}</version>-->
+				<version>${maven.cargo.maven2.plugin.version}</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
@@ -1122,6 +1121,7 @@
 						<log>${project.build.directory}/cargo.log</log>
 						<logLevel>debug</logLevel>
 						<systemProperties>
+							<java.io.tmpdir>target/tmp</java.io.tmpdir>
 							<log4j.debug>true</log4j.debug>
 						</systemProperties>
 						<!-- Class path contains multiple SLF4J bindings.
@@ -1145,7 +1145,7 @@
 						<!--<type>${cargo.configuration.type}</type>-->
 						<!--<home>${project.build.directory}/cargo/installs/jboss-as-dist-7.1.1.Final/jboss-as-7.1.1.Final/standalone/</home>-->
 						<properties>
-							<!--<cargo.protocol>https</cargo.protocol>-->
+							<cargo.protocol>${cargo.protocol}</cargo.protocol>
 							<cargo.hostname>${cargo.host}</cargo.hostname>
 							<cargo.servlet.port>${cargo.port}</cargo.servlet.port>
 							<!--<cargo.rmi.port>${cargo.rmi.port}</cargo.rmi.port>-->
@@ -1195,7 +1195,6 @@
 								<todir></todir>
 							</configfile>
 						</configfiles>
-						<!-- https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html#Maven2PluginReferenceGuide-file -->
 						<files>
 							<configfile>
 								<file>${project.basedir}/src/main/config/demo-base/keystore</file>
@@ -1213,10 +1212,8 @@
 							<properties>
 								<context>/visma</context>
 							</properties>
-							<!--<pingURL>http://${cargo.host}:${cargo.port}/visma/rest/ping</pingURL>-->
-							<pingURL>http://${cargo.host}:${cargo.port}/visma/rest/loan/test</pingURL>
+							<pingURL>${cargo.protocol}://${cargo.host}:${cargo.port}/visma/rest/loan/test</pingURL>
 							<pingTimeout>60000</pingTimeout>
-							<!-- 1 minute -->
 						</deployable>
 					</deployables>
 				</configuration>
@@ -1339,6 +1336,7 @@
 				<!-- Allow this web application to be started with the command : 'mvn jetty:run-war -Psample -Dserver=jetty9x -Ddatabase=derby -Djetty.port=9090' -->
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
+                                <version>${maven.jetty.eclipse.plugin.version}</version>
 				<!--
 				<executions>
 					<execution>
@@ -1483,6 +1481,7 @@
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
+                		<version>${maven.tomcat7.plugin.version}</version>
 				<dependencies>
 					<dependency>
 						<groupId>${project.groupId}</groupId>

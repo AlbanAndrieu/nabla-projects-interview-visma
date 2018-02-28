@@ -45,7 +45,7 @@
 			<optional>true</optional>
 			<!-- needed only for annotations -->
 		</dependency>
-		<!-- 
+		<!--
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -68,13 +68,11 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--		
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 			<scope>test</scope>
 		</dependency>
-		-->
 	</dependencies>
 
 	<build>
