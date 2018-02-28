@@ -135,13 +135,6 @@
 			<!--<version>${jsp-api.version}</version>-->
 		</dependency>
 
-		<!-- Tomcat 6 need this -->
-		<dependency>
-			<groupId>com.sun.el</groupId>
-			<artifactId>el-ri</artifactId>
-			<!--<version>${el.ri.version}</version>-->
-		</dependency>
-
 		<!-- TODO must be needed later
         <dependency>
             <groupId>org.jboss.el</groupId>
@@ -209,29 +202,6 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-servlet-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-jetty-http</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-moxy</artifactId>
-		</dependency>
-		<!--  Jersey Client required for test *and runtime* due to Jersey bug : https://java.net/jira/browse/JERSEY-2104 -->
-		<!--  This dependency can be scoped to test when Jersey is upgraded to >=2.4 -->
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-client</artifactId>
-			<!--<scope>test</scope>-->
-		</dependency>
 		<!-- replaced by ow2 asm-debug-all
         <dependency>
                 <groupId>asm</groupId>
@@ -252,25 +222,7 @@
         </dependency>
         -->
 
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-proxy</artifactId>
-			<version>${jetty9.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>${jetty9.version}</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlet</artifactId>
-			<version>${jetty9.version}</version>
-			<type>jar</type>
-		</dependency>
-
+		<!--
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-core</artifactId>
@@ -283,9 +235,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		-->
 
 		<!-- this is just one of the appsensor dependencies you'll need - see step
 			below called pluggable components -->
+		<!--
 		<dependency>
 			<groupId>org.owasp.appsensor</groupId>
 			<artifactId>appsensor-core</artifactId>
@@ -309,6 +263,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -330,14 +285,6 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-deploy</artifactId>
-			<version>${jetty.version}</version>
-			<scope>runtime</scope>
-		</dependency>	
-		-->
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -457,28 +404,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-http</artifactId>
-			<version>${jetty9.version}</version>
-			<type>jar</type>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-rewrite</artifactId>
-			<version>${jetty9.version}</version>
-			<type>jar</type>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlets</artifactId>
-			<version>${jetty9.version}</version>
-			<type>jar</type>
-			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
 			<artifactId>shrinkwrap-resolver-depchain</artifactId>
 			<version>${version.shrinkwrap.resolvers}</version>
@@ -492,7 +417,7 @@
 			<version>${org.jboss.shrinkwrap.resolver.version}</version>
 			<scope>test</scope>
 		</dependency>
-						
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -567,73 +492,61 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-remote-driver</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-firefox-driver</artifactId>
-			<!--<version>${selenium.firefox.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-api</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-support</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-safari-driver</artifactId>
-			<!--<version>${selenium.safari.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-iphone-driver</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-ie-driver</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-htmlunit-driver</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-android-driver</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-chrome-driver</artifactId>
-			<!--<version>${selenium.driver.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-server</artifactId>
-			<!--<version>${selenium.version}</version>-->
 			<scope>test</scope>
 		</dependency>
 
@@ -757,61 +670,6 @@
       </dependency>
       -->
 
-		<!-- for cannot access javax.faces.application.FacesMessage -->
-		<!-- see in core project it is provided (needed for jboss 7) -->
-		<!-- TODO remove old API
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <scope>${scope.tomcat.never.type}</scope>
-        </dependency>
-        -->
-
-		<!-- TODO remove not needed old impl
-                <dependency>
-                        <groupId>javax.faces</groupId>
-                        <artifactId>jsf-impl</artifactId>
-                        <version>${jsf.impl.version}</version>
-                        <scope>${scope.type}</scope>
-                </dependency>
-        -->
-
-		<!-- TODO remove
-            <dependency>
-                <groupId>org.primefaces</groupId>
-                <artifactId>primefaces</artifactId>
-                <version>4.0</version>
-            </dependency>
-         -->
-
-		<!-- Javaee API -->
-		<!-- TODO remove
-        <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-api</artifactId>
-                <version>${javax.javaee.api.version}</version>
-            <scope>${scope.type}</scope>
-        </dependency>
-         recommended way is to include
-        <dependency>
-                    <groupId>javax.faces</groupId>
-                    <artifactId>javax.faces-api</artifactId>
-                    <version>2.1</version>
-                <scope>${scope.type}</scope>
-        </dependency>
-        -->
-		<!-- http://download.java.net/maven/2 needed for tomcat only -->
-		<!-- replaced by javax.faces for other except tomcat -->
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-api</artifactId>
-			<scope>${scope.tomcat.only.type}</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
-			<scope>${scope.tomcat.only.type}</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -1439,6 +1297,7 @@
 			</plugin>
 
 			<!-- start app using java -jar target/dependency/jetty-runner.jar target/*.war -port 9090 -->
+			<!-- mvn org.apache.maven.plugins:maven-dependency-plugin:3.0.1:analyze-only -Dserver=jetty9x -Darquillian=arq-jetty-embedded -Psample,jacoco,integration,jmeter,run-its,arq-jetty-embedded,\!arq-weld-ee-embedded,\!arq-jbossas-managed -DignoreNonCompile=true -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -1689,7 +1548,7 @@
 							</docletArtifact>
 							<reportOutputDirectory>${project.build.outputDirectory}</reportOutputDirectory>
 							<useStandardDocletOptions>false</useStandardDocletOptions>
-							<additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath / -verbose -Xdoclint:none</additionalparam>
+							<additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath / -verbose</additionalparam>
 						</configuration>
 					</execution>
 					<!-- Extended Wadl Config: javadoc plugin generates resourcedoc.xml during the compilation using doclet.
@@ -1882,6 +1741,172 @@
 	</build>
 
 	<profiles>
+		<profile>
+			<id>jersey</id>
+			<activation>
+				<property>
+					<name>!profile.activation</name>
+					<!--
+					<name>server</name>
+					<value>jersey</value>
+					-->
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.glassfish.jersey.core</groupId>
+					<artifactId>jersey-server</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish.jersey.containers</groupId>
+					<artifactId>jersey-container-servlet-core</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish.jersey.containers</groupId>
+					<artifactId>jersey-container-jetty-http</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish.jersey.media</groupId>
+					<artifactId>jersey-media-moxy</artifactId>
+				</dependency>
+				<!--  Jersey Client required for test *and runtime* due to Jersey bug : https://java.net/jira/browse/JERSEY-2104 -->
+				<!--  This dependency can be scoped to test when Jersey is upgraded to >=2.4 -->
+				<dependency>
+					<groupId>org.glassfish.jersey.core</groupId>
+					<artifactId>jersey-client</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>jetty9x</id>
+			<activation>
+				<property>
+					<!--<name>!profile.activation</name>-->
+					<name>server</name>
+					<value>jetty9x</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-proxy</artifactId>
+					<version>${jetty9.version}</version>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-server</artifactId>
+					<version>${jetty9.version}</version>
+					<type>jar</type>
+				</dependency>
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-servlet</artifactId>
+					<version>${jetty9.version}</version>
+					<type>jar</type>
+				</dependency>
+
+				<!--
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-deploy</artifactId>
+					<version>${jetty.version}</version>
+					<scope>runtime</scope>
+				</dependency>	
+				-->
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-http</artifactId>
+					<version>${jetty9.version}</version>
+					<type>jar</type>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-rewrite</artifactId>
+					<version>${jetty9.version}</version>
+					<type>jar</type>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-servlets</artifactId>
+					<version>${jetty9.version}</version>
+					<type>jar</type>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>jsf</id>
+			<activation>
+				<property>
+					<name>!profile.activation</name>
+				</property>
+			</activation>
+			<dependencies>
+				<!-- for cannot access javax.faces.application.FacesMessage -->
+				<!-- see in core project it is provided (needed for jboss 7) -->
+				<!-- TODO remove old API
+				<dependency>
+					<groupId>javax.faces</groupId>
+					<artifactId>jsf-api</artifactId>
+					<scope>${scope.tomcat.never.type}</scope>
+				</dependency>
+				-->
+
+				<!-- TODO remove not needed old impl
+						<dependency>
+								<groupId>javax.faces</groupId>
+								<artifactId>jsf-impl</artifactId>
+								<version>${jsf.impl.version}</version>
+								<scope>${scope.type}</scope>
+						</dependency>
+				-->
+
+				<!-- TODO remove
+					<dependency>
+						<groupId>org.primefaces</groupId>
+						<artifactId>primefaces</artifactId>
+						<version>4.0</version>
+					</dependency>
+				 -->
+
+				<!-- Javaee API -->
+				<!-- TODO remove
+				<dependency>
+						<groupId>javax</groupId>
+						<artifactId>javaee-api</artifactId>
+						<version>${javax.javaee.api.version}</version>
+					<scope>${scope.type}</scope>
+				</dependency>
+				 recommended way is to include
+				<dependency>
+							<groupId>javax.faces</groupId>
+							<artifactId>javax.faces-api</artifactId>
+							<version>2.1</version>
+						<scope>${scope.type}</scope>
+				</dependency>
+				-->
+				<!-- Tomcat 6 need this -->
+				<dependency>
+					<groupId>com.sun.el</groupId>
+					<artifactId>el-ri</artifactId>
+				</dependency>
+				<!-- http://download.java.net/maven/2 needed for tomcat only -->
+				<!-- replaced by javax.faces for other except tomcat -->
+				<dependency>
+					<groupId>com.sun.faces</groupId>
+					<artifactId>jsf-api</artifactId>
+					<scope>${scope.tomcat.only.type}</scope>
+				</dependency>
+				<dependency>
+					<groupId>com.sun.faces</groupId>
+					<artifactId>jsf-impl</artifactId>
+					<scope>${scope.tomcat.only.type}</scope>
+				</dependency>
+			</dependencies>
+		</profile>
 		<profile>
 			<id>jmeter</id>
 			<activation>
