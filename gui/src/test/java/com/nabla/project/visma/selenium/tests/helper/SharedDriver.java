@@ -128,7 +128,7 @@ public class SharedDriver extends /* RemoteWebDriver */ EventFiringWebDriver {
         break;
     }
     // maximize browser's window on start
-    driver.manage().window().maximize();
+    //driver.manage().window().maximize();
     return driver;
   }
 

@@ -38,7 +38,7 @@ import org.openqa.selenium.os.WindowsUtils;
 
 /**
  * DOCUMENT ME! albandri.
- *
+ * 
  * @author $Author$
  * @version $Revision$
  * @since $Date$
