@@ -14,7 +14,7 @@
 		<property name="deploymentExportPath">target/</property>
 	</engine>
 
-	<container qualifier="arq-weld-ee-embedded" default="true">
+	<container qualifier="arq-weld-ee-embedded">
 	</container>
 
 	<!-- Example configuration for a remote JBoss AS 7 instance -->
@@ -60,10 +60,10 @@
     <container qualifier="arq-glassfish-remote">
     </container>
 
-	<container qualifier="arq-jetty-embedded">
+	<container qualifier="arq-jetty-embedded" default="true">
 		<!--<protocol type="Servlet 3.0" /> -->
 		<configuration>
-			<property name="bindHttpPort">9090</property>
+			<property name="bindHttpPort">9990</property>
 			<property name="javaVmArguments">-agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=y</property>
 		</configuration>
 	</container>

@@ -76,7 +76,7 @@
 
 			<!-- Override dependency resolver with latest version.
              This must go *BEFORE* the Arquillian BOM. -->
-			<!--  ShrinkWrap  -->
+			<!--  ShrinkWrap
 			<dependency>
 				<groupId>org.jboss.shrinkwrap</groupId>
 				<artifactId>shrinkwrap-bom</artifactId>
@@ -98,6 +98,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			-->
 
 			<!-- Arquillian : http://arquillian.org/guides/getting_started_fr -->
 			<dependency>
@@ -127,6 +128,14 @@
 	</dependencyManagement>
 
 	<dependencies>
+
+		<dependency>
+		  <groupId>org.jboss.shrinkwrap.resolver</groupId>
+		  <artifactId>shrinkwrap-resolver-depchain</artifactId>
+		  <version>${version.shrinkwrap.resolvers}</version>
+		  <scope>test</scope>
+		  <type>pom</type>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -274,6 +283,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -511,6 +521,16 @@
 			<artifactId>arquillian-protocol-servlet</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-container-test-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-core</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- ClassNotFoundException: org.w3c.dom.ElementTraversal for arquillian -->
 		<dependency>
@@ -706,16 +726,7 @@
 			<artifactId>commons-io</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian.container</groupId>
-			<artifactId>arquillian-container-test-api</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian.junit</groupId>
-			<artifactId>arquillian-junit-core</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-core</artifactId>
