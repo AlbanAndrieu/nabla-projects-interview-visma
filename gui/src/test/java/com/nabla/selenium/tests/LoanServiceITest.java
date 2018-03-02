@@ -67,20 +67,20 @@ public class LoanServiceITest {
   @org.jboss.arquillian.container.test.api.TargetsContainer("arq-jetty-embedded")
   public static Archive<?> createDeployment() {
   //public static Archive<?> createTestArchive() {
-	   
+
 	  //ShrinkWrap.create(MavenImporter.class)
 	  //.loadPomFromFile("/path/to/pom.xml", "activate-profile-1", "!disable-profile-2")
 	  //.importBuildOutput().as(WebArchive.class)	;
-	  
+
 	  File[] dependencies = Maven.resolver().loadPomFromFile("pom.xml", "sample", "jacoco", "integration", "jmeter", "run-its", "arq-jetty-embedded", "!arq-weld-ee-embedded", "!arq-jbossas-managed")
-      .importRuntimeAndTestDependencies().resolve().withTransitivity().asFile();  
-    //MavenResolverSystem resolver = Maven.resolver().loadPomFromFile("pom.xml").resolve(); 
+      .importRuntimeAndTestDependencies().resolve().withTransitivity().asFile();
+    //MavenResolverSystem resolver = Maven.resolver().loadPomFromFile("pom.xml").resolve();
 
     WebArchive war = ShrinkWrap.create(WebArchive.class, "visma.war")
         .addClasses(ILoanService.class, LoanService.class, QueryBean.class, Payment.class,
             PaymentSchedule.class, NavigationBean.class)
         .addAsLibraries(dependencies);
-        
+
     // .setWebXML("WEB-INF/web.xml");
 
     // .addAsResource("loan.xhtml", "loan.xhtml").addAsResource("payment.xhtml", "payment.xhtml")
@@ -92,9 +92,9 @@ public class LoanServiceITest {
     // .addAsResource("import.sql")
     // enable CDI
     // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-    
-    System.out.println("WAR : " + war.toString(true));  
-    return war;  
+
+    System.out.println("WAR : " + war.toString(true));
+    return war;
   }
 
   // @Inject

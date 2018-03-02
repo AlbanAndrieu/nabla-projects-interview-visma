@@ -14,7 +14,7 @@ cache:
     - $HOME/.sonar/cache
     - $HOME/.cache
     - $HOME/.m2
-    - node_modules   
+    - node_modules
 
 install:
 - sudo apt-get update -qq
