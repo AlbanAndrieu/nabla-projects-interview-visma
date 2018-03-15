@@ -320,4 +320,4 @@ License
 
 ***
 
-Alban Andrieu [linkedin](fr.linkedin.com/in/nabla/)
+Alban Andrieu [linkedin](https://fr.linkedin.com/in/nabla/)
