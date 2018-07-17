@@ -18,7 +18,8 @@ public class InputTest {
   private static final String PASSWORD_TEST = "passwordTest";
   private static final String USERNAME_TEST = "usernameTest";
 
-  @Test
+  //@Test
+  @org.junit.Ignore
   public void testGoogleFinance() throws Exception {
     URL url = new URL("https://www.google.com/search?q=NASDAQ%3GOOG");
     String urlContent = Resources.toString(url, Charsets.UTF_8);

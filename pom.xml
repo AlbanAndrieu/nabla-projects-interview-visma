@@ -48,8 +48,8 @@
 		<guava.version>24.0-jre</guava.version>
 		<guice.version>4.1.0</guice.version>
 		<jdbc.h2.version>1.4.196</jdbc.h2.version>
-		<jersey.version>2.23.1</jersey.version>
 		<jersey.version>2.26</jersey.version>
+		<jersey.version>2.23.1</jersey.version>
 		<!--<jersey.version>2.26</jersey.version> NOK-->
 		<jetty9.version>9.3.10.v20160621</jetty9.version>
 		<!-- WARNING jmockit does not work wit jacoco coverage -->
@@ -84,8 +84,8 @@
 		<wss4j.version>1.6.19</wss4j.version>
 		<xalan.version>2.7.2</xalan.version>
 		<xerces.version>2.11.0.SP5</xerces.version>
-		<xml.apis.version>2.0.2</xml.apis.version>
 		<xml.apis.version>1.4.01</xml.apis.version>
+		<xml.apis.version>2.0.2</xml.apis.version>
 	</properties>
 
 	<!-- DEPENDENCIES -->
