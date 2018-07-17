@@ -20,7 +20,7 @@ public class InputTest {
 
   @Test
   public void testGoogleFinance() throws Exception {
-    URL url = new URL("https://finance.google.com/finance?q=NASDAQ%3AMSFT");
+    URL url = new URL("https://www.google.com/search?q=NASDAQ%3GOOG");
     String urlContent = Resources.toString(url, Charsets.UTF_8);
     System.out.println(urlContent);
   }
