@@ -83,8 +83,8 @@
 		<wss4j.version>1.6.19</wss4j.version>
 		<xalan.version>2.7.2</xalan.version>
 		<xerces.version>2.11.0.SP5</xerces.version>
-		<xml.apis.version>1.4.01</xml.apis.version>
 		<xml.apis.version>2.0.2</xml.apis.version>
+		<!--<xml.apis.version>1.4.01</xml.apis.version>-->
 	</properties>
 
 	<!-- DEPENDENCIES -->

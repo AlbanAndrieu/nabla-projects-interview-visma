@@ -84,6 +84,8 @@ Problem Description
 
 ## Quality tools
 
+### pre-commit
+
 See [pre-commit](http://pre-commit.com/)
 Run `pre-commit install`
 Run `pre-commit autoupdate`
@@ -96,6 +98,14 @@ htmllint
 Run `pre-commit run --all-files`
 
 Commit `git commit -am 'TEST' --no-verify`
+
+### takari maven wrapper
+
+See [takari-maven-wrapper] (https://github.com/takari/maven-wrapper)
+
+```
+mvn -N io.takari:maven:wrapper
+```
 
 ## Working with Nabla in Eclipse/STS
 
