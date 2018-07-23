@@ -1,0 +1,93 @@
+{
+  "v": "4.0",
+  "policies" : {
+  "create" : "perUser"
+  },
+  "workspace": {
+    "defaultEnv": "java",
+    "environments": [
+      {
+        "name": "java",
+        "machineConfigs": [
+          {
+            "limits": {
+              "ram": 1000
+            },
+            "name": "ws-machine",
+            "type": "docker",
+            "source": {
+              "location": "http://beta.codenvy.com/api/recipe/recipega4hxep75ipg04yo/script",
+              "type": "recipe"
+            },
+            "dev": true
+          }
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "links": [],
+        "name": "nabla-project-interview-visma",
+        "attributes": {
+          "maven.artifactId": [
+            "nabla-project-interview-visma"
+          ],
+          "maven.packaging": [
+            "jar"
+          ],
+          "vcs.provider.name": [
+            "git"
+          ],
+          "maven.version": [
+            "1.0.1-SNAPSHOT"
+          ],
+          "git.current.branch.name": [
+            "master"
+          ],
+          "language": [
+            "java"
+          ],
+          "git.repository.remotes": [
+            "https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git"
+          ],
+          "maven.groupId": [
+            "com.nabla.project.sample.interview.visma"
+          ]
+        },
+        "type": "maven",
+        "source": {
+          "location": "https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git",
+          "type": "git",
+          "parameters": {}
+        },
+        "modules": [],
+        "path": "/nabla-projects-interview-visma",
+        "problems": [],
+        "mixins": [
+          "git"
+        ]
+      }
+    ],
+    "name": "java",
+    "attributes": {},
+    "commands": [
+      {
+        "commandLine": "mvn -f ${current.project.path} clean install -s ${current.project.path}/settings.xml",
+        "name": "console-java-simple: build",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "mvn"
+      },
+      {
+        "commandLine": "mvn -f ${current.project.path} clean install -s ${current.project.path}/settings.xml && java -jar ${current.project.path}/target/*.jar",
+        "name": "console-java-simple: run",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "mvn"
+      }
+    ],
+    "links": []
+  }
+}
