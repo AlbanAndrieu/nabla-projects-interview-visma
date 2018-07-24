@@ -149,7 +149,7 @@ mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
 
 You can then access nabla here: http://localhost:9090/
 
-<img width="1042" alt="nabla-screenshot" src="https://home.nabla.mobi/nabla/html/website_under_construction_1895x685.png">
+<img src="https://home.nabla.mobi/nabla/html/website_under_construction_1895x685.png" width="1895" height="685" alt="Under construction">
 
 ### Result
 
