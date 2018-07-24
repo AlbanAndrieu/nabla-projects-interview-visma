@@ -147,9 +147,14 @@ mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
     ./mvnw org.codehaus.cargo:cargo-maven2-plugin:run
 ```
 
-You can then access nabla here: http://localhost:9090/
+You can then access nabla here: 
 
-![website_under_construction_1895x685](https://home.nabla.mobi/nabla/html/website_under_construction_1895x685.png)
+[jetty](http://localhost:9090/)
+
+[tomcat](http://home.nabla.mobi:8280/visma/)
+
+![testWithGoodInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-servers-bower-sample/master/gui/testWithGoodInputS.png)
+![testWithWrongInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-servers-bower-sample/master/gui/testWithWrongInputS.png)
 
 ### Result
 
