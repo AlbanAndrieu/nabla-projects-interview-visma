@@ -153,8 +153,8 @@ You can then access nabla here:
 
 [tomcat](http://home.nabla.mobi:8280/visma/)
 
-![testWithGoodInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-servers-bower-sample/master/gui/testWithGoodInputS.png)
-![testWithWrongInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-servers-bower-sample/master/gui/testWithWrongInputS.png)
+![testWithGoodInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-projects-interview-visma/master/gui/testWithGoodInputS.png)
+![testWithWrongInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-projects-interview-visma/master/gui/testWithWrongInputS.png)
 
 ### Result
 
