@@ -141,20 +141,23 @@ mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
 
 ## Running nabla locally
 ```
-	git clone https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git
-	cd nabla-projects-interview-visma
-#	./mvnw spring-boot:run
-    ./mvnw org.codehaus.cargo:cargo-maven2-plugin:run
+git clone https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git
+cd nabla-projects-interview-visma
+#./mvnw spring-boot:run
+./mvnw org.codehaus.cargo:cargo-maven2-plugin:run
 ```
 
 You can then access nabla here: 
 
-[jetty](http://localhost:9090/)
+- [jetty](http://localhost:9090/)
 
-[tomcat](http://home.nabla.mobi:8280/visma/)
+- [tomcat](http://home.nabla.mobi:8280/visma/)
+
+### Screenshot
+
+![testWithWrongInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-projects-interview-visma/master/gui/testWithWrongInputS.png)
 
 ![testWithGoodInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-projects-interview-visma/master/gui/testWithGoodInputS.png)
-![testWithWrongInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-projects-interview-visma/master/gui/testWithWrongInputS.png)
 
 ### Result
 
