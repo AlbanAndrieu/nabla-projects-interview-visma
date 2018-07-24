@@ -29,7 +29,7 @@
       "type": "mvn"
     },
     {
-      "commandLine": "mvn -f ${current.project.path} clean install -s ${current.project.path}/settings.xml -Dserver=jetty9x -Darquillian=arq-jetty-embedded && java -jar ${current.project.path}/target/*.jar",
+      "commandLine": "java -jar ${current.project.path}/gui/target/*.jar",
       "name": "console-java-simple: run",
       "attributes": {
         "previewUrl": ""

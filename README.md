@@ -14,7 +14,7 @@ Java project for an interview request by visma
 
 ## Quality
 
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.nabla.project.sample.interview.visma%3Avisma%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
 [![SonarQube Coverage](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/coverage.svg)]()
 [![SonarQube Tech Debt](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/tech_debt.svg)]()
 
@@ -149,7 +149,7 @@ mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
 
 You can then access nabla here: http://localhost:9090/
 
-<img width="1042" alt="nabla-screenshot" src="http://home.nabla.mobi:7072/website_under_construction_1895x685.png">
+<img width="1042" alt="nabla-screenshot" src="https://home.nabla.mobi/nabla/html/website_under_construction_1895x685.png">
 
 ### Result
 
