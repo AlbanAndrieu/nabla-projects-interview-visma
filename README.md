@@ -14,7 +14,7 @@ Java project for an interview request by visma
 
 ## Quality
 
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.nabla.project.sample.interview.visma%3Avisma%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
 [![SonarQube Coverage](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/coverage.svg)]()
 [![SonarQube Tech Debt](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/tech_debt.svg)]()
 
@@ -84,6 +84,8 @@ Problem Description
 
 ## Quality tools
 
+### pre-commit
+
 See [pre-commit](http://pre-commit.com/)
 Run `pre-commit install`
 Run `pre-commit autoupdate`
@@ -96,6 +98,14 @@ htmllint
 Run `pre-commit run --all-files`
 
 Commit `git commit -am 'TEST' --no-verify`
+
+### takari maven wrapper
+
+See [takari-maven-wrapper] (https://github.com/takari/maven-wrapper)
+
+```
+mvn -N io.takari:maven:wrapper
+```
 
 ## Working with Nabla in Eclipse/STS
 
@@ -131,15 +141,23 @@ mvnw verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
 
 ## Running nabla locally
 ```
-	git clone https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git
-	cd nabla-projects-interview-visma
-#	./mvnw spring-boot:run
-    ./mvnw org.codehaus.cargo:cargo-maven2-plugin:run
+git clone https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git
+cd nabla-projects-interview-visma
+#./mvnw spring-boot:run
+./mvnw org.codehaus.cargo:cargo-maven2-plugin:run
 ```
 
-You can then access nabla here: http://localhost:9090/
+You can then access nabla here:
 
-<img width="1042" alt="nabla-screenshot" src="http://home.nabla.mobi:7072/website_under_construction_1895x685.png">
+- [jetty](http://localhost:9090/)
+
+- [tomcat](http://home.nabla.mobi:8280/visma/)
+
+### Screenshot
+
+![testWithWrongInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-projects-interview-visma/master/gui/testWithWrongInputS.png)
+
+![testWithGoodInputS](https://raw.githubusercontent.com/AlbanAndrieu/nabla-projects-interview-visma/master/gui/testWithGoodInputS.png)
 
 ### Result
 

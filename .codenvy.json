@@ -1,0 +1,90 @@
+{
+  "name": "AlbanAndrieu",
+  "environments": {
+    "nabla-projects-interview-visma": {
+      "machines": {
+        "ws-machine": {
+          "attributes": {
+            "memoryLimitBytes": "2147483648"
+          },
+          "servers": {},
+          "agents": [
+            "org.eclipse.che.ws-agent"
+          ]
+        }
+      },
+      "recipe": {
+        "location": "eclipse/ubuntu_jdk8",
+        "type": "dockerimage"
+      }
+    }
+  },
+  "commands": [
+    {
+      "commandLine": "mvn -f ${current.project.path} clean install -s ${current.project.path}/settings.xml -Dserver=jetty9x -Darquillian=arq-jetty-embedded",
+      "name": "console-java-simple: build",
+      "attributes": {
+        "previewUrl": ""
+      },
+      "type": "mvn"
+    },
+    {
+      "commandLine": "java -jar ${current.project.path}/gui/target/*.jar",
+      "name": "console-java-simple: run",
+      "attributes": {
+        "previewUrl": ""
+      },
+      "type": "mvn"
+    }
+  ],
+  "projects": [
+    {
+      "links": [],
+      "name": "nabla-projects-interview-visma",
+      "attributes": {
+        "maven.artifactId": [
+          "nabla-project-interview-visma"
+        ],
+        "maven.packaging": [
+          "jar"
+        ],
+        "vcs.provider.name": [
+          "git"
+        ],
+        "maven.version": [
+          "1.0.1-SNAPSHOT"
+        ],
+        "git.current.branch.name": [
+          "master"
+        ],
+        "language": [
+          "java"
+        ],
+        "contribute_to_branch": [
+          "master"
+        ],
+        "git.repository.remotes": [
+          "https://github.com/AlbanAndrieu/nabla-projects-interview-visma.git"
+        ],
+        "maven.groupId": [
+          "com.nabla.project.sample.interview.visma"
+        ]
+      },
+      "type": "maven",
+      "source": {
+        "location": "https://github.com/AlbanAndrieu/nabla-projects-interview-visma",
+        "type": "git",
+        "parameters": {
+          "branch": "master"
+        }
+      },
+      "path": "/nabla-projects-interview-visma",
+      "problems": [],
+      "mixins": [
+        "pullrequest"
+      ]
+    }
+  ],
+  "defaultEnv": "nabla-projects-interview-visma",
+  "links": []
+}
