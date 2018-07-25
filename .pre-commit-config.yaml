@@ -12,18 +12,23 @@ repos:
         exclude: >
                   (?x)^(
                       clean.bat|
-                      build.bat
+                      build.bat|
+                      mvnw.cmd|
+                      .mvn/|
                   )$
     -   id: check-json
     -   id: check-xml
     -   id: check-yaml
+        exclude: >
+                  (?x)^(
+                      docker-compose.yml
+                  )$
     -   id: check-symlinks
     -   id: debug-statements
     -   id: detect-private-key
         exclude: >
                   (?x)^(
-                      roles/jenkins-master/defaults/main.yml|
-                      roles/jenkins-master/README.md
+                      README.md
                   )$
     -   id: double-quote-string-fixer
     -   id: name-tests-test

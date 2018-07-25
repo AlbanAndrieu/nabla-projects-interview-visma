@@ -122,11 +122,11 @@ File -> Import -> Maven -> Existing Maven project
 
 ## Build & development
 
-Run `mvn clean install -Dserver=jetty9x` for building.
+Run `mvnw clean install -Dserver=jetty9x` for building.
 
 ```
-mvn clean install -Dserver=jetty9x
-mvn verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
+mvnw clean install -Dserver=jetty9x
+mvnw verify gpg:sign -Dgpg.passphrase=thephrase 2>&1 sign.log
 ```
 
 ## Running nabla locally

@@ -1,38 +1,38 @@
 version: "2"
 services:
- nabla:
-  image: nabla/visma:latest
-  container_name: nabla
-  hostname: nabla
-  domainname: nabla.mobi
-  cpu_shares: 73
-  cpu_quota: 50000
-  cpuset: 0-2
-  mem_limit: 1024m
-  restart: on-failure:5
-  ulimits:
-    nproc: 65535
-    nofile:
-      soft: 20000
-      hard: 40000
-#  command: sleep infinity
-#  read_only: true
-  tmpfs:
-    - /run
-    - /tmp:rw,exec,nosuid,size=2g
-    - /home/nabla/data/tmp:rw,exec,nosuid,size=2g
-    - /home/nabla/data/work:rw,exec,nosuid,size=2g
-    - /home/nabla/data/profiles:rw,exec,nosuid,size=2g
-    - /home/nabla/data/executions:rw,exec,nosuid,size=2g
-    - /home/nabla/data/sessions:rw,exec,nosuid,size=2g
-    - /home/nabla/webapps:rw,exec,nosuid,size=2g
-  ports:
-   - "1099:1099" #jmx remote
-   - "9090:9090" #http
-   - "9443:9443" #https
-   - "2924:2924" #eclipse
-  #depends_on:
-  # - other
+  nabla:
+    image: nabla/visma:latest
+    container_name: nabla
+    hostname: nabla
+    domainname: nabla.mobi
+    cpu_shares: 73
+    cpu_quota: 50000
+    cpuset: 0-2
+    mem_limit: 1024m
+    restart: on-failure:5
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+#    command: sleep infinity
+#    read_only: true
+    tmpfs:
+      - /run
+      - /tmp:rw,exec,nosuid,size=2g
+      - /home/nabla/data/tmp:rw,exec,nosuid,size=2g
+      - /home/nabla/data/work:rw,exec,nosuid,size=2g
+      - /home/nabla/data/profiles:rw,exec,nosuid,size=2g
+      - /home/nabla/data/executions:rw,exec,nosuid,size=2g
+      - /home/nabla/data/sessions:rw,exec,nosuid,size=2g
+      - /home/nabla/webapps:rw,exec,nosuid,size=2g
+    ports:
+     - "1099:1099" #jmx remote
+     - "9090:9090" #http
+     - "9443:9443" #https
+     - "2924:2924" #eclipse
+    #depends_on:
+    # - other
   mysql:
     image: mysql
     ports:
