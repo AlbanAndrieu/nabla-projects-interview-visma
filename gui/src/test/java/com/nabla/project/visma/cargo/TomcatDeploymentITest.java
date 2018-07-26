@@ -88,18 +88,11 @@ public class TomcatDeploymentITest {
         (LocalConfiguration) new DefaultConfigurationFactory().createConfiguration(CONTAINER_ID,
             ContainerType.INSTALLED, ConfigurationType.STANDALONE, "target/" + TOMCAT_VERSION);
     // See properties at http://cargo.codehaus.org/Configuration+properties
-    // System.setProperty("cargo.servlet.port", "");
-    System.out.println("cargo.servlet.port system property is : "
-        + System.getProperty("cargo.servlet.port") + "\n");
-    // System.setProperty("cargo.tomcat.ajp.port", "");
-    System.out.println("cargo.tomcat.ajp.port system property is : "
-        + System.getProperty("cargo.tomcat.ajp.port") + "\n");
-    // System.setProperty("cargo.rmi.port", "");
-    System.out.println(
-        "cargo.rmi.port system property is : " + System.getProperty("cargo.rmi.port") + "\n");
-    System.setProperty("cargo.rmi.port", valueOf(RMI_PORT));
-    System.out.println(
-        "cargo.rmi.port system property is : " + System.getProperty("cargo.rmi.port") + "\n");
+    //System.err.println("cargo.servlet.port system property is : " + System.getProperty("cargo.servlet.port") + "\n");
+    //System.err.println("cargo.tomcat.ajp.port system property is : " + System.getProperty("cargo.tomcat.ajp.port") + "\n");
+    //System.err.println("cargo.rmi.port system property is : " + System.getProperty("cargo.rmi.port") + "\n");
+    //System.setProperty("cargo.rmi.port", valueOf(RMI_PORT));
+    //System.out.println("cargo.rmi.port system property is : " + System.getProperty("cargo.rmi.port") + "\n");
     System.out.println("Random SERVER port is : " + WEBAPI_PORT);
     configuration.setProperty(ServletPropertySet.PORT, valueOf(WEBAPI_PORT));
     System.out.println("Random AJP port is : " + AJP_PORT);

@@ -81,14 +81,14 @@ public class DeploymentITest {
 
 	@BeforeClass
 	public static void setUp() throws InterruptedException, NoSuchAlgorithmException, KeyManagementException {
-		System.out.println("SERVER_CONTEXT = " + System.getenv("SERVER_CONTEXT"));
+		//System.err.println("SERVER_CONTEXT = " + System.getenv("SERVER_CONTEXT"));
 		DeploymentITest.SERVER_CONTEXT = System.getenv("SERVER_CONTEXT");
 		if (null == DeploymentITest.SERVER_CONTEXT) {
 			System.out.println("Use default SERVER_CONTEXT");
 			DeploymentITest.SERVER_CONTEXT = DeploymentITest.DEFAULT_SERVER_CONTEXT;
 		}
 
-		System.out.println("SERVER_URL = " + System.getenv("SERVER_URL"));
+		//System.err.println("SERVER_URL = " + System.getenv("SERVER_URL"));
 		DeploymentITest.BASE_URL = System.getProperty("webdriver.base.url");
 
 		if (null == DeploymentITest.BASE_URL) {

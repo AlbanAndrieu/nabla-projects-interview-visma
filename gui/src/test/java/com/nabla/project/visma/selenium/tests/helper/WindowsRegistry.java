@@ -33,8 +33,8 @@
  */
 package com.nabla.project.visma.selenium.tests.helper;
 
-import org.junit.Assert;
-import org.openqa.selenium.os.WindowsUtils;
+//import org.junit.Assert;
+//import org.openqa.selenium.os.WindowsUtils;
 
 /**
  * DOCUMENT ME! albandri.
