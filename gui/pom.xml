@@ -26,6 +26,7 @@
         </properties>
     -->
 	<properties>
+		<jetty.runner.version>9.4.9.v20180320</jetty.runner.version>
 		<appsensor.core.version>2.2.0</appsensor.core.version>
 		<!--<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>-->
 
@@ -1310,7 +1311,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>org.mortbay.jetty</groupId>
+									<groupId>org.eclipse.jetty</groupId>
 									<artifactId>jetty-runner</artifactId>
 									<version>${jetty.runner.version}</version>
 									<destFileName>jetty-runner.jar</destFileName>

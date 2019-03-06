@@ -52,4 +52,6 @@ REM Inside Jconsole --> Remote connection to : service:jmx:rmi://localhost:1099/
 REM Inside VisualVM --> Add jmx connection : service:jmx:rmi://127.0.0.1:1099/jndi/rmi://127.0.0.1:1099/jmxrmi
 REM do not forget to replace localhost by 127.0.0.1 and to deactivate proxy
 
+#echo "java -jar target/dependency/jetty-runner.jar target/visma.war"
+
 pause

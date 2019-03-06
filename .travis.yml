@@ -19,8 +19,7 @@ cache:
 install:
 - sudo apt-get update -qq
 - sudo apt-get install -y rpm
-- mvn compile -DskipTests=true -Dmaven.javadoc.skip=true -Dcobertura.skip=true --settings
-  settings.xml -B -V
+- ./mvnw install -Dserver=jetty9x -DskipTests=true -Dmaven.javadoc.skip=true -Dcobertura.skip=true --settings settings.xml -B -V
 after_success:
 - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && mvn site --settings settings.xml -B -V
 branches:

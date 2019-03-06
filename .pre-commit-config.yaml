@@ -14,7 +14,7 @@ repos:
                       clean.bat|
                       build.bat|
                       mvnw.cmd|
-                      .mvn/|
+                      .mvn/*|
                   )$
     -   id: check-json
     -   id: check-xml
