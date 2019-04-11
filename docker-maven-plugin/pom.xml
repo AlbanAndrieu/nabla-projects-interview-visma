@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>docker-maven-plugin</artifactId>
+    <name>docker-maven-plugin</name>
+    <description>Docker image</description>
+
+    <parent>
+		<groupId>com.nabla.project.sample.interview.visma</groupId>
+		<artifactId>visma</artifactId>
+		<version>1.0.1-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <cargo.docker.basedir>${project.basedir}/src/main/resources/</cargo.docker.basedir>
+        <cargo.docker.registry>registry.misys.global.ad</cargo.docker.registry>
+        <cargo.docker.registry-tmp>registry-tmp.misys.global.ad</cargo.docker.registry-tmp>
+        <cargo.docker.image.name>fusion-risk/bower-fr-integration-test</cargo.docker.image.name>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${cargo.docker.basedir}/local-build-archive</directory>
+                            <includes>
+                                <include>*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-pricer</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${cargo.docker.basedir}/local-build-archive/pricer</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/../target/pricer</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-scripts</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${cargo.docker.basedir}/local-build-archive/scripts</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/target/scripts</directory>
+                                    <filtering>false</filtering>
+                                    <excludes>*.class</excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <timestampFormat>{0,date,yyyyMMdd}</timestampFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- To create target/classes/git.properties with current sha1 -->
+                <!-- Use case is to tag docker images -->
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <commitIdGenerationMode>flat</commitIdGenerationMode>
+                    <gitDescribe>
+                        <skip>true</skip>
+                    </gitDescribe>
+                    <!-- sanitize branch name: replace slash '/' with dash '-'  -->
+                    <!-- e.g. feature/MGR... -> feature-MGR.. -->
+                    <replacementProperties>
+                        <replacementProperty>
+                            <property>git.branch</property>
+                            <token>^([^\/]*)\/([^\/]*)$</token>
+                            <value>$1-$2</value>
+                            <regex>true</regex>
+                        </replacementProperty>
+                    </replacementProperties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-docker-image</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>deploy-docker-image</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- to print output from docker at build time - this is not debug -->
+                    <logStdout>true</logStdout>
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                            <name>${cargo.docker.registry-tmp}/${cargo.docker.image.name}</name>
+                            <!--if using <registry> tag, docker plugin  will create temporary name,-->
+                            <!--which will fail the build if temporary name clashes with existing one-->
+                            <build>
+                                <dockerFileDir>${cargo.docker.basedir}</dockerFileDir>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${git.branch}-${git.commit.id.abbrev}</tag>
+                                    <tag>${timestamp}</tag>
+                                </tags>
+                                <args>
+                                    <!-- variables used for internal image labeling -->
+                                    <!-- for constants go to src/main/resources/docker.properties -->
+                                    <BUILD_DATE>${timestamp}</BUILD_DATE>
+                                    <GIT_COMMIT>${git.commit.id.abbrev}</GIT_COMMIT>
+                                    <BUILD_TAG>${git.branch}-${git.commit.id.abbrev}</BUILD_TAG>
+                                    <GIT_BRANCH>${git.branch}</GIT_BRANCH>
+                                    <LIMITS_TAG>${git.branch}-${git.commit.id.abbrev}</LIMITS_TAG>
+                                </args>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
