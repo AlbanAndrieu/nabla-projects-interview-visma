@@ -5,8 +5,8 @@
 	<!-- @version $Revision: $ $Date: $ $Author: $ $State: $ -->
 	<!-- @formatter:off -->
 	<parent>
-		<artifactId>visma</artifactId>
 		<groupId>com.nabla.project.sample.interview.visma</groupId>
+		<artifactId>visma</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>gui</artifactId>
@@ -26,7 +26,6 @@
         </properties>
     -->
 	<properties>
-		<jetty.runner.version>9.4.9.v20180320</jetty.runner.version>
 		<appsensor.core.version>2.2.0</appsensor.core.version>
 		<!--<cargo.jmx.rmi.port>2099</cargo.jmx.rmi.port>-->
 
@@ -58,6 +57,7 @@
 
 		<jetty.jmxremote.rmihost>localhost</jetty.jmxremote.rmihost>
 		<jetty.jmxremote.rmiport>3099</jetty.jmxremote.rmiport>
+		<jetty.runner.version>9.4.9.v20180320</jetty.runner.version>
 		<!--<lombok.version>1.16.20</lombok.version>-->
 
 		<!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->

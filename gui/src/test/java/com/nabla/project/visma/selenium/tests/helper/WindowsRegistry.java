@@ -38,7 +38,7 @@ package com.nabla.project.visma.selenium.tests.helper;
 
 /**
  * DOCUMENT ME! albandri.
- * 
+ *
  * @author $Author$
  * @version $Revision$
  * @since $Date$

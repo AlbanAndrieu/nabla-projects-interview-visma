@@ -158,7 +158,7 @@ under the License.
       <username>admin</username>
       <password>microsoft</password>
     </server>
-    
+
     <!-- Another sample, using keys to authenticate.
     <server>
       <id>siteServer</id>
@@ -218,7 +218,7 @@ under the License.
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
       <url>http://home.nabla.mobi:8085/nexus/content/groups/public/</url>
-    </mirror> 
+    </mirror>
     <mirror>
       <!-- This sends everything else to /public -->
       <id>nexus</id>
@@ -330,7 +330,7 @@ under the License.
       </properties>
     </profile>
     -->
-    
+
     <!-- defined in the project
     <profile>
       <id>unittest</id>
@@ -369,7 +369,7 @@ under the License.
                     <url>http://home.nabla.mobi:8085/nexus/content/repositories/server-forge-snapshot</url>
                     <releases><enabled>false</enabled></releases>
                     <snapshots><enabled>true</enabled></snapshots>
-                </pluginRepository>     
+                </pluginRepository>
             </pluginRepositories>
             <!--
             <properties>
@@ -388,7 +388,7 @@ under the License.
   </activeProfiles>
   -->
 
-  <activeProfiles>    
+  <activeProfiles>
     <activeProfile>nexus</activeProfile>
   </activeProfiles>
 </settings>
