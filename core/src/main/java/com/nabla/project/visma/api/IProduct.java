@@ -37,7 +37,7 @@ import java.math.BigDecimal;
 
 /**
  * DOCUMENT ME! albandri.
- *
+ * 
  * @author $Author$
  * @version $Revision$
  * @since $Date$
@@ -46,14 +46,14 @@ public interface IProduct
 {
     /**
      * Give the price or amount of the product in NOK.
-     *
+     * 
      * @return the price or amount of the product
      */
     BigDecimal getPrice();
 
     /**
      * Give the name of the product.
-     *
+     * 
      * @return the name of the product
      */
     String getName();

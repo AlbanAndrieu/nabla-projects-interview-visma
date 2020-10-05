@@ -1,8 +1,18 @@
-#!/groovy
-/*
-	Point of this Jenkinsfile is to:
-	- build java project
-*/
+#!/usr/bin/env groovy
+@Library(value='jenkins-pipeline-scripts@master', changelog=false) _
+
+String DOCKER_REGISTRY="index.docker.io/v1".trim()
+String DOCKER_ORGANISATION="nabla".trim()
+String DOCKER_TAG="latest".trim()
+String DOCKER_NAME="ansible-jenkins-slave-docker".trim()
+
+String DOCKER_REGISTRY_URL="https://${DOCKER_REGISTRY}".trim()
+String DOCKER_REGISTRY_CREDENTIAL=env.DOCKER_REGISTRY_CREDENTIAL ?: "hub-docker-nabla".trim()
+String DOCKER_IMAGE="${DOCKER_ORGANISATION}/${DOCKER_NAME}:${DOCKER_TAG}".trim()
+
+String DOCKER_OPTS_BASIC = getDockerOpts()
+String DOCKER_OPTS_COMPOSE = getDockerOpts(isDockerCompose: true, isLocalJenkinsUser: false)
+
 properties([
 	[$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
 	parameters([
@@ -37,7 +47,7 @@ Boolean CLEAN_RUN = params.CLEAN_RUN
 Boolean DEBUG_RUN = params.DEBUG_RUN
 
 ansiColor('xterm') {
-	node ('docker&&javascript') {
+	node ('molecule') {
 
 		println "JOB_NAME: ${env.JOB_NAME} : ${env.JOB_BASE_NAME}"
 		String PROJECT = env.JOB_NAME
@@ -176,7 +186,7 @@ echo "ZAPROXY_HOME : $ZAPROXY_HOME"
 
 #curl -i -v -k ${SERVER_URL}${SERVER_CONTEXT} --data "username=tomcat&password=microsoft"
 
-wget --http-user=admin --http-password=Motdepasse12 "http://home.nabla.mobi:8280/manager/text/undeploy?path=/test" -O -
+wget --http-user=admin --http-password=Motdepasse12 "http://albandieu.com:8280/manager/text/undeploy?path=/test" -O -
 
 exit 0
 '''
