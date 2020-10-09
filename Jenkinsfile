@@ -73,7 +73,7 @@ ansiColor('xterm') {
 		String GIT_URL = "https://github.com/AlbanAndrieu/${GIT_PROJECT}.git"
 		String JENKINS_CREDENTIALS = '8aaa3139-bdc4-4774-a08d-ee6b22a7e0ac'
 
-        	String GIT_COMMIT = "TODO"
+        String GIT_COMMIT = "TODO"
 
 		try {
 
@@ -119,7 +119,7 @@ ansiColor('xterm') {
 
                 checkout([
                     $class: 'GitSCM',
-                    branches: [[name: "${GIT_BRANCH_NAME}"]],
+                    branches: [[name: "master"]],
                     browser: [
                         $class: 'Stash',
                         repoUrl: "${GIT_BROWSE_URL}"],
@@ -130,8 +130,9 @@ ansiColor('xterm') {
                         $class: 'RelativeTargetDirectory', relativeTargetDir: 'bm'], [
                         $class: 'MessageExclusion', excludedMessage: '.*\\\\[maven-release-plugin\\\\].*'], [
                         $class: 'IgnoreNotifyCommit'], [
-                        $class: 'ChangelogToBranch',
-                    options: [compareRemote: 'origin', compareTarget: 'release/1.0.0']]],
+                    //    $class: 'ChangelogToBranch',
+                    options: [compareRemote: 'origin', compareTarget: 'release/1.0.0']]
+                    ],
                     gitTool: 'git-latest',
                     submoduleCfg: [],
                     userRemoteConfigs: [[
