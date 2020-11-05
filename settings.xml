@@ -54,7 +54,8 @@ under the License.
    | Default: ~/.m2/repository
   <localRepository>/path/to/local/repo</localRepository>
   -->
-  <localRepository>~/.m2/repository</localRepository>
+  <!--<localRepository>~/.m2/repository</localRepository>-->
+  <localRepository>/home/jenkins/.m2/repository</localRepository>
 
   <!-- interactiveMode
    | This will determine whether maven prompts you when it needs input. If set to false,
@@ -214,17 +215,17 @@ under the License.
 
     <!--This sends everything else to /public -->
     <mirror>
-      <!-- This sends everything else to /public -->
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
-      <url>http://home.nabla.mobi:8085/nexus/content/groups/public/</url>
+      <url>http://192.168.1.57:8081/repository/maven-public/</url>
     </mirror>
+    <!--
     <mirror>
-      <!-- This sends everything else to /public -->
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
-      <url>http://home.nabla.mobi:8085/nexus/content/groups/public/</url>
+      <url>http://albandrieu.com:8081/nexus/content/groups/public/</url>
     </mirror>
+    -->
   </mirrors>
 
   <!-- profiles
@@ -346,13 +347,13 @@ under the License.
             <repositories>
                 <repository>
                     <id>nexus-releases</id>
-                    <url>http://home.nabla.mobi:8085/nexus/content/repositories/server-forge-release</url>
+                    <url>http://192.168.1.57:8081/nexus/content/repositories/releases</url>
                     <releases><enabled>true</enabled></releases>
                     <snapshots><enabled>false</enabled></snapshots>
                 </repository>
                 <repository>
                     <id>nexus-snapshots</id>
-                    <url>http://home.nabla.mobi:8085/nexus/content/repositories/server-forge-snapshot</url>
+                    <url>http://192.168.1.57:8081/nexus/content/repositories/snapshots</url>
                     <releases><enabled>false</enabled></releases>
                     <snapshots><enabled>true</enabled></snapshots>
                 </repository>
@@ -360,13 +361,13 @@ under the License.
             <pluginRepositories>
                 <pluginRepository>
                     <id>nexus-releases</id>
-                    <url>http://home.nabla.mobi:8085/nexus/content/repositories/server-forge-release</url>
+                    <url>http://192.168.1.57:8081/nexus/content/repositories/releases</url>
                     <releases><enabled>true</enabled></releases>
                     <snapshots><enabled>false</enabled></snapshots>
                 </pluginRepository>
                 <pluginRepository>
                     <id>nexus-snapshots</id>
-                    <url>http://home.nabla.mobi:8085/nexus/content/repositories/server-forge-snapshot</url>
+                    <url>http://192.168.1.57:8081/nexus/content/repositories/snapshots</url>
                     <releases><enabled>false</enabled></releases>
                     <snapshots><enabled>true</enabled></snapshots>
                 </pluginRepository>

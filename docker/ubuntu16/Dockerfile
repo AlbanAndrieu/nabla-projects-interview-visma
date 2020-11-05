@@ -143,7 +143,7 @@ RUN mkdir ${HOME}/workspace && mkdir ${HOME}/.sonar && mkdir -p ${HOME}/.m2/repo
 
 #RUN npm install --only=production
 #TODO -Dserver=tomcat8x
-RUN ./mvnw install -Dserver=jetty9x -Dmaven.test.skip=true
+RUN ./mvnw install -s settings.xml -Dserver=jetty9x -Dmaven.test.skip=true
 
 # Standard SSH port
 EXPOSE 22
