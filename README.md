@@ -45,6 +45,12 @@ Java project for an interview request by visma
 [![GitHub issues by-label](https://img.shields.io/github/issues/AlbanAndrieu/nabla-projects-interview-visma/good%20first%20issue.svg)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-projects-interview-visma/good%20first%20issue.svg)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/pulls?q=is%3Apr+is%3Aopen+label%3A%22good+first+issue%22)
 
+# Table of contents
+
+<!-- toc -->
+
+<!-- tocstop -->
+
 ## Why? [![start with why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
 <!--

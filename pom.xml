@@ -40,7 +40,7 @@
 
 	<properties>
 		<ant.version>1.9.7</ant.version>
-		<asm.ow2.version>5.2</asm.ow2.version>
+    <asm.ow2.version>9.1</asm.ow2.version>
 		<cucumber.version>1.2.5</cucumber.version>
 		<dbunit.version>2.5.4</dbunit.version>
 		<easymock.version>3.5.1</easymock.version>
@@ -88,6 +88,7 @@
 		<xerces.version>2.11.0.SP5</xerces.version>
 		<xml.apis.version>2.0.2</xml.apis.version>
 		<!--<xml.apis.version>1.4.01</xml.apis.version>-->
+		<!--<weld.servlet.version>2.4.8.Final</weld.servlet.version>-->
 	</properties>
 
 	<!-- DEPENDENCIES -->
