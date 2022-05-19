@@ -55,7 +55,9 @@ under the License.
   <localRepository>/path/to/local/repo</localRepository>
   -->
   <!--<localRepository>~/.m2/repository</localRepository>-->
-  <localRepository>/home/jenkins/.m2/repository</localRepository>
+  <!--<localRepository>C:/repo</localRepository>-->
+  <!--<localRepository>/scratch/jenkins/workspace/nabla-demo/.repository</localRepository>-->
+  <!--<localRepository>/home/jenkins/.m2/repository</localRepository>-->
 
   <!-- interactiveMode
    | This will determine whether maven prompts you when it needs input. If set to false,
@@ -134,39 +136,6 @@ under the License.
       <id>github</id>
       <password>${env.GITHUB_TOKEN}</password>
     </server>
-    <!--
-    <server>
-      <id>ossrh</id>
-      <username>${env.SONATYPE_USERNAME}</username>
-      <password>${env.SONATYPE_PASSWORD}</password>
-    </server>
-    -->
-
-    <server>
-      <id>nexus-releases</id>
-      <username>admin</username>
-      <password>admin123</password>
-    </server>
-
-    <server>
-      <id>nexus-snapshots</id>
-      <username>admin</username>
-      <password>admin123</password>
-    </server>
-
-    <server>
-      <id>nabla-tomcat</id>
-      <username>admin</username>
-      <password>microsoft</password>
-    </server>
-
-    <!-- Another sample, using keys to authenticate.
-    <server>
-      <id>siteServer</id>
-      <privateKey>/path/to/private/key</privateKey>
-      <passphrase>optional; leave empty if not used.</passphrase>
-    </server>
-        -->
 
   </servers>
 
@@ -214,18 +183,18 @@ under the License.
     -->
 
     <!--This sends everything else to /public -->
+    <!--
     <mirror>
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
       <url>http://192.168.1.57:8081/repository/maven-public/</url>
     </mirror>
-    <!--
+    -->
     <mirror>
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
-      <url>http://albandrieu.com:8081/nexus/content/groups/public/</url>
+      <url>http://albandrieu.com:8081/repository/maven-public/</url>
     </mirror>
-    -->
   </mirrors>
 
   <!-- profiles
@@ -341,43 +310,337 @@ under the License.
       </properties>
     </profile>
     -->
-        <profile>
-            <id>nexus</id>
-            <!--all requests to nexus via the mirror -->
-            <repositories>
-                <repository>
-                    <id>nexus-releases</id>
-                    <url>http://192.168.1.57:8081/nexus/content/repositories/releases</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
-                </repository>
-                <repository>
-                    <id>nexus-snapshots</id>
-                    <url>http://192.168.1.57:8081/nexus/content/repositories/snapshots</url>
-                    <releases><enabled>false</enabled></releases>
-                    <snapshots><enabled>true</enabled></snapshots>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>nexus-releases</id>
-                    <url>http://192.168.1.57:8081/nexus/content/repositories/releases</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
-                </pluginRepository>
-                <pluginRepository>
-                    <id>nexus-snapshots</id>
-                    <url>http://192.168.1.57:8081/nexus/content/repositories/snapshots</url>
-                    <releases><enabled>false</enabled></releases>
-                    <snapshots><enabled>true</enabled></snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-            <!--
-            <properties>
-              <maven.clover.licenseLocation>${user.home}/clover.license</maven.clover.licenseLocation>
-            </properties>
-            -->
-        </profile>
+    <!-- workaround because some environment does not have the WORKSPACE global variable -->
+    <profile>
+      <id>env.WORKSPACE.default</id>
+      <activation>
+        <property>
+          <name>!env.WORKSPACE</name>
+        </property>
+      </activation>
+      <properties>
+        <env.WORKSPACE>${env.HOME}</env.WORKSPACE>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>nabla</id>
+      <!-- http://mvnrepository.com/search.html -->
+      <repositories>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Staging Repository</name>
+            <url>http://albandrieu.com:8081/repository/maven-releases/</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://albandrieu.com:8081/repository/maven-snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <!--
+        <repository>
+            <id>openqa-releases</id>
+            <name>Openqa Release Repository</name>
+            <url>http://nexus.openqa.org/content/repositories/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>openqa-snapshots</id>
+            <name>Openqa Snapshot Repository</name>
+            <url>http://nexus.openqa.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>central</id>
+            <name>Codehaus Maven 2.x Release Repository 1</name>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jboss-public-deprecated</id>
+            <name>JBoss Repository Public Deprecated</name>
+            <url>http://maven-eu.nuxeo.org/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jboss-public</id>
+            <name>JBoss Repository Public</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+           <id>jboss-snapshots</id>
+           <name>JBoss Snapshot Repository</name>
+           <url>http://snapshots.jboss.org/maven2</url>
+           <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>daily</updatePolicy>
+            <checksumPolicy>ignore</checksumPolicy>
+           </snapshots>
+           <releases>
+              <enabled>false</enabled>
+           </releases>
+        </repository>
+        <repository>
+            <id>andromda</id>
+            <name>AndroMDA Maven 2.x Repository</name>
+            <url>http://andromda.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>sonatype</id>
+            <name>Sonatype AndroMDA Repository</name>
+            <url>http://oss.sonatype.org/content/groups/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+          <id>smartics</id>
+          <name>Smartics Repository</name>
+          <url>http://www.smartics.eu/nexus/content/groups/public-group</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+            <id>mule-deps</id>
+            <name>Mule Dependencies</name>
+            <url>http://dist.codehaus.org/mule/dependencies/maven2</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        -->
+      </repositories>
+
+      <pluginRepositories>
+        <pluginRepository>
+            <id>nexus-releases</id>
+            <name>Nexus Staging Repository</name>
+            <url>http://192.168.1.57:8081/nexus/content/repositories/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Staging Repository</name>
+            <url>http://192.168.1.57:8081/nexus/content/repositories/snapshots</url>
+            <snapshots>
+                    <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                    <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>mobilvox-snapshots</id>
+                <name>Mobilvox JS Plugin Snapshots</name>
+            <url>http://maven-js-plugin.sourceforge.net/m2snapshotrepo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>codehaus-plugins</id>
+            <name>Codehaus Plugins</name>
+            <url>http://dist.codehaus.org</url>
+            <snapshots>
+              <enabled>false</enabled>
+            </snapshots>
+            <releases>
+              <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>appfuse</id>
+            <name>Appfuse</name>
+            <url>http://static.appfuse.org/repository</url>
+            <snapshots>
+              <enabled>false</enabled>
+            </snapshots>
+            <releases>
+              <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>elca-services</id>
+            <name>Elca Services</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+            <snapshots>
+              <enabled>false</enabled>
+            </snapshots>
+            <releases>
+              <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>codehaus-repository</id>
+            <name>Codehaus</name>
+            <url>http://repository.codehaus.org/</url>
+            <snapshots>
+              <enabled>false</enabled>
+            </snapshots>
+            <releases>
+              <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>sonatype-repository</id>
+            <name>Sonatype Repository</name>
+            <url>http://oss.sonatype.org/content/groups/public</url>
+            <snapshots>
+              <enabled>false</enabled>
+            </snapshots>
+            <releases>
+              <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jboss-public-repository</id>
+            <name>JBoss Repository</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public</url>
+            <snapshots>
+              <enabled>false</enabled>
+            </snapshots>
+            <releases>
+              <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+          <id>smartics</id>
+          <name>Smartics Repository</name>
+          <url>http://www.smartics.eu/nexus/content/groups/public-group</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+    <profile>
+      <id>nexus</id>
+      <!--all requests to nexus via the mirror -->
+      <repositories>
+          <repository>
+              <id>nexus-releases</id>
+              <url>http://192.168.1.57:8081/nexus/content/repositories/releases</url>
+              <releases><enabled>true</enabled></releases>
+              <snapshots><enabled>false</enabled></snapshots>
+          </repository>
+          <repository>
+              <id>nexus-snapshots</id>
+              <url>http://192.168.1.57:8081/nexus/content/repositories/snapshots</url>
+              <releases><enabled>false</enabled></releases>
+              <snapshots><enabled>true</enabled></snapshots>
+          </repository>
+      </repositories>
+      <pluginRepositories>
+          <pluginRepository>
+              <id>nexus-releases</id>
+              <url>http://192.168.1.57:8081/nexus/content/repositories/releases</url>
+              <releases><enabled>true</enabled></releases>
+              <snapshots><enabled>false</enabled></snapshots>
+          </pluginRepository>
+          <pluginRepository>
+              <id>nexus-snapshots</id>
+              <url>http://192.168.1.57:8081/nexus/content/repositories/snapshots</url>
+              <releases><enabled>false</enabled></releases>
+              <snapshots><enabled>true</enabled></snapshots>
+          </pluginRepository>
+      </pluginRepositories>
+    </profile>
+    <profile>
+      <id>upstream</id>
+      <repositories>
+         <repository>
+            <id>upstream</id>
+            <url>${env.Jenkins.Repository}</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+               <enabled>true</enabled>
+            </snapshots>
+         </repository>
+       </repositories>
+       <pluginRepositories>
+           <pluginRepository>
+                <id>upstream</id>
+                <url>${env.Jenkins.Repository}</url>
+                <releases>
+                  <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                  <enabled>true</enabled>
+                </snapshots>
+           </pluginRepository>
+       </pluginRepositories>
+    </profile>
   </profiles>
 
   <!-- activeProfiles
@@ -390,6 +653,8 @@ under the License.
   -->
 
   <activeProfiles>
-    <activeProfile>nexus</activeProfile>
+    <!--<activeProfile>nexus</activeProfile>-->
+    <activeProfile>nabla</activeProfile>
+    <!--<activeProfile>unittest</activeProfile>-->
   </activeProfiles>
 </settings>

@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 @Library(value='jenkins-pipeline-scripts@master', changelog=false) _
 
-String DOCKER_REGISTRY_HUB=env.DOCKER_REGISTRY_HUB ?: "registry.hub.docker.com".toLowerCase().trim() // registry.hub.docker.com
+String DOCKER_REGISTRY_HUB=env.DOCKER_REGISTRY_HUB ?: "index.docker.io".toLowerCase().trim()
 String DOCKER_ORGANISATION_HUB="nabla".trim()
 String DOCKER_IMAGE_TAG=env.DOCKER_IMAGE_TAG ?: "latest".trim()
 //String DOCKER_USERNAME="nabla"
@@ -15,14 +15,13 @@ String DOCKER_OPTS_BASIC = getDockerOpts()
 String DOCKER_OPTS_COMPOSE = getDockerOpts(isDockerCompose: true, isLocalJenkinsUser: false)
 
 String DOCKER_NAME_BUILD="ansible-jenkins-slave-test".trim()
-String DOCKER_BUILD_TAG=dockerTag("temp").trim()
+String DOCKER_BUILD_TAG = dockerTag().trim()
 String DOCKER_BUILD_IMG="${DOCKER_ORGANISATION_HUB}/${DOCKER_NAME_BUILD}:${DOCKER_BUILD_TAG}".trim()
 String DOCKER_RUNTIME_TAG="latest".trim()
 String DOCKER_RUNTIME_NAME="nabla-servers-bower-sample-test".trim()
 String DOCKER_RUNTIME_IMG="${DOCKER_ORGANISATION_HUB}/${DOCKER_RUNTIME_NAME}:${DOCKER_RUNTIME_TAG}".trim()
 
 String RELEASE_VERSION=""
-//String GIT_COMMIT_REV=""
 
 def NODES_USED = []
 

@@ -1,5 +1,4 @@
-# nabla-projects-interview-visma
-![nabla-projects-interview-visma](http://home.nabla.mobi:7075/images/mroizo.1f00120c.png)
+## [![Nabla](http://albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu) nabla-projects-interview-visma
 
 [![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/blob/master/LICENSE)
 [![Gitter](https://badges.gitter.im/nabla-projects-interview-visma/Lobby.svg)](https://gitter.im/nabla-projects-interview-visma/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -9,18 +8,16 @@ Java project for an interview request by visma
 ## Build
 
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-projects-interview-visma)
-[![Jenkins Build Status](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly/badge/icon)](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma-nightly)
+<!--
+[![Jenkins Build Status](http://albandrieu.com/jenkins/job/nabla-projects-interview-visma-nightly/badge/icon)](http://albandrieu.com/jenkins/job/nabla-projects-interview-visma-nightly)
 [![Jenkins tests](https://img.shields.io/jenkins/t/https/jenkins.qa.ubuntu.com/view/Precise/view/All%20Precise/job/precise-desktop-amd64_default.svg)]()
+-->
 
 ## Quality
 
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.nabla.project.sample.interview.visma%3Avisma%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
-[![SonarQube Coverage](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/coverage.svg)]()
-[![SonarQube Tech Debt](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/tech_debt.svg)]()
 
 
-[![Dependency Status](https://img.shields.io/david/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-projects-interview-visma)
-[![devDependency Status](https://img.shields.io/david/dev/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-projects-interview-visma#info=devDependencies)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 
 [![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-projects-interview-visma)
@@ -29,7 +26,6 @@ Java project for an interview request by visma
 ## Info
 
 [![Minimal java version](https://img.shields.io/badge/java-1.8-yellow.svg)](https://img.shields.io/badge/java-1.8-yellow.svg)
-[![Node version](https://img.shields.io/node/v/[NPM-MODULE-NAME].svg?style=flat)](http://nodejs.org/download/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.pitest/pitest)
 
 [![Branch](http://img.shields.io/github/tag/AlbanAndrieu/nabla-projects-interview-visma.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/tree/master)
@@ -40,7 +36,7 @@ Java project for an interview request by visma
 
 [![Last deployed](https://img.shields.io/github/last-commit/AlbanAndrieu/nabla-projects-interview-visma/gh-pages.svg?label=last%20deployed)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/commits/gh-pages)
 
-## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/issues) [![Requirements](https://requires.io/github/pycontribs/jira/requirements.svg?branch=master)](https://requires.io/github/nabla-projects-interview-visma/jira/requirements/?branch=master) [![Donate](https://img.shields.io/gratipay/AlbanAndrieu.svg?style=flat)](https://www.gratipay.com/~AlbanAndrieu) [![bounties](https://img.shields.io/bountysource/team/pycontribs/activity.svg)](https://www.bountysource.com/teams/nabla-projects-interview-visma/issues?tracker_ids=3650997)
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/issues) [![bounties](https://img.shields.io/bountysource/team/pycontribs/activity.svg)](https://www.bountysource.com/teams/nabla-projects-interview-visma/issues?tracker_ids=3650997)
 
 [![GitHub issues by-label](https://img.shields.io/github/issues/AlbanAndrieu/nabla-projects-interview-visma/good%20first%20issue.svg)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-projects-interview-visma/good%20first%20issue.svg)](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/pulls?q=is%3Apr+is%3Aopen+label%3A%22good+first+issue%22)
@@ -171,7 +167,7 @@ Please find below output of this sample:
 
 - Source code repository : [github](https://github.com/AlbanAndrieu/nabla-projects-interview-visma)
 
-- Jenkins : [jenkins](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma/)
+- Jenkins : [jenkins](http://albandrieu.com/jenkins/job/nabla-projects-interview-visma/)
 
 - Sonar metrics : [sonar](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
 
@@ -179,8 +175,8 @@ TODO : The compiled, source, and Javadoc JAR files will be uploaded as downloads
 
 The generated site will be committed to the [gh-pages branch](https://github.com/AlbanAndrieu/nabla-projects-interview-visma/tree/gh-pages) and visible [here](http://albanandrieu.github.io/nabla-projects-interview-visma/).
 
-Remarks : visma installer is produced during the jenkins build , especially [here](http://home.nabla.mobi:8381/job/nabla-installer-visma/).
-In order to install, double click on the [VISMAInstaller.jar](http://home.nabla.mobi:8381/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/VISMAInstaller.jar)
+Remarks : visma installer is produced during the jenkins build , especially [here](http://albandrieu.com/jenkins/job/nabla-installer-visma/).
+In order to install, double click on the [VISMAInstaller.jar](http://albandrieu.com/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/VISMAInstaller.jar)
 
 On unix, please make sure you can execute the installer :
 
@@ -301,24 +297,24 @@ I am now using this project more because it generates a lot of code and it is re
 This project is using JBoss, Seam, Hibernate, Spring,GWT, JSF, Arquillian, ... So it was quite hard to get Jacoco with mutation testing to work with it.
 In this repo there's also some sample projects used as ProofOfConcept
 
- - Database best pratices [nabla-databases-integration](http://home.nabla.mobi:8381/job/nabla-databases-integration/)
+ - Database best pratices [nabla-databases-integration](http://albandrieu.com/jenkins/job/nabla-databases-integration/)
 
- - Server integration best pratices [nabla-uml-integration](http://home.nabla.mobi:8381/job/nabla-servers-integration/)
+ - Server integration best pratices [nabla-uml-integration](http://albandrieu.com/jenkins/job/nabla-servers-integration/)
 
- - UML best pratices [nabla-uml-integration](http://home.nabla.mobi:8381/job/nabla-uml-integration/)
+ - UML best pratices [nabla-uml-integration](http://albandrieu.com/jenkins/job/nabla-uml-integration/)
 
-The goal is mostly to ensure that any of my code will be able to work with any [database](http://home.nabla.mobi:8381/job/nabla-databases-matrix/) on any [servers/browsers](http://home.nabla.mobi:8381/job/nabla-browsers-matrix/) using [selenium](http://home.nabla.mobi:8381/job/nabla-servers-jsf-simple-selenium/).
+The goal is mostly to ensure that any of my code will be able to work with any [database](http://albandrieu.com/jenkins/job/nabla-databases-matrix/) on any [servers/browsers](http://albandrieu.com/jenkins/job/nabla-browsers-matrix/) using [selenium](http://albandrieu.com/jenkins/job/nabla-servers-jsf-simple-selenium/).
 
 ------------------
 
 ### VISMA : An opensource project to showcase best pratices
 
 You're invited to have a quick look at the project below (it has some of the quality metrics that I am using at work, like unit tests, integration tests, mutation tests, performance tests, load tests, end2end tests, functional tests)
- - [Jenkins](http://home.nabla.mobi:8381/job/nabla-projects-interview-visma/)
+ - [Jenkins](http://albandrieu.com/jenkins/job/nabla-projects-interview-visma/)
  - [Sonar old](http://home.nabla.mobi:9000/dashboard/index/418)
  - [Sonar sonarcloud](https://sonarcloud.io/dashboard?id=com.nabla.project.sample.interview.visma%3Avisma%3Amaster)
 
-Visma is a very basic code done for an interview that you can easily install using [IZPack](http://izpack.org/) at [installer](http://home.nabla.mobi:8381/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/)
+Visma is a very basic code done for an interview that you can easily install using [IZPack](http://izpack.org/) at [installer](http://albandrieu.com/jenkins/job/nabla-installer-visma/lastSuccessfulBuild/artifact/visma-installer/target/)
 The goal is to provide an easy Maven starter with basic integration and metrics for any code interview working.
 The goal is also to have as many testing tools ready to work altogether (like junit, mock, selenium, cucumber).
 because there is always some form of incompatiblity between them...

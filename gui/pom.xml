@@ -9,7 +9,10 @@
 		<artifactId>visma</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
 	</parent>
+
+  <groupId>com.nabla.project.sample.interview.visma</groupId>
 	<artifactId>gui</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Maven Java Server Faces Webapp for Visma</name>
 
@@ -62,6 +65,8 @@
 
 		<!--<org.jboss.arquillian.spi.version>1.0.0.Alpha5</org.jboss.arquillian.spi.version>-->
 		<maven.jaxrs.analyzer.plugin.version>0.9</maven.jaxrs.analyzer.plugin.version>
+    <maven.cargo.maven2.plugin.version>1.7.11</maven.cargo.maven2.plugin.version>
+    <maven.jdeps.plugin.version>3.1.2</maven.jdeps.plugin.version>
 		<netty.version>3.10.5.Final</netty.version>
 
 		<!-- for jmeter -->
@@ -984,8 +989,12 @@
 						<!-- 8 minutes -->
 						<timeout>600000</timeout>
 						<!-- 10 minutes -->
-						<!--<containerId>${cargo.container}</containerId> -->
-						<!--<type>${cargo.container.type}</type> -->
+						<containerId>${cargo.container}</containerId>
+						<artifactInstaller>
+							<groupId>org.eclipse.jetty</groupId>
+							<artifactId>jetty-distribution</artifactId>
+							<version>${server.version}</version>
+						</artifactInstaller>
 						<log>${project.build.directory}/cargo.log</log>
 						<logLevel>debug</logLevel>
 						<systemProperties>
@@ -1394,24 +1403,20 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
+      <!--
 			<plugin>
-				<groupId>com.github.marschall</groupId>
-				<artifactId>jdeps-maven-plugin</artifactId>
-				<version>${maven.marschall.jdeps.plugin.version}</version>
-				<!-- optionally any configuration -->
+				<groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jdeps-plugin</artifactId>
+				<version>${maven.jdeps.plugin.version}</version>
 				<executions>
 					<execution>
-						<id>jdeps</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jdeps</goal>
-						</goals>
+            <goals>
+              <goal>jdkinternals</goal>
+            </goals>
 					</execution>
 				</executions>
-				<configuration>
-					<profile>true</profile>
-				</configuration>
 			</plugin>
+      -->
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -1521,6 +1526,7 @@
 					</apiSources>
 				</configuration>
 			</plugin>
+      <!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -1533,14 +1539,6 @@
 							<goal>javadoc</goal>
 						</goals>
 						<configuration>
-							<!--
-                            <doclet>com.hypnoticocelot.jaxrs.doclet.ServiceDoclet</doclet>
-                            <docletArtifact>
-                                <groupId>com.hypnoticocelot</groupId>
-                                <artifactId>jaxrs-doclet</artifactId>
-                                <version>${jaxrs.doclet.version}</version>
-                            </docletArtifact>
-                            -->
 							<doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
 							<docletArtifact>
 								<groupId>com.carma</groupId>
@@ -1552,8 +1550,6 @@
 							<additionalparam>-apiVersion 1 -docBasePath /apidocs -apiBasePath / -verbose</additionalparam>
 						</configuration>
 					</execution>
-					<!-- Extended Wadl Config: javadoc plugin generates resourcedoc.xml during the compilation using doclet.
-                     Generated file is then used during runtime to attach javadoc information to wadl. -->
 					<execution>
 						<id>generate-jersey-docs</id>
 						<phase>generate-resources</phase>
@@ -1565,16 +1561,11 @@
 							<doclet>org.glassfish.jersey.wadl.doclet.ResourceDoclet</doclet>
 							<docletPath>${path.separator}${project.build.outputDirectory}</docletPath>
 							<docletArtifacts>
-								<!-- jersey doclet generator -->
 								<docletArtifact>
 									<groupId>org.glassfish.jersey.ext</groupId>
 									<artifactId>jersey-wadl-doclet</artifactId>
 									<version>${jersey.version}</version>
 								</docletArtifact>
-								<!--
-									 Also specify jersey and xerces as doclet artifacts as the ResourceDoclet
-									 uses classes provided by them to generate the resourcedoc.
-								  -->
 								<docletArtifact>
 									<groupId>org.glassfish.jersey.core</groupId>
 									<artifactId>jersey-server</artifactId>
@@ -1586,9 +1577,6 @@
 									<version>${xerces.version}</version>
 								</docletArtifact>
 							</docletArtifacts>
-							<!-- the following option is required as a work around for
-								  version 2.5 of the javadoc plugin which will be used
-								  by a maven version > 2.0.9 -->
 							<useStandardDocletOptions>false</useStandardDocletOptions>
 							<additionalparam>-output ${project.build.outputDirectory}/resourcedoc.xml</additionalparam>
 						</configuration>
@@ -1607,89 +1595,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo.jspc</groupId>
-				<artifactId>jspc-maven-plugin</artifactId>
-			</plugin>
-
-			<!--
-			<plugin>
-				<groupId>com.sun.jersey.contribs</groupId>
-				<artifactId>maven-wadl-plugin</artifactId>
-				<version>${jersey.version}</version>
-			    <dependencies>
-					<dependency>
-				        <groupId>org.glassfish.jersey.media</groupId>
-				        <artifactId>jersey-media-json-jackson</artifactId>
-				        <version>${jersey.version}</version>
-      			  	</dependency>
-      			  	<dependency>
-                       <groupId>org.glassfish.jersey.core</groupId>
-                       <artifactId>jersey-server</artifactId>
-                       <version>${jersey.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>xerces</groupId>
-						<artifactId>xercesImpl</artifactId>
-						<version>${xerces.version}</version>
-					</dependency>
-					<dependency>
-					    <groupId>javax.inject</groupId>
-					    <artifactId>javax.inject</artifactId>
-					    <version>${inject.version}</version>
-					</dependency>
-			    </dependencies>
-				<executions>
-					<execution>
-						<id>generate</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<phase>compile</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<wadlFile>${project.build.outputDirectory}/application.wadl</wadlFile>
-					<formatWadlFile>true</formatWadlFile>
-					<baseUri>https://[host]:8444/visma/private</baseUri>
-					<packagesResourceConfig>
-						<param>com.nabla.project.hub.war.guice.services</param>
-					</packagesResourceConfig>
-					<wadlGenerators>
-						<wadlGeneratorDescription>
-							<className>com.sun.jersey.server.wadl.generators.WadlGeneratorApplicationDoc
-							</className>
-							<properties>
-								<property>
-									<name>applicationDocsFile</name>
-									<value>${project.basedir}/src/main/resources/application-doc.xml</value>
-								</property>
-							</properties>
-						</wadlGeneratorDescription>
-						<wadlGeneratorDescription>
-							<className>com.sun.jersey.server.wadl.generators.WadlGeneratorGrammarsSupport
-							</className>
-							<properties>
-								<property>
-									<name>grammarsFile</name>
-									<value>${project.basedir}/src/main/resources/application-grammars.xml</value>
-								</property>
-							</properties>
-						</wadlGeneratorDescription>
-						<wadlGeneratorDescription>
-							<className>com.sun.jersey.server.wadl.generators.resourcedoc.WadlGeneratorResourceDocSupport
-							</className>
-							<properties>
-								<property>
-									<name>resourceDocFile</name>
-									<value>${project.build.outputDirectory}/resourcedoc.xml</value>
-								</property>
-							</properties>
-						</wadlGeneratorDescription>
-					</wadlGenerators>
-				</configuration>
-			</plugin>
-			-->
+      -->
 			<plugin>
 				<groupId>org.bitstrings.maven.plugins</groupId>
 				<artifactId>dependencypath-maven-plugin</artifactId>
@@ -1794,11 +1700,32 @@
 			<id>jetty9x</id>
 			<activation>
 				<property>
-					<!--<name>!profile.activation</name>-->
+					<name>!profile.activation</name>
+					<!--
 					<name>server</name>
 					<value>jetty9x</value>
+					 -->
 				</property>
 			</activation>
+			<properties>
+				<cargo.configuration.type>standalone</cargo.configuration.type>
+				<cargo.container>jetty9x</cargo.container>
+				<cargo.container.home>${project.build.directory}/jetty</cargo.container.home>
+				<!--<cargo.container.url>TODOjetty9</cargo.container.url> -->
+				<cargo.container.type>installed</cargo.container.type>
+				<cargo.deployables.type></cargo.deployables.type>
+				<cargo.jmx.activation>${cargo.jetty.jmx.activation}</cargo.jmx.activation>
+				<cargo.port>${jetty.port}</cargo.port>
+				<datasource>${datasource.name}</datasource>
+				<jetty.version>${jetty9.version}</jetty.version>
+				<scope.tomcat.never.type>${scope.provided}</scope.tomcat.never.type>
+				<scope.tomcat.only.type>${scope.compile}</scope.tomcat.only.type>
+				<scope.type>${scope.compile}</scope.type>
+				<server.home></server.home>
+				<server.name>${product.name}</server.name>
+				<server.port></server.port>
+				<server.version>${jetty.version}</server.version>
+			</properties>
 			<dependencies>
 				<dependency>
 					<groupId>org.eclipse.jetty</groupId>
@@ -1993,7 +1920,6 @@
 					<name>profile.activation</name>
 				</property>
 			</activation>
-
 			<build>
 				<plugins>
 					<plugin>

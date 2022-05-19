@@ -116,7 +116,6 @@
 				   -->
 					<arguments>
 						<argument>-XX:+UnlockDiagnosticVMOptions -XX:+TraceClassLoading -XX:+LogCompilation -XX:LogFile=hotspot.log</argument>
-						<!--<argument>myproject:dist</argument> -->
 					</arguments>
 
 				</configuration>
@@ -126,125 +125,116 @@
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 			</plugin>
-
-			<plugin>
-				<!--groupId>com.pyx4me</groupId-->
-				<groupId>com.github.wvengen</groupId>
-				<artifactId>proguard-maven-plugin</artifactId>
-				<version>${maven.proguard.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>proguard</id>
-						<phase>package</phase>
-						<goals>
-							<goal>proguard</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>net.sf.proguard</groupId>
-						<artifactId>proguard-base</artifactId>
-						<version>${net.sf.proguard.version}</version>
-						<scope>runtime</scope>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<!-- Our application is so big that ProGuard had ran out of memory -->
-					<!--<maxMemory>1024m</maxMemory>-->
-
-					<!-- File with proguard configuration -->
-					<!--<proguardInclude>${basedir}/proguard.conf</proguardInclude>-->
-					<proguardVersion>${net.sf.proguard.version}</proguardVersion>
-					<obfuscate>true</obfuscate>
-					<!--<injarNotExistsSkip>true</injarNotExistsSkip>
-					<includeDependency>false</includeDependency>-->
-					<injar>${project.build.finalName}.jar</injar>
-					<outjar>${project.build.finalName}.jar</outjar>
-					<attach>false</attach>
-					<addMavenDescriptor>false</addMavenDescriptor>
-					<!-- Now exclude all modules that are embedded in the jar, so that
-						ProGuard won't see redefinition of each single class.
-						You don't have to write down your main module. -->
-					<exclusions>
-						<exclusion>
-							<groupId>com.sun</groupId>
-							<artifactId>tools</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>xerces</groupId>
-							<artifactId>xercesImpl</artifactId>
-						</exclusion>
-						<!--
-						<exclusion>
-							<groupId>com.yourcompany</groupId>
-							<artifactId>data</artifactId>
-						</exclusion>
-						-->
-					</exclusions>
-					<options>
-						<!--<option>-keep public class * { public protected *; }</option>-->
-						<option>-keep public class com.nabla.project.visma.Visma{public static void main(java.lang.String[]);}</option>
-						<!--<option>-dontwarn com.nabla.project.visma.**</option>-->
-						<option>-keep class com.nabla.project.visma.api.**{ *; }</option>
-						<option>-keep class com.nabla.project.visma.House{ *; }</option>
-						<option>-keep class com.nabla.project.visma.HouseLoan{ *; }</option>
-						<option>-keep class com.nabla.project.visma.Payment{ *; }</option>
-						<option>-keep class com.nabla.project.visma.BasicPaymentMethod{ *; }</option>
-						<!--<option>-ignorewarnings</option>-->
-						<option>-allowaccessmodification</option>
-						<option>-dontskipnonpubliclibraryclasses</option>
-						<option>-dontskipnonpubliclibraryclassmembers</option>
-						<option>-optimizations !code/allocation/variable</option>
-					</options>
-					<libs>
-						<lib>${java.bootstrap.classes}</lib>
-						<lib>${java.cryptographic.extension.classes}</lib>
-						<lib>${java.secure.socket.extension.classes}</lib>
-					</libs>
-				</configuration>
-			</plugin>
-
-			<!-- for gridgain
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin.version}</version>
+				<inherited>true</inherited>
 				<configuration>
-					<includes>
-						<include>**/*BasicPaymentMethodTest.java</include>
-					</includes>
-
-					<argline>-javaagent:${project.build.directory}/libs/aspectjweaver-${aspect.jweaver.version}.jar</argline>
-					<workingdirectory>${project.build.directory}/libs/</workingdirectory>
+					<exclusions>
+						<exclusion>
+							<groupId>sun.jdk</groupId>
+							<artifactId>tools</artifactId>
+						</exclusion>
+					</exclusions>
 				</configuration>
 			</plugin>
--->
-			<!-- for gridgain
-			<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>copy</id>
-							<phase>process-resources</phase>
-							<goals>
-								<goal>copy</goal>
-							</goals>
-							<configuration>
-								<artifactitems>
-									<artifactitem>
-										<groupId>org.aspectj</groupId>
-										<artifactId>aspectjweaver</artifactId>
-										<version>${aspectj.weaver.version}</version>
-										<outputdirectory>${project.build.directory}/libs/</outputdirectory>
-									</artifactitem>
-								</artifactitems>
-							</configuration>
-						</execution>
-					</executions>
-			</plugin>
--->
+      -->
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>proguard</id>
+			<!--
+			<activation>
+				<property>
+					<name>!profile.activation</name>
+				</property>
+			</activation>
+      -->
+			<build>
+				<plugins>
+					<plugin>
+						<!--groupId>com.pyx4me</groupId-->
+						<groupId>com.github.wvengen</groupId>
+						<artifactId>proguard-maven-plugin</artifactId>
+						<version>${maven.proguard.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>proguard</id>
+								<phase>package</phase>
+								<goals>
+									<goal>proguard</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>net.sf.proguard</groupId>
+								<artifactId>proguard-base</artifactId>
+								<version>${net.sf.proguard.version}</version>
+								<scope>runtime</scope>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<!-- Our application is so big that ProGuard had ran out of memory -->
+							<!--<maxMemory>1024m</maxMemory>-->
+
+							<!-- File with proguard configuration -->
+							<!--<proguardInclude>${basedir}/proguard.conf</proguardInclude>-->
+							<proguardVersion>${net.sf.proguard.version}</proguardVersion>
+							<obfuscate>true</obfuscate>
+							<!--<injarNotExistsSkip>true</injarNotExistsSkip>
+              <includeDependency>false</includeDependency>-->
+							<injar>${project.build.finalName}.jar</injar>
+							<outjar>${project.build.finalName}.jar</outjar>
+							<attach>false</attach>
+							<addMavenDescriptor>false</addMavenDescriptor>
+							<!-- Now exclude all modules that are embedded in the jar, so that
+                ProGuard won't see redefinition of each single class.
+                You don't have to write down your main module. -->
+							<exclusions>
+								<exclusion>
+									<groupId>com.sun</groupId>
+									<artifactId>tools</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>xerces</groupId>
+									<artifactId>xercesImpl</artifactId>
+								</exclusion>
+								<!--
+                <exclusion>
+                  <groupId>com.yourcompany</groupId>
+                  <artifactId>data</artifactId>
+                </exclusion>
+                -->
+							</exclusions>
+							<options>
+								<!--<option>-keep public class * { public protected *; }</option>-->
+								<option>-keep public class com.nabla.project.visma.Visma{public static void main(java.lang.String[]);}</option>
+								<!--<option>-dontwarn com.nabla.project.visma.**</option>-->
+								<option>-keep class com.nabla.project.visma.api.**{ *; }</option>
+								<option>-keep class com.nabla.project.visma.House{ *; }</option>
+								<option>-keep class com.nabla.project.visma.HouseLoan{ *; }</option>
+								<option>-keep class com.nabla.project.visma.Payment{ *; }</option>
+								<option>-keep class com.nabla.project.visma.BasicPaymentMethod{ *; }</option>
+								<!--<option>-ignorewarnings</option>-->
+								<option>-allowaccessmodification</option>
+								<option>-dontskipnonpubliclibraryclasses</option>
+								<option>-dontskipnonpubliclibraryclassmembers</option>
+								<option>-optimizations !code/allocation/variable</option>
+							</options>
+							<libs>
+								<lib>${java.bootstrap.classes}</lib>
+								<lib>${java.cryptographic.extension.classes}</lib>
+								<lib>${java.secure.socket.extension.classes}</lib>
+							</libs>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
